@@ -3,9 +3,9 @@ require 'serverspec'
 
 set :backend, :exec
 
-module_name = JSON.load(File.read('metadata.json'))['name'].split('-').last
+module_name = file('metadata.json').content_as_json['name'].split('-').last
 
-describe "MSMFG puppet module #{module_name}" do
+describe "Puppet module \"#{module_name}\"" do
   describe file("metadata.json") do
     it { is_expected.to be_file }
     describe 'metadata' do
@@ -25,7 +25,7 @@ describe "MSMFG puppet module #{module_name}" do
     its(:content) { is_expected.to contain("class #{module_name}") }
   end
   
-  describe 'specs' do
+  describe 'Directory "specs"' do
     subject { Dir['spec/{classes,defines,functions,acceptance}/**/*_spec.rb'] }
     it { is_expected.not_to be_empty }
     it 'should include at least 1 class spec' do
