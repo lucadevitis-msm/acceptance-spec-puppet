@@ -6,6 +6,7 @@ source 'https://rubygems.org' do
 
   group :development do
     gem 'bundler', '~> 1.11'
+    gem 'metadata-json-lint'
     gem 'pry'
     gem 'puppet', '< 4'
     gem 'puppetlabs_spec_helper'
