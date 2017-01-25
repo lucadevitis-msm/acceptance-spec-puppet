@@ -1,4 +1,5 @@
 # rubocop:disable Metrics/LineLength
+# rubocop:disable Metrics/BlockLength
 require 'serverspec'
 
 set :backend, :exec
@@ -6,7 +7,7 @@ set :backend, :exec
 module_name = file('metadata.json').content_as_json['name'].split('-').last
 
 describe "Puppet module \"#{module_name}\"" do
-  describe file("metadata.json") do
+  describe file('metadata.json') do
     it { is_expected.to be_file }
     describe 'metadata' do
       subject { described_class.content_as_json }
@@ -19,12 +20,12 @@ describe "Puppet module \"#{module_name}\"" do
       end
     end
   end
-  
-  describe file("manifests/init.pp") do
+
+  describe file('manifests/init.pp') do
     it { is_expected.to be_file }
     its(:content) { is_expected.to contain("class #{module_name}") }
   end
-  
+
   describe 'Directory "specs"' do
     subject { Dir['spec/{classes,defines,functions,acceptance}/**/*_spec.rb'] }
     it { is_expected.not_to be_empty }
@@ -35,8 +36,8 @@ describe "Puppet module \"#{module_name}\"" do
       is_expected.to include(match(%r{^spec/acceptance/}))
     end
   end
-  
-  describe file(".fixtures.yaml") do
+
+  describe file('.fixtures.yaml') do
     it { is_expected.to be_file }
     describe 'fixtures' do
       subject { described_class.content_as_yaml }
@@ -45,22 +46,22 @@ describe "Puppet module \"#{module_name}\"" do
       end
     end
   end
-  
-  describe file("spec/acceptance/nodesets/default.yml") do
+
+  describe file('spec/acceptance/nodesets/default.yml') do
     it { is_expected.to be_file }
     describe 'nodeset' do
       subject { described_class.content_as_yaml }
       it 'should configure a masterless environment' do
         is_expected.to include('CONFIG' => include('masterless' => true))
       end
-  
+
       it 'should include a default host' do
         is_expected.to include('HOSTS' => include('default'))
       end
     end
   end
-  
-  describe file("Gemfile") do
+
+  describe file('Gemfile') do
     it { is_expected.to be_file }
     describe 'content' do
       # This should be replaced by the current gem
@@ -71,7 +72,7 @@ describe "Puppet module \"#{module_name}\"" do
                    'puppetlabs_spec_helper', 'hiera-puppet-helper',
                    'coveralls']
       acceptance_gems = ['beaker-facter', 'beaker-hiera', 'beaker-rspec']
-  
+
       subject { described_class.content }
       it { is_expected.to contain('gemspec').before(/^source/) }
       (development_gems + test_gems + acceptance_gems).each do |bundled_gem|
@@ -79,10 +80,12 @@ describe "Puppet module \"#{module_name}\"" do
       end
     end
   end
-  describe file("Gemfile.lock") do
+
+  describe file('Gemfile.lock') do
     it { is_expected.to be_file }
   end
-  describe file("Rakefile") do
+
+  describe file('Rakefile') do
     it { is_expected.to be_file }
     [
       'bundler/gem_tasks',                  # Creates `:build` task

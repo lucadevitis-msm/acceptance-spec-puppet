@@ -5,7 +5,7 @@ require 'msmfg_spec_helper/version'
 
 Gem::Specification.new do |spec|
   raise 'RubyGems 2.0 or newer is required.' unless spec.respond_to?(:metadata)
-  spec.name = 'rspec-brownbag'
+  spec.name = 'msmfg-spec-helper'
   spec.version = MSMFGSpecHelper::VERSION
   spec.authors = ['Luca De Vitis']
   spec.email = ['luca.devitis at moneysupermarket.com']
@@ -20,8 +20,7 @@ Gem::Specification.new do |spec|
   spec.metadata['allowed_push_host'] = 'http://mygemserver.com'
 
   spec.files = `git ls-files -z lib data`.split("\x0")
-  spec.files.reject! { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir = 'bin'
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.require_paths = ['lib', 'data']
+  spec.require_paths = %w(lib data)
 end

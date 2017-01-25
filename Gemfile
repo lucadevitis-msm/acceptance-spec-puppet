@@ -1,4 +1,4 @@
-# gemspec
+gemspec
 source 'https://rubygems.org' do
   group :docs do
     gem 'yard'
