@@ -1,0 +1,7 @@
+--no-80chars-check
+--no-140chars-check
+--relative
+--error-level=all
+--log-format=%{path}: %{kind}: %{message}
+--show-ignored
+--with-context
