@@ -1,7 +1,7 @@
-require 'msmfg_spec_helper/rake_tasks/syntax'
 require 'msmfg_spec_helper/rake_tasks/module_spec'
 require 'msmfg_spec_helper/rake_tasks/puppet_lint'
 require 'msmfg_spec_helper/rake_tasks/rubocop'
+require 'msmfg_spec_helper/rake_tasks/syntax'
 require 'rake/clean'
 
 # `:clean` task is supposed to clean intermediate/temporary files
