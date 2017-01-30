@@ -10,7 +10,7 @@ namespace :syntax do
   desc 'Check ruby files syntax (ruby -c)'
   task :ruby, [:module_path] do |_, args|
     puts '  Checking ruby files syntax...'
-    ruby_files(args).include('{{Gem,Rake}file,{,*}.gemspec}').each do |rb|
+    ruby_files(args).include('**/Puppetfile.*').each do |rb|
       sh "ruby -c #{rb} >/dev/null", verbose: false
     end
   end
@@ -47,7 +47,7 @@ namespace :syntax do
   desc 'Check fragment syntax'
   task :fragments, [:module_path] do |_, args|
     puts '  Checking fragments files syntax...'
-    errors = fragments(args).collect do |fragment|
+    errors = fragments(args).select do |fragment|
       begin
         YAML.safe_load(fragment) && nil
       rescue => e
@@ -57,12 +57,12 @@ namespace :syntax do
     abort errors.compact.join("\n") if errors.any?
   end
 
-  task :all, [:module_path] => [:'syntax:ruby',
-                                :'syntax:metadata_json',
-                                :'syntax:manifests',
-                                :'syntax:templates',
-                                :'syntax:hieradata',
-                                :'syntax:fragments']
+  multidask :all, [:module_path] => [:'syntax:ruby',
+                                     :'syntax:metadata_json',
+                                     :'syntax:manifests',
+                                     :'syntax:templates',
+                                     :'syntax:hieradata',
+                                     :'syntax:fragments']
 end
 # rubocop:enable Metrics/BlockLength
 
