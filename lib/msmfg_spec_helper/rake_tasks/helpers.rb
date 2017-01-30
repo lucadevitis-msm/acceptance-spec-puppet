@@ -30,7 +30,7 @@ module MSMFGSpecHelper
       #
       # @return [Rake::FileList]            A list of absolute paths
       def ruby_files(args)
-        pattern = '**/*.rb'
+        pattern = '**/{*.rb,{Gem,Rake}file,{,*}.gemspec,*.rake}'
         exclude = ['bundle/**/*',         # bundler
                    'vendor/**/*',         # bundler
                    'pkg/**/*',            # gem build process
