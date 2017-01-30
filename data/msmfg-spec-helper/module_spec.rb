@@ -11,13 +11,19 @@ describe "Puppet module \"#{module_name}\"" do
     it { is_expected.to be_file }
     describe 'metadata' do
       subject { described_class.content_as_json }
-      # it { is_expected.to include('name', 'summary', 'source', 'license') }
-      it 'should include "version" matching sematic versioning' do
-        is_expected.to include('version' => match(/^[0-9]+(\.[0-9]+){0,2}$/))
-      end
-      it 'should include "author" matching MoneySupermarket.com email' do
-        is_expected.to include('author' => match(/at moneysupermarket\.com/))
-      end
+      name = described_class.content_as_json['name']
+      github = 'https://github.com/MSMFG/'
+      # should include "version" matching sematic versioning
+      it { is_expected.to include('version' => match(/^[0-9]+(\.[0-9]+){0,2}$/)) }
+      # should include "author" matching MoneySupermarket.com email
+      it { is_expected.to include('author' => match(/at moneysupermarket\.com/)) }
+      # should be an MSMFG hosted module
+      it { is_expected.to include('source' => match(/#{github}\/#{name}/)) }
+      it { is_expected.to include('project_page' => match(/#{github}\/#{name}/)) }
+      it { is_expected.to include('issues_url' => match(/#{github}\/#{name}\/issues/)) }
+      # Should not include placeholders
+      it { is_expected.not_to include('summary' => match(/<replace_me>/)) }
+      it { is_expected.not_to include('tags' => include(match(/<replace_me>/))) }
     end
   end
 
