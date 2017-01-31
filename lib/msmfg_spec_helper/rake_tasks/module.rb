@@ -16,10 +16,10 @@ CLEAN.include %w(.yardoc coverage log junit)
 CLOBBER.include %(doc pkg)
 
 desc 'Check the module against MSMFG acceptance specs'
-RSpec::Core::RakeTask.new :module_spec, [:module_path] do |rspec, args|
+RSpec::Core::RakeTask.new :module_spec do |rspec|
   include MSMFGSpecHelper::RakeTasks::Helpers
   rspec.pattern = File.join(Gem.datadir('msmfg-spec-helper'), 'module_spec.rb')
-  rspec.ruby_opts = "-W0 -C#{module_path(args)}"
+  rspec.ruby_opts = '-W0'
   rspec.rspec_opts = '--color --format documentation'
   rspec.verbose = false
 end

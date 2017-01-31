@@ -30,8 +30,6 @@ require 'puppetlabs_spec_helper/rake_tasks'
 # rake syntax:templates      # Syntax check Puppet templates
 # rake validate              # Check syntax of Ruby files and call :syntax and :metadata_lint
 [
-  'beaker:sets',
-  'beaker:ssh',
   'build',
   'check:dot_underscore',
   'check:git_ignore',
@@ -57,19 +55,19 @@ require 'puppetlabs_spec_helper/rake_tasks'
 end
 
 desc 'Run spec tests on an existing fixtures directory'
-RSpec::Core::RakeTask.new :spec_standalone, [:module_path] do |rspec, args|
+RSpec::Core::RakeTask.new :spec_standalone do |rspec|
   include MSMFGSpecHelper::RakeTasks::Helpers
   rspec.pattern = 'spec/{classes,defines,unit,functions,hosts,integration,types}/**/*_spec.rb'
-  rspec.ruby_opts = "-W0 -C#{module_path(args)}"
+  rspec.ruby_opts = '-W0'
   rspec.rspec_opts = '--color --format documentation'
   rspec.verbose = false
 end
 
 desc 'Run beaker acceptance tests'
-RSpec::Core::RakeTask.new :beaker, [:module_path] do |rspec, args|
+RSpec::Core::RakeTask.new :beaker do |rspec|
   include MSMFGSpecHelper::RakeTasks::Helpers
   rspec.pattern = 'spec/acceptance/**/*_spec.rb'
-  rspec.ruby_opts = "-W0 -C#{module_path(args)}"
+  rspec.ruby_opts = '-W0'
   rspec.rspec_opts = '--color --format documentation'
   rspec.verbose = false
 end

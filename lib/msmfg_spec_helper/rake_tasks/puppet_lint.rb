@@ -3,15 +3,14 @@ require 'puppet-lint/tasks/puppet-lint'
 
 Rake::Task[:lint].clear
 desc 'Run puppet-lint'
-task :puppet_lint, [:module_path] do |_, args|
+task :puppet_lint do
   include MSMFGSpecHelper::RakeTasks::Helpers
 
-  rc = File.join(Gem.datadir('msmfg-spec-helper'), 'puppet-lint.rc')
-  PuppetLint::OptParser.build.load(rc)
+  PuppetLint::OptParser.build.load(File.join(DATADIR, 'puppet-lint.rc'))
 
   linter = PuppetLint.new
   puts 'Running puppet-lint...'
-  manifests(args).each do |manifest|
+  manifests.each do |manifest|
     linter.file = manifest
     linter.run
     linter.print_problems
