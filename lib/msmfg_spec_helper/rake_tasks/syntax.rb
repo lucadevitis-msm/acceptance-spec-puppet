@@ -19,6 +19,7 @@ namespace :syntax do
   task :metadata_json, [:module_path] do |_, args|
     puts '  Checking metadata.json syntax...'
     metadata_json = "#{module_path(args)}/metadata.json"
+    MetadataJsonLint.options[:strict_license] = false
     MetadataJsonLint.parse(metadata_json) if ::File.file? metadata_json
   end
 
@@ -57,7 +58,7 @@ namespace :syntax do
     abort errors.compact.join("\n") if errors.any?
   end
 
-  multidask :all, [:module_path] => [:'syntax:ruby',
+  multitask :all, [:module_path] => [:'syntax:ruby',
                                      :'syntax:metadata_json',
                                      :'syntax:manifests',
                                      :'syntax:templates',

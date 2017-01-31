@@ -1,7 +1,10 @@
 require 'rake/file_list'
 
+# Collection of modules and classes to help writing MSMFG puppet modules.
 module MSMFGSpecHelper
+  # Collection of rake tasks.
   module RakeTasks
+    # Collection of helper functions.
     module Helpers
       # Returns the module path
       #
