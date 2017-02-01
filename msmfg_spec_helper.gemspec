@@ -23,4 +23,23 @@ Gem::Specification.new do |spec|
   spec.bindir = 'bin'
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = %w(lib data)
+
+  spec.add_runtime_dependency('beaker-facter')
+  spec.add_runtime_dependency('beaker-rspec')
+  spec.add_runtime_dependency('bundler', '~> 1.11')
+  spec.add_runtime_dependency('coveralls')
+  spec.add_runtime_dependency('hiera')
+  spec.add_runtime_dependency('hiera-puppet-helper')
+  spec.add_runtime_dependency('metadata-json-lint')
+  # https://tickets.puppetlabs.com/browse/BKR-1034
+  spec.add_runtime_dependency('net-ssh', '>= 2.6.5')
+  spec.add_runtime_dependency('pry')
+  spec.add_runtime_dependency('puppet', '< 4')
+  spec.add_runtime_dependency('puppetlabs_spec_helper')
+  spec.add_runtime_dependency('puppet-strings')
+  spec.add_runtime_dependency('rake', '~> 10.0')
+  spec.add_runtime_dependency('rubocop')
+  spec.add_runtime_dependency('ruby-augeas')
+  spec.add_runtime_dependency('safe_yaml')
+  spec.add_runtime_dependency('wirble')
 end

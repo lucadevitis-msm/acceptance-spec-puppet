@@ -1,6 +1,5 @@
 require 'msmfg_spec_helper/rake_tasks/puppetlabs'
 require 'msmfg_spec_helper/rake_tasks/helpers'
-require 'msmfg_spec_helper/rake_tasks/module_spec'
 require 'msmfg_spec_helper/rake_tasks/puppet_lint'
 require 'msmfg_spec_helper/rake_tasks/rubocop'
 require 'msmfg_spec_helper/rake_tasks/syntax'
@@ -25,7 +24,4 @@ RSpec::Core::RakeTask.new :module_spec do |rspec|
 end
 
 desc 'Run syntax check, module spec and linters'
-task :validate, [:module_path] => [:syntax,
-                                   :rubocop,
-                                   :puppet_lint,
-                                   :module_spec]
+task validate: [:syntax, :rubocop, :puppet_lint, :module_spec]

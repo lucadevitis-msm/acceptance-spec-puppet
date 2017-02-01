@@ -12,7 +12,7 @@ describe "Puppet module \"#{module_name}\"" do
     describe 'metadata' do
       subject { described_class.content_as_json }
       name = described_class.content_as_json['name']
-      github = 'https://github.com/MSMFG/'
+      github = 'https://github.com/MSMFG'
       # should include "version" matching sematic versioning
       it { is_expected.to include('version' => match(/^[0-9]+(\.[0-9]+){0,2}$/)) }
       # should include "author" matching MoneySupermarket.com email
@@ -21,9 +21,6 @@ describe "Puppet module \"#{module_name}\"" do
       it { is_expected.to include('source' => match(%r{#{github}/#{name}})) }
       it { is_expected.to include('project_page' => match(%r{#{github}/#{name}})) }
       it { is_expected.to include('issues_url' => match(%r{#{github}/#{name}/issues})) }
-      # Should not include placeholders
-      it { is_expected.not_to include('summary' => match(/<replace_me>/)) }
-      it { is_expected.not_to include('tags' => include(match(/<replace_me>/))) }
     end
   end
 
@@ -69,22 +66,7 @@ describe "Puppet module \"#{module_name}\"" do
 
   describe file('Gemfile') do
     it { is_expected.to be_file }
-    describe 'content' do
-      # This should be replaced by the current gem
-      development_gems = ['bundler', 'rake',
-                          'wirble', 'pry',
-                          'puppet-strings', "puppet', '< 4", 'hiera']
-      test_gems = ['metadata-json-lint', 'rubocop',
-                   'puppetlabs_spec_helper', 'hiera-puppet-helper',
-                   'coveralls']
-      acceptance_gems = ['beaker-facter', 'beaker-hiera', 'beaker-rspec']
-
-      subject { described_class.content }
-      it { is_expected.to contain('gemspec').before(/^source/) }
-      (development_gems + test_gems + acceptance_gems).each do |bundled_gem|
-        it { is_expected.to contain("gem '#{bundled_gem}'").after(/^source/) }
-      end
-    end
+    its(:content) { is_expected.to contain("gem 'msmfg-spec-helper'") }
   end
 
   describe file('Gemfile.lock') do
@@ -93,13 +75,6 @@ describe "Puppet module \"#{module_name}\"" do
 
   describe file('Rakefile') do
     it { is_expected.to be_file }
-    [
-      'bundler/gem_tasks',                  # Creates `:build` task
-      'puppetlabs_spec_helper/rake_tasks',  # Creates other default tasks
-      'puppet-strings/tasks',               # Creates `strings` class
-      'rake/clean'                          # Creates `:clean` and `:clobber`
-    ].each do |filename|
-      it { is_expected.to contain("require '#{filename}'") }
-    end
+    it { is_expected.to contain("require 'msmfg_spec_helper/rake_tasks/module") }
   end
 end
