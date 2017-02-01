@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    msmfg-spec-helper (0.0.0)
+    msmfg_spec_helper (0.0.0)
       beaker-facter
       beaker-rspec
       bundler (~> 1.11)
@@ -383,7 +383,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  msmfg-spec-helper!
+  msmfg_spec_helper!
 
 BUNDLED WITH
    1.13.7

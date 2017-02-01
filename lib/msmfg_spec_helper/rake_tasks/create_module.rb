@@ -129,7 +129,7 @@ end
 
 desc 'Creates Gemfile'
 file 'Gemfile' => :skeleton do |file|
-  File.write(file.name, "gem 'msmfg-spec-helper'\n")
+  File.write(file.name, "gem 'msmfg_spec_helper'\n")
 end
 
 desc 'Creates Gemfile.lock'

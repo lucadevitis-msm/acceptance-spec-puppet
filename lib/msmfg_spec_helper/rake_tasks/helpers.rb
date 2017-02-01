@@ -6,7 +6,7 @@ module MSMFGSpecHelper
   module RakeTasks
     # Collection of helper functions.
     module Helpers
-      DATADIR = (ENV['GEM_DATADIR'] || Gem.datadir('msmfg-spec-helper')).freeze
+      DATADIR = (ENV['GEM_DATADIR'] || Gem.datadir('msmfg_spec_helper')).freeze
 
       # Returns a list of module's files, matching a pattern
       #

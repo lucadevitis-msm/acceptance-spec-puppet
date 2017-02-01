@@ -66,7 +66,7 @@ describe "Puppet module \"#{module_name}\"" do
 
   describe file('Gemfile') do
     it { is_expected.to be_file }
-    its(:content) { is_expected.to contain("gem 'msmfg-spec-helper'") }
+    its(:content) { is_expected.to contain("gem 'msmfg_spec_helper'") }
   end
 
   describe file('Gemfile.lock') do

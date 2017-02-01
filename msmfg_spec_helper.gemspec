@@ -5,14 +5,14 @@ require 'msmfg_spec_helper/version'
 
 Gem::Specification.new do |spec|
   raise 'RubyGems 2.0 or newer is required.' unless spec.respond_to?(:metadata)
-  spec.name = 'msmfg-spec-helper'
+  spec.name = 'msmfg_spec_helper'
   spec.version = MSMFGSpecHelper::VERSION
   spec.authors = ['Luca De Vitis']
   spec.email = ['luca.devitis at moneysupermarket.com']
 
   spec.summary = 'MSMFG Spec Helper'
   spec.description = 'MSMFG Spec Helper'
-  spec.homepage = 'https://github.com/lucadevitis-msm/msmfg-spec-helper'
+  spec.homepage = 'https://github.com/lucadevitis-msm/msmfg_spec_helper'
   spec.license = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
