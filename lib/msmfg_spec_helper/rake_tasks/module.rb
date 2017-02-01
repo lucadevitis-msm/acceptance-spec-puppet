@@ -18,9 +18,11 @@ desc 'Check the module against MSMFG acceptance specs'
 RSpec::Core::RakeTask.new :module_spec do |rspec|
   include MSMFGSpecHelper::RakeTasks::Helpers
   rspec.pattern = File.join(Gem.datadir('msmfg_spec_helper'), 'module_spec.rb')
-  rspec.ruby_opts = '-W0'
   rspec.rspec_opts = '--color --format documentation'
-  rspec.verbose = false
+  unless ENV['VERBOSE']
+    rspec.ruby_opts = '-W0' 
+    rspec.verbose = false
+  end
 end
 
 desc 'Run syntax check, module spec and linters'

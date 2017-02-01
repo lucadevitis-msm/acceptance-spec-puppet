@@ -58,16 +58,20 @@ desc 'Run spec tests on an existing fixtures directory'
 RSpec::Core::RakeTask.new :spec_standalone do |rspec|
   include MSMFGSpecHelper::RakeTasks::Helpers
   rspec.pattern = 'spec/{classes,defines,unit,functions,hosts,integration,types}/**/*_spec.rb'
-  rspec.ruby_opts = '-W0'
   rspec.rspec_opts = '--color --format documentation'
-  rspec.verbose = false
+  unless ENV['VERBOSE']
+    rspec.ruby_opts = '-W0'
+    rspec.verbose = false
+  end
 end
 
 desc 'Run beaker acceptance tests'
 RSpec::Core::RakeTask.new :beaker do |rspec|
   include MSMFGSpecHelper::RakeTasks::Helpers
   rspec.pattern = 'spec/acceptance/**/*_spec.rb'
-  rspec.ruby_opts = '-W0'
   rspec.rspec_opts = '--color --format documentation'
-  rspec.verbose = false
+  unless ENV['VERBOSE']
+    rspec.ruby_opts = '-W0'
+    rspec.verbose = false
+  end
 end
