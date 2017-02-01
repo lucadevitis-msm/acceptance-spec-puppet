@@ -1,10 +1,12 @@
+#!/usr/bin/env rake --rakefile
 # rubocop:disable Metrics/LineLength
 require 'json'
 require 'rake'
 require 'yaml'
 
+APP_NAME = File.basename(__FILE__).freeze
+
 MODULE_NAME = (ENV['MODULE_NAME'] || 'msmfg-skeleton').freeze
-raise "Invalid module name: #{MODULE_NAME}" unless MODULE_NAME =~ /\w-\w/
 
 DIRECTORIES = [
   'manifests',
@@ -100,11 +102,12 @@ describe '#{CLASS_NAME} class' do
 end
 EOS
 
-DIRECTORIES.each do |path|
-  desc "Creates #{path}"
-  directory path
-end
+Rake.application.init(APP_NAME)
+Rake::TaskManager.record_task_metadata = true
 
+DIRECTORIES.each { |path| directory path }
+
+desc "Creates #{MODULE_NAME} directory structure"
 task skeleton: DIRECTORIES
 
 desc 'Creates metadata.json'
@@ -169,15 +172,43 @@ file "spec/acceptance/#{CLASS_NAME}_spec.rb" => :skeleton do |file|
   File.write(file.name, ACCEPTANCE_SPEC)
 end
 
-desc "Creates module '#{MODULE_NAME}' skeleton"
-task create_module: ['metadata.json',
-                     'manifests/init.pp',
-                     '.fixtures.yaml',
-                     'Rakefile',
-                     'Gemfile',
-                     'Gemfile.lock',
-                     'spec/spec_helper.rb',
-                     "spec/classes/#{CLASS_NAME}_spec.rb",
-                     'spec/acceptance/nodesets/default.yml',
-                     'spec/spec_helper_acceptance.rb',
-                     "spec/acceptance/#{CLASS_NAME}_spec.rb"]
+desc "Creates module's skeleton"
+task default: ['metadata.json',
+               'manifests/init.pp',
+               '.fixtures.yaml',
+               'Rakefile',
+               'Gemfile',
+               'Gemfile.lock',
+               'spec/spec_helper.rb',
+               "spec/classes/#{CLASS_NAME}_spec.rb",
+               'spec/acceptance/nodesets/default.yml',
+               'spec/spec_helper_acceptance.rb',
+               "spec/acceptance/#{CLASS_NAME}_spec.rb"]
+
+desc 'Shows this help'
+task :help do
+  puts <<-EOS
+NAME
+  #{APP_NAME} - Creates the all the files required by an MSMFG puppet module
+
+SYNOPSIS
+  MODULE_NAME=msmfg-test #{APP_NAME} [task|file]
+  #{APP_NAME} [task|file] MODULE_NAME=msmfg-test
+
+DESCRIPTION
+  This is a rake application, therefore you can use any rake option (if that
+  helps). Variable MODULE_NAME sets the module name. You can set MODULE_NAME as
+  an environment variable or as an argument. If not task or file is specified,
+  the default task is run.
+
+TASKS
+  EOS
+  tasks = Rake.application.tasks
+  width = tasks.map { |t| t.name_with_args.length }.max || 10
+  tasks.each do |t|
+    printf("  %s %-#{width}s  # %s\n", APP_NAME, t.name, t.comment) if t.comment
+  end
+  # Rake.application.options.show_tasks = :tasks
+  # Rake.application.display_tasks_and_comments
+end
+# vim: set ft=ruby ts=2 sts=2 et ai ruler:
