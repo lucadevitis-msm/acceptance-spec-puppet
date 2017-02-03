@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files -z lib data`.split("\x0")
   spec.bindir = 'bin'
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.require_paths = %w(lib data)
+  # spec.require_paths = %w(lib data)
 
   spec.add_runtime_dependency('beaker-facter')
   spec.add_runtime_dependency('beaker-rspec')

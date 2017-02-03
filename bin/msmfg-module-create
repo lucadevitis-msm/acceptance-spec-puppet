@@ -1,214 +1,43 @@
-#!/usr/bin/env rake --rakefile
+#!/usr/bin/env ruby
 # rubocop:disable Metrics/LineLength
-require 'json'
-require 'rake'
-require 'yaml'
+require 'msmfg_spec_helper/rake_application'
 
 APP_NAME = File.basename(__FILE__).freeze
 
-MODULE_NAME = (ENV['MODULE_NAME'] || 'msmfg-skeleton').freeze
+MSMFGSpecHelper.rake_application(APP_NAME) do
+  require 'msmfg_spec_helper/rake_tasks/module/create'
 
-DIRECTORIES = [
-  'manifests',
-  'templates',
-  'files',
-  'lib/puppet/parser/functions',
-  'lib/puppet/type',
-  'lib/puppet/provider',
-  'spec/acceptance/nodesets',
-  'spec/classes',
-  'spec/defines',
-  'spec/functions',
-  'spec/types'
-].freeze
+  task skeleton: MSMFG_MODULE.directories
+  task default: MSMFG_MODULE.files.collect {|f| f[:name]}
 
-CLASS_NAME = MODULE_NAME.split('-').last.freeze
-
-METADATA = {
-  'name' => MODULE_NAME,
-  'version' => '0.0.0',
-  'author' => 'DevOps Core <devops-core at moneysupermarket.com>',
-  'license' => 'proprietary',
-  'summary' => '<replace_me>',
-  'source' => "https://github.com/MSMFG/#{MODULE_NAME}",
-  'project_page' => "https://github.com/MSMFG/#{MODULE_NAME}",
-  'issues_url' => "https://github.com/MSMFG/#{MODULE_NAME}/issues",
-  'tags' => ['<replace_me>'],
-  'operatingsystem_support' => [
-    {
-      'operatingsystem' => 'CentOS',
-      'operatingsystemrelease' => ['5.0', '6.0', '7.0']
-    }
-  ],
-  'dependencies' => [],
-  'data_provider' => 'hiera'
-}.freeze
-
-FIXTURE = {
-  'fixtures' => {
-    'symlinks' => {
-      CLASS_NAME => '#{source_dir}'
-    }
-  }
-}.freeze
-
-NODESET = {
-  'HOSTS' => {
-    'default' => {
-      'platform' => 'el-6-x86_64',
-      'image' => 'centos:6.6-msm',
-      'hypervisor' => 'docker',
-      'docker_container_name' => 'centos6.6-msm'
-    }
-  },
-  'CONFIG' => {
-    'log_level' => 'warn',
-    'quite' => true,
-    'type' => 'foss',
-    'masterless' => true
-  }
-}.freeze
-
-CLASS_SPEC = <<EOS.freeze
-require 'spec_helper'
-
-describe '#{CLASS_NAME}' do
-  it { is_expected.to compile }
-end
-EOS
-
-ACCEPTANCE_SPEC = <<EOS.freeze
-require 'spec_helper_acceptance'
-
-describe '#{CLASS_NAME} class' do
-  let(:pp) do
-    <<-MANIFEST
-      class { '#{CLASS_NAME}':
-      }
-    MANIFEST
-  end
-
-  describe 'puppet apply manifest' do
-    subject { apply_manifest pp, catch_failures: true }
-
-    it 'should run without errors' do
-      expect(subject.exit_code).to eq 2
-    end
-
-    it 'should run a second time without changes' do
-      expect(subject.exit_code).to eq 0
-    end
-  end
-end
-EOS
-
-Rake.application.init(APP_NAME)
-Rake::TaskManager.record_task_metadata = true
-
-DIRECTORIES.each { |path| directory path }
-
-desc "Creates #{MODULE_NAME} directory structure"
-task skeleton: DIRECTORIES
-
-desc 'Creates metadata.json'
-file 'metadata.json' => :skeleton do |file|
-  File.write(file.name, JSON.pretty_generate(METADATA))
-end
-
-desc 'Creates manifests/init.pp'
-file 'manifests/init.pp' => :skeleton do |file|
-  File.write(file.name, "# #{CLASS_NAME}\nclass #{CLASS_NAME} {}\n")
-end
-
-desc 'Creates .fixtures.yaml'
-file '.fixtures.yaml' => :skeleton do |file|
-  File.write(file.name, YAML.dump(FIXTURE))
-end
-
-desc 'Creates Rakefile'
-file 'Rakefile' => :skeleton do |file|
-  File.write(file.name, "require 'msmfg_spec_helper/rake_tasks/module'\n")
-end
-
-desc 'Creates Gemfile'
-file 'Gemfile' => :skeleton do |file|
-  File.write(file.name, "gem 'msmfg_spec_helper'\n")
-end
-
-desc 'Creates Gemfile.lock'
-file 'Gemfile.lock' => ['Gemfile'] do |file|
-  require 'bundler/cli'
-  require 'bundler/cli/install'
-  require 'bundler/ui'
-  require 'bundler/ui/shell'
-  ENV['BUNDLE_GEMFILE'] = file.source
-  Bundler.reset!
-  Bundler.ui = Bundler::UI::Shell.new
-  Bundler::CLI::Install.new('jobs' => 7).run
-end
-
-desc 'Creates spec/spec_helper.rb'
-file 'spec/spec_helper.rb' => :skeleton do |file|
-  File.write(file.name, "require 'msmfg_spec_helper/spec_helper'\n")
-end
-
-desc "Creates spec/classes/#{CLASS_NAME}_spec.rb"
-file "spec/classes/#{CLASS_NAME}_spec.rb" => :skeleton do |file|
-  File.write(file.name, CLASS_SPEC)
-end
-
-desc 'Creates spec/acceptance/nodesets/default.yml'
-file 'spec/acceptance/nodesets/default.yml' => :skeleton do |file|
-  File.write(file.name, YAML.dump(NODESET))
-end
-
-desc 'Creates spec/spec_helper_acceptance.rb'
-file 'spec/spec_helper_acceptance.rb' => :skeleton do |file|
-  File.write(file.name, "require 'msmfg_spec_helper/spec_helper_acceptance.rb'\n")
-end
-
-desc "Creates spec/acceptance/#{CLASS_NAME}_spec.rb"
-file "spec/acceptance/#{CLASS_NAME}_spec.rb" => :skeleton do |file|
-  File.write(file.name, ACCEPTANCE_SPEC)
-end
-
-desc "Creates module's skeleton"
-task default: ['metadata.json',
-               'manifests/init.pp',
-               '.fixtures.yaml',
-               'Rakefile',
-               'Gemfile',
-               'Gemfile.lock',
-               'spec/spec_helper.rb',
-               "spec/classes/#{CLASS_NAME}_spec.rb",
-               'spec/acceptance/nodesets/default.yml',
-               'spec/spec_helper_acceptance.rb',
-               "spec/acceptance/#{CLASS_NAME}_spec.rb"]
-
-desc 'Shows this help'
-task :help do
-  puts <<-EOS
+  task :help do
+    puts <<-EOS
 NAME
   #{APP_NAME} - Creates the all the files required by an MSMFG puppet module
 
 SYNOPSIS
-  MODULE_NAME=msmfg-test #{APP_NAME} [task|file]
-  #{APP_NAME} [task|file] MODULE_NAME=msmfg-test
+  #{APP_NAME} [help|default|file]
 
 DESCRIPTION
   This is a rake application, therefore you can use any rake option (if that
-  helps). Variable MODULE_NAME sets the module name. You can set MODULE_NAME as
-  an environment variable or as an argument. If not task or file is specified,
-  the default task is run.
+  helps). The module name is guessed from (in order):
+
+  - Local metadata.json
+  - Environment variable MODULE_NAME
+  - Current directory name
+
+  If no task or file is specified, the default task is run. If a file already
+  exists, it is skipped.
 
 TASKS
-  EOS
-  tasks = Rake.application.tasks
-  width = tasks.map { |t| t.name_with_args.length }.max || 10
-  tasks.each do |t|
-    printf("  %s %-#{width}s  # %s\n", APP_NAME, t.name, t.comment) if t.comment
+    EOS
+    width = MSMFG_MODULE.files.collect { |f| f[:name].length }.max
+    printf("  %s %-#{width}s # %s\n", APP_NAME, 'help', 'Shows this help')
+    printf("  %s %-#{width}s # %s\n", APP_NAME, 'default', 'Creates all the files')
+    printf("  %s %-#{width}s # %s\n", APP_NAME, 'skeleton', 'Creates all the directories')
+    MSMFG_MODULE.files.each do |f|
+      printf("  %s %-#{width}s # Creates %s\n", APP_NAME, f[:name], f[:name])
+    end
   end
-  # Rake.application.options.show_tasks = :tasks
-  # Rake.application.display_tasks_and_comments
 end
-# vim: set ft=ruby ts=2 sts=2 et ai ruler:
+# vim: set ft=ruby:

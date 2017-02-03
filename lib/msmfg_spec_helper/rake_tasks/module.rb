@@ -1,10 +1,57 @@
-require 'msmfg_spec_helper/rake_tasks/puppetlabs'
-require 'msmfg_spec_helper/rake_tasks/helpers'
-require 'msmfg_spec_helper/rake_tasks/puppet_lint'
-require 'msmfg_spec_helper/rake_tasks/rubocop'
-require 'msmfg_spec_helper/rake_tasks/syntax'
-require 'rake/clean'
-require 'rspec/core/rake_task'
+# rubocop:disable Metrics/LineLength
+require 'puppetlabs_spec_helper/rake_tasks'
+
+# This is going to create a lot of tasks we are going to redefine:
+#
+# beaker                # Run beaker acceptance tests
+# beaker:sets           # List available beaker nodesets
+# beaker:ssh[set,node]  # Try to use vagrant to login to the Beaker node
+# build                 # Build puppet module package
+# check:dot_underscore  # Fails if any ._ files are present in directory
+# check:git_ignore      # Fails if directories contain the files specified in .gitignore
+# check:symlinks        # Fails if symlinks are present in directory
+# check:test_file       # Fails if .pp files present in tests folder
+# clean                 # Clean a built module package
+# compute_dev_version   # Print development version of module
+# help                  # Display the list of available rake tasks
+# lint                  # Run puppet-lint
+# metadata_lint         # Run metadata-json-lint
+# parallel_spec         # Parallel spec tests
+# release_checks        # Runs all necessary checks on a module in preparation for a release
+# rubocop               # Run RuboCop
+# rubocop:auto_correct  # Auto-correct RuboCop offenses
+# spec                  # Run spec tests and clean the fixtures directory if successful
+# spec_clean            # Clean up the fixtures directory
+# spec_prep             # Create the fixtures directory
+# spec_standalone       # Run spec tests on an existing fixtures directory
+# syntax                # Syntax check Puppet manifests and templates
+# syntax:hiera          # Syntax check Hiera config files
+# syntax:manifests      # Syntax check Puppet manifests
+# syntax:templates      # Syntax check Puppet templates
+# validate              # Check syntax of Ruby files and call :syntax and :metadata_lint
+[
+  'build',
+  'check:dot_underscore',
+  'check:git_ignore',
+  'check:symlinks',
+  'check:test_file',
+  'compute_dev_version',
+  'help',
+  'lint',
+  'metadata_lint',
+  'parallel_spec',
+  'release_checks',
+  'rubocop',
+  'rubocop:auto_correct',
+  'spec_standalone',
+  'syntax',
+  'syntax:hiera',
+  'syntax:manifests',
+  'syntax:templates',
+  'validate'
+].each do |name|
+  Rake::Task[name].clear
+end
 
 # `:clean` task is supposed to clean intermediate/temporary files
 # `CLEAN` array tells which files to remove on `clean` task.
@@ -14,16 +61,6 @@ CLEAN.include %w(.yardoc coverage log junit)
 # `CLOBBER` array tells which files to remove on `clobber` task.
 CLOBBER.include %(doc pkg)
 
-desc 'Check the module against MSMFG acceptance specs'
-RSpec::Core::RakeTask.new :module_spec do |rspec|
-  include MSMFGSpecHelper::RakeTasks::Helpers
-  rspec.pattern = File.join(Gem.datadir('msmfg_spec_helper'), 'module_spec.rb')
-  rspec.rspec_opts = '--color --format documentation'
-  unless ENV['VERBOSE']
-    rspec.ruby_opts = '-W0' 
-    rspec.verbose = false
-  end
-end
-
-desc 'Run syntax check, module spec and linters'
-task validate: [:syntax, :rubocop, :puppet_lint, :module_spec]
+require 'msmfg_spec_helper/rake_tasks/module/create'
+require 'msmfg_spec_helper/rake_tasks/module/test'
+require 'msmfg_spec_helper/rake_tasks/module/validate'
