@@ -2,11 +2,16 @@ require 'json'
 require 'yaml'
 
 module MSMFGSpecHelper
+  # MSMFG puppet module class.
+  #
+  # @param [String] name The name of the module
+  #
+  # rubocop:disable Metrics/ClassLength
   class Module
     attr_reader :name
 
     def initialize(name = nil)
-      @name = name || JSON.load(File.read('metadata.json'))['name']
+      @name = name || JSON.parse(File.read('metadata.json'))['name']
     rescue
       @name = ENV['MODULE_NAME'] || File.basename(Dir.pwd)
     end
@@ -131,6 +136,8 @@ EOS
       ].freeze
     end
 
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def files
       [
         {
@@ -154,7 +161,8 @@ EOS
         {
           name: 'Rakefile',
           create: proc do |file|
-            File.write(file.name, "require 'msmfg_spec_helper/rake_tasks/module'\n")
+            lib = 'msmfg_spec_helper/rake_tasks/module'
+            File.write(file.name, "require '#{lib}'\n")
           end
         },
         {
@@ -192,7 +200,8 @@ EOS
         {
           name: 'spec/spec_helper_acceptance.rb',
           create: proc do |file|
-            File.write(file.name, "require 'msmfg_spec_helper/spec_helper_acceptance.rb'\n")
+            lib = 'msmfg_spec_helper/spec_helper_acceptance'
+            File.write(file.name, "require '#{lib}'\n")
           end
         },
         {

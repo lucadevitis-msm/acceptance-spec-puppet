@@ -3,7 +3,7 @@ require 'rake'
 
 MSMFG_MODULE = MSMFGSpecHelper::Module.new.freeze
 
-MSMFG_MODULE.directories.each {|path| directory path}
+MSMFG_MODULE.directories.each { |path| directory path }
 
 MSMFG_MODULE.files.each do |item|
   dirname = File.dirname(item[:name])

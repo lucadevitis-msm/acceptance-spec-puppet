@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 require 'rspec/core/rake_task'
 
 desc 'Run spec tests on an existing fixtures directory'

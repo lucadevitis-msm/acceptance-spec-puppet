@@ -9,7 +9,7 @@ RSpec::Core::RakeTask.new :module_spec do |rspec|
   rspec.pattern = File.join(Gem.datadir('msmfg_spec_helper'), 'module_spec.rb')
   rspec.rspec_opts = '--color --format documentation'
   unless ENV['VERBOSE']
-    rspec.ruby_opts = '-W0' 
+    rspec.ruby_opts = '-W0'
     rspec.verbose = false
   end
 end
