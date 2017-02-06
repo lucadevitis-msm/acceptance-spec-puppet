@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   # delete this section to allow pushing this gem to any host.
   spec.metadata['allowed_push_host'] = 'http://mygemserver.com'
 
-  spec.files = `git ls-files -z lib data`.split("\x0")
+  spec.files = `git ls-files -z bin lib data`.split("\x0")
   spec.bindir = 'bin'
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   # spec.require_paths = %w(lib data)
@@ -42,4 +42,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency('ruby-augeas')
   spec.add_runtime_dependency('safe_yaml')
   spec.add_runtime_dependency('wirble')
+  spec.add_runtime_dependency('yardstick')
 end
