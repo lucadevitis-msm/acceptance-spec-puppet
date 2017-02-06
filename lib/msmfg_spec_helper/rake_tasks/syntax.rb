@@ -18,7 +18,7 @@ namespace :syntax do
   desc 'Check metadata.json syntax (metadata-json-lint)'
   task :metadata_json do
     puts 'Checking metadata.json syntax...'
-    MetadataJsonLint.options[:strict_license] = false
+    # MetadataJsonLint.options[:strict_license] = false
     MetadataJsonLint.parse('metadata.json') if ::File.file? 'metadata.json'
   end
 
