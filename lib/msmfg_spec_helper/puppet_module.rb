@@ -259,7 +259,8 @@ EOS
         {
           name: 'spec/spec_helper.rb',
           create: proc do |file|
-            File.write(file.name, "require 'msmfg_spec_helper/spec_helper'\n")
+            lib = "msmfg_spec_helper/puppet_module/spec_helper"
+            File.write(file.name, "require '#{lib}'\n")
           end
         },
         {
@@ -271,7 +272,7 @@ EOS
         {
           name: 'spec/spec_helper_acceptance.rb',
           create: proc do |file|
-            lib = 'msmfg_spec_helper/spec_helper_acceptance'
+            lib = 'msmfg_spec_helper/puppet_module/spec_helper_acceptance'
             File.write(file.name, "require '#{lib}'\n")
           end
         },
