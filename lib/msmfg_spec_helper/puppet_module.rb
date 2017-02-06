@@ -231,7 +231,7 @@ EOS
         {
           name: 'Rakefile',
           create: proc do |file|
-            lib = 'msmfg_spec_helper/rake_tasks/module'
+            lib = 'msmfg_spec_helper/rake_tasks/puppet_module'
             File.write(file.name, "require '#{lib}'\n")
           end
         },

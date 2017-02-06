@@ -6,9 +6,9 @@ require 'msmfg_spec_helper/rake_tasks/docs_coverage'
 require 'rspec/core/rake_task'
 
 desc 'Check the module against MSMFG acceptance specs'
-RSpec::Core::RakeTask.new :module_spec do |rspec|
+RSpec::Core::RakeTask.new :msmfg_acceptance_spec do |rspec|
   include MSMFGSpecHelper
-  rspec.pattern = File.join(DATADIR, 'module_spec.rb')
+  rspec.pattern = File.join(DATADIR, 'msmfg_acceptance_spec.rb')
   rspec.rspec_opts = '--color --format documentation'
   unless ENV['VERBOSE']
     rspec.ruby_opts = '-W0'
@@ -21,4 +21,4 @@ task validate: [:syntax,
                 :ruby_style,
                 :puppet_style,
                 :docs_coverage,
-                :module_spec]
+                :msmfg_acceptance_spec]

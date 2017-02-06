@@ -1,13 +1,13 @@
-# msmfg_spec_helper
+# `msmfg_spec_helper`
 ## What is it?
 It a ruby gem whose purpose is to make it easyer to develop puppet modules complieant to MSMFG guidelines.
 It provides:
 
-1. [`msmfg-module-create`](#msmfg-module-create)
+1. [`msmfg-puppet-module-create`](#msmfg-puppet-module-create)
    1. [Can create an entire module skeleton from scratch](#can-create-an-entire-module-skeleton-from-scratch)
    2. [Can add missing files to an already existsing module](#can-add-missing-files-to-an-already-existsing-module)
    3. [Will add basic catalogue and acceptance specs](#will-add-basic-catalogue-and-acceptance-specs)
-2. [`msmfg-module-validate`](#msmfg-module-validate)
+2. [`msmfg-puppet-module-validate`](#msmfg-puppet-module-validate)
    1. [Can validate the module](#can-validate-the-module)
    2. [Check syntax](#check-syntax) (anything)
    3. [Check ruby style](#check-ruby-style)
@@ -19,28 +19,28 @@ It provides:
 4. [No-brainer bundle](#no-brainer-bundle)
 5. [No-brainer spec helpers](#no-brainer-spec-helpers)
 
-## `msmfg-module-create`
+## `msmfg-puppet-module-create`
 
 ### Can create an entire module skeleton from scratch
 If you want to create a brand new module, you can use `msmfg-create-module`. You have 3 options:
 Using environment variable `MODULE_NAME`
 ```sh
-$ MODULE_NAME=puppet-something msmfg-module-create
+$ MODULE_NAME=puppet-something msmfg-puppet-module-create
 ```
 Using rake argument variable `MODULE_NAME`
 ```sh
-$ msmfg-module-create MODULE_NAME=puppet-something
+$ msmfg-puppet-module-create MODULE_NAME=puppet-something
 ```
-Letting `msmfg-module-create` to guess the module's name from the current working directory
+Letting `msmfg-puppet-module-create` to guess the module's name from the current working directory
 ```sh
 $ mkdir puppet-something
 $ cd puppet-something
-$ msmfg-module-create
+$ msmfg-puppet-module-create
 ```
 
 ### Can add missing files to an already existsing module
-If you already have a module and you want to let this gem fill the gap, you can just run the `msmfg-module-create` command.
-The script will not override existing files. `msmfg-module-create` will try to guess the module name from the `metadata.json`
+If you already have a module and you want to let this gem fill the gap, you can just run the `msmfg-puppet-module-create` command.
+The script will not override existing files. `msmfg-puppet-module-create` will try to guess the module name from the `metadata.json`
 file or current working directory basename.
 ```sh
 $ cd /path/to/your/puppet-something
@@ -58,12 +58,12 @@ script will also:
 Automatic guess of requirements is on the way. In the mean while you have to configure
 [`.fixtures.yaml`](https://github.com/puppetlabs/puppetlabs_spec_helper#using-fixtures)
 
-## `msmfg-module-validate`
+## `msmfg-puppet-module-validate`
 
 ### Can validate the module
 You can validate the current module against the currently implemented MSMFG acceptance specs for puppet modules:
 ```
-$ msmfg-module-validate
+$ msmfg-puppet-module-validate
 Checking ruby files syntax...
 Checking metadata.json syntax...
 Checking puppet manifests syntax...
@@ -112,7 +112,7 @@ Puppet module "skeleton"
     should be file
   File "Rakefile"
     should be file
-    should contain "require 'msmfg_spec_helper/rake_tasks/module"
+    should contain "require 'msmfg_spec_helper/rake_tasks/puppet_module"
 
 Finished in 0.05903 seconds (files took 0.87694 seconds to load)
 21 examples, 0 failures
@@ -121,7 +121,7 @@ Finished in 0.05903 seconds (files took 0.87694 seconds to load)
 #### Check syntax
 Check any sort of syntax:
 ```sh
-$ msmfg-module-validate syntax
+$ msmfg-puppet-module-validate syntax
 Checking ruby files syntax...
 Checking metadata.json syntax...
 Checking puppet manifests syntax...
@@ -132,14 +132,14 @@ $
 ```
 You could also check specific a type of syntax:
 ```
-$ msmfg-module-validate syntax:ruby
+$ msmfg-puppet-module-validate syntax:ruby
 Checking ruby files syntax...
 $
 ```
 
 #### Check ruby style
 ```sh
-$ msmfg-module-validate ruby_style
+$ msmfg-puppet-module-validate ruby_style
 Running RuboCop...
 Inspecting 6 files
 ......
@@ -149,13 +149,13 @@ Inspecting 6 files
 
 #### Check manifests style
 ```sh
-$ msmfg-module-validate puppet_style
+$ msmfg-puppet-module-validate puppet_style
 Running puppet-lint...
 ```
 
 #### Runs MSMFG acceptance spes for Puppet Modules
 ```sh
-$ msmfg-module-validate module_spec
+$ msmfg-puppet-module-validate module_spec
 Puppet module "skeleton"
   File "metadata.json"
     should be file
@@ -190,32 +190,32 @@ Puppet module "skeleton"
     should be file
   File "Rakefile"
     should be file
-    should contain "require 'msmfg_spec_helper/rake_tasks/module"
+    should contain "require 'msmfg_spec_helper/rake_tasks/puppet_module"
 
 Finished in 0.05903 seconds (files took 0.87694 seconds to load)
 21 examples, 0 failures
 ```
 
 ## `rake` tasks
-Actually, `msmfg-module-create` and `msmfg-module-validate` are rake applications. 
+Actually, `msmfg-puppet-module-create` and `msmfg-puppet-module-validate` are rake applications. 
 
 ### Use local Rakefile
 There are multiple task libraries that you could `require` in your `Rakefile`:
 
-* `msmfg_spec_helper/rake_tasks/module`: loads/configure any possible task
-  * `msmfg_spec_helper/rake_tasks/module/create`: defines files/directories creation tasks
-  * `msmfg_spec_helper/rake_tasks/module/validate`: loads all validation tasks:
+* `msmfg_spec_helper/rake_tasks/puppet_module`: loads/configure any possible task
+  * `msmfg_spec_helper/rake_tasks/puppet_module/create`: defines files/directories creation tasks
+  * `msmfg_spec_helper/rake_tasks/puppet_module/validate`: loads all validation tasks:
     * `msmfg_spec_helper/rake_tasks/syntax`: see below
     * `msmfg_spec_helper/rake_tasks/puppet_style`: see below
     * `msmfg_spec_helper/rake_tasks/ruby_style`: see below
     * `msmfg_spec_helper/rake_tasks/docs_coverage`: see below
-  * `msmfg_spec_helper/rake_tasks/module/test`: defines puppet specs and acceptance specs tasks
+  * `msmfg_spec_helper/rake_tasks/puppet_module/spec`: defines puppet specs and acceptance specs tasks
 * `msmfg_spec_helper/rake_tasks/syntax`: defins all syntax checking tasks
 * `msmfg_spec_helper/rake_tasks/puppet_style`: defines the puppet style checking task
 * `msmfg_spec_helper/rake_tasks/ruby_style`: defines the ruby style checking task
 * `msmfg_spec_helper/rake_tasks/docs_coverage`: defines the documentation coverage checking task
 
-As a matter of fact, when you create a new module, the generate `Rakefile` requires `msmfg_spec_helper/rake_tasks/module`
+As a matter of fact, when you create a new module, the generate `Rakefile` requires `msmfg_spec_helper/rake_tasks/puppet_module`
 
 ## No-brainer bundle
 If you write your `Gemfile` like:
@@ -225,17 +225,17 @@ gem 'msmfg_spec_helper'
 ```
 and run `bundle install` this gem will require all the goodies you might need to develop your module, including:
 
-1. [pry](https://github.com/pry/pry)
-2. [puppetlabs_spec_helper](https://github.com/puppetlabs/puppetlabs_spec_helper)
+1. [`pry`](https://github.com/pry/pry)
+2. [`puppetlabs_spec_helper`](https://github.com/puppetlabs/puppetlabs_spec_helper)
 
 ## No-brainer spec helpers
 If you write yout `specs/spec_helper.rb` like:
 ```ruby
-require 'msmfg_spec_helper/spec_helper_acceptance'
+require 'msmfg_spec_helper/puppet_module/spec_helper_acceptance'
 ```
 and your `specs/spec_helper_acceptance.rb like:
 ```ruby
-require 'msmfg_spec_helper/spec_helper'
+require 'msmfg_spec_helper/puppet_module/spec_helper'
 ```
 Those 2 libraries will take care of the helpers configuration
 

@@ -55,9 +55,9 @@ require 'puppetlabs_spec_helper/rake_tasks'
   Rake::Task[name].clear
 end
 
-require 'msmfg_spec_helper/rake_tasks/module/create'
-require 'msmfg_spec_helper/rake_tasks/module/test'
-require 'msmfg_spec_helper/rake_tasks/module/validate'
+require 'msmfg_spec_helper/rake_tasks/puppet_module/create'
+require 'msmfg_spec_helper/rake_tasks/puppet_module/spec'
+require 'msmfg_spec_helper/rake_tasks/puppet_module/validate'
 require 'rake/clean'
 
 # `:clean` task is supposed to clean intermediate/temporary files

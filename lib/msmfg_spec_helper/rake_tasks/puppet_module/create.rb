@@ -1,4 +1,4 @@
-require 'msmfg_spec_helper/module'
+require 'msmfg_spec_helper/puppet_module'
 require 'rake'
 
 PUPPET_MODULE = MSMFGSpecHelper::PuppetModule.new.freeze
@@ -14,5 +14,8 @@ PUPPET_MODULE.files.each do |item|
   requires << dirname unless dirname == '.'
 
   desc "Creates #{item[:name]}"
-  file item[:name] => requires, &item[:create]
+  file item[:name] => requires do |file|
+    puts "Creating #{item[:name]} ..."
+    item[:create].call(file)
+  end
 end

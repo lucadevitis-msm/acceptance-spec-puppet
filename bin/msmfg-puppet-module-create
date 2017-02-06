@@ -4,7 +4,7 @@ require 'msmfg_spec_helper/rake_application'
 APP_NAME = File.basename(__FILE__).freeze
 
 MSMFGSpecHelper.rake_application(APP_NAME) do
-  require 'msmfg_spec_helper/rake_tasks/module/create'
+  require 'msmfg_spec_helper/rake_tasks/puppet_module/create'
 
   module_files = PUPPET_MODULE.files
 
