@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# rubocop:disable Metrics/LineLength
 require 'msmfg_spec_helper/rake_application'
 
 APP_NAME = File.basename(__FILE__).freeze
@@ -7,8 +6,10 @@ APP_NAME = File.basename(__FILE__).freeze
 MSMFGSpecHelper.rake_application(APP_NAME) do
   require 'msmfg_spec_helper/rake_tasks/module/create'
 
-  task skeleton: MSMFG_MODULE.directories
-  task default: MSMFG_MODULE.files.collect {|f| f[:name]}
+  module_files = PUPPET_MODULE.files
+
+  task skeleton: PUPPET_MODULE.directories
+  task(:default) { module_files.each {|f| Rake::Task[f[:name]].invoke } }
 
   task :help do
     puts <<-EOS
@@ -31,12 +32,13 @@ DESCRIPTION
 
 TASKS
     EOS
-    width = MSMFG_MODULE.files.collect { |f| f[:name].length }.max
-    printf("  %s %-#{width}s # %s\n", APP_NAME, 'help', 'Shows this help')
-    printf("  %s %-#{width}s # %s\n", APP_NAME, 'default', 'Creates all the files')
-    printf("  %s %-#{width}s # %s\n", APP_NAME, 'skeleton', 'Creates all the directories')
-    MSMFG_MODULE.files.each do |f|
-      printf("  %s %-#{width}s # Creates %s\n", APP_NAME, f[:name], f[:name])
+    length = module_files.collect { |f| f[:name].length }.max
+    format = "  %s %-#{length}s # %s\n" 
+    printf(format, APP_NAME, 'help', 'Shows this help')
+    printf(format, APP_NAME, 'default', 'Creates all the files')
+    printf(format, APP_NAME, 'skeleton', 'Creates all the directories')
+    module_files.each do |f|
+      printf("  %s %-#{length}s # Creates %s\n", APP_NAME, f[:name], f[:name])
     end
   end
 end

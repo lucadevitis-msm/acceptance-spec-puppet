@@ -1,11 +1,13 @@
 require 'msmfg_spec_helper/module'
 require 'rake'
 
-MSMFG_MODULE = MSMFGSpecHelper::Module.new.freeze
+PUPPET_MODULE = MSMFGSpecHelper::PuppetModule.new.freeze
 
-MSMFG_MODULE.directories.each { |path| directory path }
+# Creates all the `directory` tasks
+PUPPET_MODULE.directories.each { |path| directory path }
 
-MSMFG_MODULE.files.each do |item|
+# Creates all the `file` tasks
+PUPPET_MODULE.files.each do |item|
   dirname = File.dirname(item[:name])
 
   requires = item[:requires].to_a

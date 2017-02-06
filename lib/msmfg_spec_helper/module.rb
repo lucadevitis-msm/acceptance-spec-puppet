@@ -3,23 +3,54 @@ require 'yaml'
 
 module MSMFGSpecHelper
   # MSMFG puppet module class.
-  #
-  # @param [String] name The name of the module
-  #
+  # This class is mainly used to create the module's files.
   # rubocop:disable Metrics/ClassLength
-  class Module
-    attr_reader :name
-
+  class PuppetModule
+    # What an MSMFG puppet module should look like on the filesystem
+    #
+    # Module's name is guessed from `metadata.json`, if available. If not, for
+    # example you are creating a new module, module's name it is taken from
+    # environment variable `MODULE_NAME`. If environment variable is not
+    # present, module's name is guessed from current working directory. As last
+    # resort, you could set it as optional argument
+    #
+    # @example
+    #   puppet_module = MSMFGSpecHelper::PuppetModule.new
+    #
+    # @param [String] name
+    #   The name of the puppet module.
+    #
+    # @api public
     def initialize(name = nil)
       @name = name || JSON.parse(File.read('metadata.json'))['name']
     rescue
       @name = ENV['MODULE_NAME'] || File.basename(Dir.pwd)
     end
 
+    # Returns the module name
+    #
+    # @return [String]
+    #   the module name
+    #
+    # @api private
+    attr_reader :name
+
+    # Returns class name (or the module name without the provider prefix)
+    #
+    # @return [String]
+    #   the module's main class name
+    #
+    # @api private
     def class_name
       name.split('-').last.freeze
     end
 
+    # Returns module metadata
+    #
+    # @return [Hash]
+    #   the module's metadata
+    #
+    # @api private
     def metadata
       {
         'name' => name,
@@ -42,7 +73,13 @@ module MSMFGSpecHelper
       }.freeze
     end
 
-    def fixture
+    # Return the module's initial fixtures configuration
+    #
+    # @return [Hash]
+    #   the module's fixtures configuration
+    #
+    # @api private
+    def fixtures
       {
         'fixtures' => {
           'symlinks' => {
@@ -52,6 +89,12 @@ module MSMFGSpecHelper
       }.freeze
     end
 
+    # Returns `beaker`'s default configuration
+    #
+    # @return [Hash]
+    #   the module's default nodeset configuration
+    #
+    # @api private
     def nodeset
       {
         'HOSTS' => {
@@ -71,6 +114,12 @@ module MSMFGSpecHelper
       }.freeze
     end
 
+    # Returns the base `rspec-puppet` spec content
+    #
+    # @return [String]
+    #   the module's catalog specs
+    #
+    # @api private
     def class_spec
       <<EOS.freeze
 require 'spec_helper'
@@ -82,6 +131,12 @@ end
 EOS
     end
 
+    # Returns the base `rspec-puppet` acceptance spec content
+    #
+    # @return [String]
+    #   the module's acceptance specs
+    #
+    # @api private
     def acceptance_spec
       <<EOS.freeze
 require 'spec_helper_acceptance'
@@ -115,6 +170,12 @@ end
 EOS
     end
 
+    # Returns the module's list of directories (mainly used by rake tasks)
+    #
+    # @return [Array<String>]
+    #   the module's directory structure
+    #
+    # @api private
     def directories
       [
         'manifests',
@@ -138,6 +199,13 @@ EOS
 
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
+
+    # Returns the list of rake tasks data needed to create the module's files
+    #
+    # @return [Array<Hash>]
+    #   the module's file tasks data
+    #
+    # @api private
     def files
       [
         {
@@ -149,13 +217,15 @@ EOS
         {
           name: 'manifests/init.pp',
           create: proc do |file|
-            File.write(file.name, "# #{class_name}\nclass #{class_name} {}\n")
+            manifest = "# Initial #{class_name} documentation\n"
+            manifest << "class #{class_name} {}\n"
+            File.write(file.name, manifest)
           end
         },
         {
           name: '.fixtures.yaml',
           create: proc do |file|
-            File.write(file.name, YAML.dump(fixture))
+            File.write(file.name, YAML.dump(fixtures))
           end
         },
         {
@@ -168,7 +238,8 @@ EOS
         {
           name: 'Gemfile',
           create: proc do |file|
-            File.write(file.name, "gem 'msmfg_spec_helper'\n")
+            gemfile = "source 'https://rubygems.org'\ngem 'msmfg_spec_helper'\n"
+            File.write(file.name, gemfile)
           end
         },
         {
@@ -206,12 +277,15 @@ EOS
         },
         {
           name: "spec/classes/#{class_name}_spec.rb",
+          requires: ['spec/spec_helper.rb', '.fixtures.yaml'],
           create: proc do |file|
             File.write(file.name, class_spec)
           end
         },
         {
           name: "spec/acceptance/#{class_name}_spec.rb",
+          requires: ['spec/spec_helper_acceptance.rb',
+                     'spec/acceptance/nodesets/default.yml'],
           create: proc do |file|
             File.write(file.name, acceptance_spec)
           end

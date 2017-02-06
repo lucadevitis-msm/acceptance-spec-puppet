@@ -30,7 +30,7 @@ require 'puppetlabs_spec_helper/rake_tasks'
 # syntax:templates      # Syntax check Puppet templates
 # validate              # Check syntax of Ruby files and call :syntax and :metadata_lint
 [
-  'build',
+  # 'build',
   'check:dot_underscore',
   'check:git_ignore',
   'check:symlinks',
@@ -44,6 +44,8 @@ require 'puppetlabs_spec_helper/rake_tasks'
   'rubocop',
   'rubocop:auto_correct',
   'spec_standalone',
+  # 'strings:generate',
+  # 'strings:gh-pages',
   'syntax',
   'syntax:hiera',
   'syntax:manifests',
@@ -53,6 +55,11 @@ require 'puppetlabs_spec_helper/rake_tasks'
   Rake::Task[name].clear
 end
 
+require 'msmfg_spec_helper/rake_tasks/module/create'
+require 'msmfg_spec_helper/rake_tasks/module/test'
+require 'msmfg_spec_helper/rake_tasks/module/validate'
+require 'rake/clean'
+
 # `:clean` task is supposed to clean intermediate/temporary files
 # `CLEAN` array tells which files to remove on `clean` task.
 CLEAN.include %w(.yardoc coverage log junit)
@@ -61,6 +68,7 @@ CLEAN.include %w(.yardoc coverage log junit)
 # `CLOBBER` array tells which files to remove on `clobber` task.
 CLOBBER.include %(doc pkg)
 
-require 'msmfg_spec_helper/rake_tasks/module/create'
-require 'msmfg_spec_helper/rake_tasks/module/test'
-require 'msmfg_spec_helper/rake_tasks/module/validate'
+task :build do
+  patterns = PuppetStrings::DEFAULT_SEARCH_PATTERNS
+  PuppetStrings.generate(patterns, yard_args: %w(--output-dir docs))
+end

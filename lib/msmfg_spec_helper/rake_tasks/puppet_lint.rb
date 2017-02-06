@@ -1,10 +1,10 @@
-require 'msmfg_spec_helper/rake_tasks/helpers'
+require 'msmfg_spec_helper'
 require 'puppet-lint/tasks/puppet-lint'
 
 Rake::Task[:lint].clear
 desc 'Run puppet-lint'
 task :puppet_lint do
-  include MSMFGSpecHelper::RakeTasks::Helpers
+  include MSMFGSpecHelper
 
   PuppetLint::OptParser.build.load(File.join(DATADIR, 'puppet-lint.rc'))
 

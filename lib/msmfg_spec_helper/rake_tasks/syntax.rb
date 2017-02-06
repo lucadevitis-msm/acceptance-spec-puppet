@@ -1,11 +1,11 @@
 require 'metadata_json_lint'
-require 'msmfg_spec_helper/rake_tasks/helpers'
+require 'msmfg_spec_helper'
 require 'puppet-syntax'
 require 'rake'
 
 # rubocop:disable Metrics/BlockLength
 namespace :syntax do
-  include MSMFGSpecHelper::RakeTasks::Helpers
+  include MSMFGSpecHelper
 
   desc 'Check ruby files syntax (ruby -c)'
   task :ruby do
@@ -60,9 +60,11 @@ end
 # rubocop:enable Metrics/BlockLength
 
 desc 'Run all the syntax checks'
-multitask :syntax, [:'syntax:ruby',
-                    :'syntax:metadata_json',
-                    :'syntax:manifests',
-                    :'syntax:templates',
-                    :'syntax:hieradata',
-                    :'syntax:fragments']
+task :syntax do
+  [:'syntax:ruby',
+   :'syntax:metadata_json',
+   :'syntax:manifests',
+   :'syntax:templates',
+   :'syntax:hieradata',
+   :'syntax:fragments'].each { |syntax_check| Rake::Task[syntax_check].invoke }
+end

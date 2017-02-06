@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# rubocop:disable Metrics/LineLength
 require 'msmfg_spec_helper/rake_application'
 
 APP_NAME = File.basename(__FILE__).freeze
@@ -7,9 +6,7 @@ APP_NAME = File.basename(__FILE__).freeze
 MSMFGSpecHelper.rake_application(APP_NAME) do
   require 'msmfg_spec_helper/rake_tasks/module/validate'
 
-  task :default do
-    Rake::Task[:validate].invoke
-  end
+  task(:default) { Rake::Task[:validate].invoke }
 
   task :help do
     puts <<-EOS
