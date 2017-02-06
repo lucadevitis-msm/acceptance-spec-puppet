@@ -233,7 +233,7 @@ If you write yout `specs/spec_helper.rb` like:
 ```ruby
 require 'msmfg_spec_helper/puppet_module/spec_helper_acceptance'
 ```
-and your `specs/spec_helper_acceptance.rb like:
+and your `specs/spec_helper_acceptance.rb` like:
 ```ruby
 require 'msmfg_spec_helper/puppet_module/spec_helper'
 ```
