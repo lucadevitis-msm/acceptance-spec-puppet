@@ -21,12 +21,12 @@ DESCRIPTION
   helps). If no task is specified, default (validate) task is run.
 
 TASKS
-  #{APP_NAME} help        # Shows this help
-  #{APP_NAME} default     # Runs all the tasks
-  #{APP_NAME} syntax      # Syntax check
-  #{APP_NAME} rubocop     # Ruby style check
-  #{APP_NAME} puppet_lint # Puppet style check
-  #{APP_NAME} module_spec # MSMFG acceptance check
+  #{APP_NAME} help         # Shows this help
+  #{APP_NAME} default      # Runs all the tasks
+  #{APP_NAME} syntax       # Syntax check
+  #{APP_NAME} ruby_style   # Ruby style check
+  #{APP_NAME} puppet_style # Puppet style check
+  #{APP_NAME} module_spec  # MSMFG acceptance check
     EOS
   end
 end

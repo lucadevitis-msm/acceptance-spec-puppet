@@ -3,7 +3,7 @@ require 'puppet-lint/tasks/puppet-lint'
 
 Rake::Task[:lint].clear
 desc 'Run puppet-lint'
-task :puppet_lint do
+task :puppet_style do
   include MSMFGSpecHelper
 
   PuppetLint::OptParser.build.load(File.join(DATADIR, 'puppet-lint.rc'))

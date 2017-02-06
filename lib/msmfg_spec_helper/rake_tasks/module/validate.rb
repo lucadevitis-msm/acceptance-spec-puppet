@@ -1,8 +1,8 @@
 require 'msmfg_spec_helper'
-require 'msmfg_spec_helper/rake_tasks/puppet_lint'
-require 'msmfg_spec_helper/rake_tasks/rubocop'
+require 'msmfg_spec_helper/rake_tasks/puppet_style'
+require 'msmfg_spec_helper/rake_tasks/ruby_style'
 require 'msmfg_spec_helper/rake_tasks/syntax'
-require 'msmfg_spec_helper/rake_tasks/yardstick'
+require 'msmfg_spec_helper/rake_tasks/docs_coverage'
 require 'rspec/core/rake_task'
 
 desc 'Check the module against MSMFG acceptance specs'
@@ -17,4 +17,8 @@ RSpec::Core::RakeTask.new :module_spec do |rspec|
 end
 
 desc 'Run syntax check, module spec and linters'
-task validate: [:syntax, :rubocop, :puppet_lint, :yardstick, :module_spec]
+task validate: [:syntax,
+                :ruby_style,
+                :puppet_style,
+                :docs_coverage,
+                :module_spec]
