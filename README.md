@@ -245,7 +245,7 @@ Finished in 0.05903 seconds (files took 0.87694 seconds to load)
 ```
 
 ## `rake` tasks
-Actually, `msmfg-puppet-module-create` and `msmfg-puppet-module-validate` are rake applications. 
+Actually, `msmfg-puppet-module-create` and `msmfg-puppet-module-validate` are rake applications.
 
 ### Use local Rakefile
 There are multiple task libraries that you could `require` in your `Rakefile`:
@@ -263,7 +263,10 @@ There are multiple task libraries that you could `require` in your `Rakefile`:
 * `msmfg_spec_helper/rake_tasks/ruby_style`: defines the ruby style checking task
 * `msmfg_spec_helper/rake_tasks/docs_coverage`: defines the documentation coverage checking task
 
-As a matter of fact, when you create a new module, the generate `Rakefile` requires `msmfg_spec_helper/rake_tasks/puppet_module`
+When you create the `Rakefile` with `msmfg-puppet-module-create`, it will look like
+```ruby
+require 'msmfg_spec_helper/rake_tasks/puppet_module'
+```
 
 ## No-brainer gems bundle
 If you write your `Gemfile` like:
@@ -271,10 +274,11 @@ If you write your `Gemfile` like:
 source 'https://rubygems.org'
 gem 'msmfg_spec_helper'
 ```
-and run `bundle install` this gem will require all the goodies you might need to develop your module, including:
+and run `bundle install` this gem will require all the goodies you might need
+to develop your module (currently around 139 gems).
 
-1. [`pry`](https://github.com/pry/pry)
-2. [`puppetlabs_spec_helper`](https://github.com/puppetlabs/puppetlabs_spec_helper)
+When you create the `Gemfile` with `msmfg-puppet-module-create`, it will look
+liket the example above.
 
 ## No-brainer spec helpers
 If you write yout `specs/spec_helper.rb` like:
@@ -285,5 +289,9 @@ and your `specs/spec_helper_acceptance.rb` like:
 ```ruby
 require 'msmfg_spec_helper/puppet_module/spec_helper'
 ```
-Those 2 `ruby` libs will take care of the helpers configuration
+Those 2 `ruby` libs will take care of the specs configuration
+
+When you create the `specs/spec_helper.rb` and
+`specs/spec_helper_acceptance.rb` with `msmfg-puppet-module-create`, they will
+look liket the examples above.
 
