@@ -1,7 +1,24 @@
 # `msmfg_spec_helper`
 ## What is it?
 It a ruby gem whose purpose is to make it easyer to develop puppet modules complieant to MSMFG guidelines.
-It provides:
+
+## How do I install it?
+Requires:
+* `git` (you don't say!)
+* `ruby` (>= 2.1.5)
+* `bundler` (to handle dependencies)
+Recommended:
+* `rvm`/`rbenv` (to handle multiple local version of `ruby`)
+* `docker` (to run acceptance tests)
+Steps:
+```sh
+git clone https://github.com/lucadevitis-msm/msmfg_spec_helper
+cd msmfg_spec_helper
+bundle install
+bundle exec rake validate install
+```
+
+## What does it provide?
 
 1. [`msmfg-puppet-module-create`](#msmfg-puppet-module-create)
    1. [Can create an entire module skeleton from scratch](#can-create-an-entire-module-skeleton-from-scratch)
@@ -16,7 +33,7 @@ It provides:
    6. [Runs MSMFG acceptance spes for Puppet Modules](#runs-msmfg-acceptance-spes-for-puppet-modules)
 3. [`rake` tasks](#rake-tasks)
    1. You can cherry-pick the tasks and [use local Rakefile](#use-local-rakefile)
-4. [No-brainer bundle](#no-brainer-bundle)
+4. [No-brainer gems bundle](#no-brainer-gems bundle)
 5. [No-brainer spec helpers](#no-brainer-spec-helpers)
 
 ## `msmfg-puppet-module-create`
@@ -25,17 +42,46 @@ It provides:
 If you want to create a brand new module, you can use `msmfg-create-module`. You have 3 options:
 Using environment variable `MODULE_NAME`
 ```sh
-$ MODULE_NAME=puppet-something msmfg-puppet-module-create
+MODULE_NAME=puppet-something msmfg-puppet-module-create
 ```
 Using rake argument variable `MODULE_NAME`
 ```sh
-$ msmfg-puppet-module-create MODULE_NAME=puppet-something
+msmfg-puppet-module-create MODULE_NAME=puppet-something
 ```
 Letting `msmfg-puppet-module-create` to guess the module's name from the current working directory
 ```sh
 $ mkdir puppet-something
 $ cd puppet-something
 $ msmfg-puppet-module-create
+```
+Example output:
+```
+$ msmfg-puppet-module-create
+Creating metadata.json ...
+mkdir -p manifests
+Creating manifests/init.pp ...
+Creating .fixtures.yaml ...
+Creating Rakefile ...
+Creating Gemfile ...
+Creating Gemfile.lock ...
+Fetching gem metadata from https://rubygems.org/..
+Fetching version metadata from https://rubygems.org/.
+Resolving dependencies...
+Using rake 10.5.0
+#
+# More bundler output here...
+#
+Using msmfg_spec_helper 0.0.0
+Bundle complete! 1 Gemfile dependency, 138 gems now installed.
+Use `bundle show [gemname]` to see where a bundled gem is installed.
+mkdir -p spec
+Creating spec/spec_helper.rb ...
+mkdir -p spec/acceptance/nodesets
+Creating spec/acceptance/nodesets/default.yml ...
+Creating spec/spec_helper_acceptance.rb ...
+mkdir -p spec/classes
+Creating spec/classes/something_spec.rb ...
+Creating spec/acceptance/something_spec.rb ...
 ```
 
 ### Can add missing files to an already existsing module
@@ -217,7 +263,7 @@ There are multiple task libraries that you could `require` in your `Rakefile`:
 
 As a matter of fact, when you create a new module, the generate `Rakefile` requires `msmfg_spec_helper/rake_tasks/puppet_module`
 
-## No-brainer bundle
+## No-brainer gems bundle
 If you write your `Gemfile` like:
 ```ruby
 source 'https://rubygems.org'
@@ -237,5 +283,5 @@ and your `specs/spec_helper_acceptance.rb` like:
 ```ruby
 require 'msmfg_spec_helper/puppet_module/spec_helper'
 ```
-Those 2 libraries will take care of the helpers configuration
+Those 2 `ruby` libs will take care of the helpers configuration
 
