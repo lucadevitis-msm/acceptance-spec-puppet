@@ -203,7 +203,7 @@ Running puppet-lint...
 
 #### Runs MSMFG acceptance spes for Puppet Modules
 ```sh
-$ msmfg-puppet-module-validate module_spec
+$ msmfg-puppet-module-validate msmfg_acceptance_spec
 Puppet module "skeleton"
   File "metadata.json"
     should be file
