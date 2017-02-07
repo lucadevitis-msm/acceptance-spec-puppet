@@ -4,21 +4,22 @@ It a ruby gem whose purpose is to make it easyer to develop puppet modules
 complieant to MSMFG guidelines. Other features are [coming soon](TODO.md)
 
 ## How do I install it?
-Requires:
+
+### Requires
 * `git` (you don't say!)
 * `ruby` (>= 2.1.5)
 * `bundler` (to handle dependencies)
 
-Recommended:
+### Recommended
 * `rvm`/`rbenv` (to handle multiple local version of `ruby`)
 * `docker` (to run acceptance tests)
 
-Windows **WARNINGS**:
+### Windows **WARNINGS**
 * Be sure you install
   [DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit)
 * `ruby-augeas` will **NOT** install
 
-Steps:
+### Steps
 ```sh
 git clone https://github.com/lucadevitis-msm/msmfg_spec_helper
 cd msmfg_spec_helper
