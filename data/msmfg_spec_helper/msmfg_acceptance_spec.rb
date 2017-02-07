@@ -2,7 +2,11 @@
 # rubocop:disable Metrics/BlockLength
 require 'serverspec'
 
-set :backend, :exec
+set :backend, if RUBY_PLATFORM =~ /cygwin|mswin|mingw|bccwin|wince|emx/
+                :cmd
+              else
+                :exec
+              end
 
 module_name = file('metadata.json').content_as_json['name'].split('-').last
 
