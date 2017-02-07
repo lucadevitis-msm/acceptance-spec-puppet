@@ -11,7 +11,12 @@ namespace :syntax do
   task :ruby do
     puts 'Checking ruby files syntax...'
     ruby_files.include('**/Puppetfile.*').each do |rb|
-      sh "ruby -c #{rb} >/dev/null", verbose: false
+      null = if RUBY_PLATFORM =~ /cygwin|mswin|mingw|bccwin|wince|emx/
+               'NUL'
+             else
+               '/dev/null'
+             end
+      sh "ruby -c #{rb} > #{null}", verbose: false
     end
   end
 
