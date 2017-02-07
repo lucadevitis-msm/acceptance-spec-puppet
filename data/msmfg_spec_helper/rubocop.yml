@@ -41,3 +41,7 @@ Style/MultilineMethodCallBraceLayout:
 
 Style/MultilineArrayBraceLayout:
   EnforcedStyle: symmetrical
+
+# Windows compatibility
+Style/EndOfLine:
+  Enabled: false
