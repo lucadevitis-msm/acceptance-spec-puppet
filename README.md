@@ -13,6 +13,11 @@ Recommended:
 * `rvm`/`rbenv` (to handle multiple local version of `ruby`)
 * `docker` (to run acceptance tests)
 
+Windows *WARNINGS*:
+* Be sure you install
+  [DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit)
+* `ruby-augeas` will *NOT* install
+
 Steps:
 ```sh
 git clone https://github.com/lucadevitis-msm/msmfg_spec_helper

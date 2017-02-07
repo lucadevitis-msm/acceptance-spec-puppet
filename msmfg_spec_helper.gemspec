@@ -39,7 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency('puppet-strings')
   spec.add_runtime_dependency('rake', '~> 10.0')
   spec.add_runtime_dependency('rubocop')
-  spec.add_runtime_dependency('ruby-augeas')
   spec.add_runtime_dependency('safe_yaml')
   spec.add_runtime_dependency('wirble')
   spec.add_runtime_dependency('yardstick')

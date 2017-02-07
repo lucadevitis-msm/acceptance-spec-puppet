@@ -16,7 +16,6 @@ PATH
       puppetlabs_spec_helper
       rake (~> 10.0)
       rubocop
-      ruby-augeas
       safe_yaml
       wirble
       yardstick
@@ -387,6 +386,7 @@ PLATFORMS
 
 DEPENDENCIES
   msmfg_spec_helper!
+  ruby-augeas!
 
 BUNDLED WITH
    1.14.3
