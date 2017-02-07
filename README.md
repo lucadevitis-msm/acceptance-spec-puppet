@@ -13,10 +13,10 @@ Recommended:
 * `rvm`/`rbenv` (to handle multiple local version of `ruby`)
 * `docker` (to run acceptance tests)
 
-Windows *WARNINGS*:
+Windows **WARNINGS**:
 * Be sure you install
   [DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit)
-* `ruby-augeas` will *NOT* install
+* `ruby-augeas` will **NOT** install
 
 Steps:
 ```sh
