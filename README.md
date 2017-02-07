@@ -7,9 +7,11 @@ Requires:
 * `git` (you don't say!)
 * `ruby` (>= 2.1.5)
 * `bundler` (to handle dependencies)
+
 Recommended:
 * `rvm`/`rbenv` (to handle multiple local version of `ruby`)
 * `docker` (to run acceptance tests)
+
 Steps:
 ```sh
 git clone https://github.com/lucadevitis-msm/msmfg_spec_helper
