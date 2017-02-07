@@ -1,6 +1,7 @@
 # `msmfg_spec_helper`
 ## What is it?
-It a ruby gem whose purpose is to make it easyer to develop puppet modules complieant to MSMFG guidelines.
+It a ruby gem whose purpose is to make it easyer to develop puppet modules
+complieant to MSMFG guidelines. Other features are [coming soon](TODO.md)
 
 ## How do I install it?
 Requires:
