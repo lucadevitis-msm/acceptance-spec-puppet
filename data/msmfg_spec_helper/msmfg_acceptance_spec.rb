@@ -82,6 +82,6 @@ describe "Puppet module \"#{full_module_name}\"" do
 
   describe file('Rakefile') do
     it { is_expected.to be_file }
-    it { is_expected.to contain(/require .msmfg_spec_helper\/rake_tasks\/puppet_module./) }
+    it { is_expected.to contain(%r{require .msmfg_spec_helper/rake_tasks/puppet_module.}) }
   end
 end
