@@ -212,7 +212,7 @@ GEM
       fast_gettext (~> 1.1.0)
       gettext (>= 3.0.2)
       locale
-    google-api-client (0.9.27)
+    google-api-client (0.9.28)
       addressable (~> 2.3)
       googleauth (~> 0.5)
       httpclient (~> 2.7)
@@ -351,7 +351,7 @@ GEM
     simplecov-html (0.10.0)
     slop (3.6.0)
     spdx-licenses (1.1.0)
-    specinfra (2.66.8)
+    specinfra (2.66.9)
       net-scp
       net-ssh (>= 2.7, < 5.0)
       net-telnet

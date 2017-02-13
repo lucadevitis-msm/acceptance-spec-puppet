@@ -1,4 +1,5 @@
 require 'rake/file_list'
+require 'msmfg_spec_helper/logger'
 
 # Collection of classes and functions to help writing MSMFG puppet modules
 # files and tasks.

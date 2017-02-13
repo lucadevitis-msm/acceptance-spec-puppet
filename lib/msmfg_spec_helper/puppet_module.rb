@@ -1,6 +1,7 @@
 require 'github_api'
 require 'json'
 require 'msmfg_spec_helper/version'
+require 'msmfg_spec_helper/logger'
 require 'puppet_forge'
 require 'yaml'
 
@@ -35,7 +36,10 @@ module MSMFGSpecHelper
         # Automatically generates DSL methods for the `Modulefile`
         METADATA.keys.reject { |m| m == :dependencies }.each do |name|
           define_method(name) do |value = nil|
-            instance_variable_set("@#{name}", value) if value
+            if value
+              logger.debug("Modulefile: #{name}: #{value}")
+              instance_variable_set("@#{name}", value)
+            end
             instance_variable_get("@#{name}")
           end
         end
@@ -46,11 +50,13 @@ module MSMFGSpecHelper
         #   dependency attributes
         #
         # @return [Array]
-        #   list of dependencies
+        #   added dependency
         #
         # @api private
         def dependency(*args)
+          logger.debug("Modulefile: dependency: #{args.join(', ')}")
           @dependencies << args
+          args
         end
 
         # Read Modulefile
@@ -69,9 +75,16 @@ module MSMFGSpecHelper
           # - This class is not meant to deal malicious configurations
           # - Modulefile content should have already been reviewed by members
           #   of the staff
-          instance_eval File.read(modulefile) if File.exist? modulefile
+          if File.exist? modulefile
+            logger.notice('Modulefile: reading...')
+            instance_eval File.read(modulefile)
+          end
         end
       end
+    end
+
+    class Version < String
+      nil
     end
 
     # Returns metadata.json content or {}
@@ -84,7 +97,14 @@ module MSMFGSpecHelper
     #
     # @api private
     def metadata_json(path = 'metadata.json')
-      @metadata_json ||= (JSON.parse(File.read(path)) if File.exist? path) || {}
+      unless @metadata_json
+        logger.notice("metadata.json: reading (#{path})")
+        @metadata_json ||= JSON.parse(File.read(path))
+      end
+      @metadata_json
+    rescue Errno::ENOENT
+      logger.notice("metadata.json: not found (#{path})")
+      @metadata_json = {}
     end
 
     # What an MSMFG puppet module should look like on the filesystem
@@ -103,17 +123,25 @@ module MSMFGSpecHelper
     #
     # @api public
     def initialize(name = nil)
-      PuppetForge.user_agent = "msmfg_spec_helerp/#{MSMFGSpecHelper::Version}"
-      Github.configure do |conf|
-        # conf.basic_auth = 'lucadevitis-msm:3ef2806558760861fc5c6f86f984437b2d1538a4'
-        conf.basic_auth = "#{ENV['GITHUB_USER']}:#{ENV['GITHUB_PASSWORD']}"
-      end
-      Modulefile.read
       @name = name ||
               Modulefile.name ||
               metadata_json['name'] ||
               ENV['MODULE_NAME'] ||
               File.basename(Dir.pwd)
+      logger.debug("PuppetModule: name: #{@name}")
+
+      PuppetForge.user_agent = "msmfg_spec_helper/#{MSMFGSpecHelper::Version}"
+      PuppetForge.host = ENV['PUPPETFORGE_ENDPOINT'] if ENV['PUPPETFORGE_ENDPOINT']
+      logger.debug("PuppetModule: PuppetForge: #{PuppetForge.host}")
+
+      Github.configure do |conf|
+        conf.basic_auth = "#{ENV['GITHUB_USER']}:#{ENV['GITHUB_PASSWORD']}"
+        conf.endpoint = ENV['GITHUB_ENDPOINT'] if ENV['GITHUB_ENDPOINT']
+        conf.site = "https://#{ENV['GITHUB_FQDN']}" if ENV['GITHUB_FQDN']
+        logger.debug("PuppetModule: GitHub: #{conf.endpoint}")
+      end
+
+      Modulefile.read
     end
 
     # Returns the module name
@@ -144,8 +172,9 @@ module MSMFGSpecHelper
       unless @metadata
         default_author = 'DevOps Core <devops-core at moneysupermarket.com>'
         dependencies = Modulefile.dependencies.reject do |name, _|
+          # We can't list msmfg puppet modules as dependency (yet)
           name =~ %r{^MSMFG/puppet-}
-        end.collect do |name, version_requirement|
+        end.collect do |name, version_requirement, _|
           { 'name' => name, 'version_requirement' => version_requirement }
         end
 
@@ -179,44 +208,54 @@ module MSMFGSpecHelper
     # @api private
     def fixtures
       unless @fixtures
+        msmfg_repo = "https://#{ENV['GITHUB_USER']}:#{ENV['GITHUB_PASSWORD']}@#{ENV['GITHUB_FQDN']}/MSMFG"
         forge_modules = {}
         repositories = {}
+
         Modulefile.dependencies.each do |name, requirement|
+          logger.notice("fixtures: looking for #{name} #{requirement}")
+
           provider_name, module_name = name.split('/')
+
           if provider_name == 'MSMFG'
+            # Let's query GitHub
             releases = Github::Client::Repos::Releases.new
+
             ref = releases.list('MSMFG', module_name).collect do |release|
-              # Collects all `tag_name`s as versions
-              release.tag_name
-            end.select do |version|
-              # Chose only tags that are versions
-              Gem::Version.correct?(version) &&
-              # Tells if `version` matches `requirement`
+              # If it's not a proper version, collect nil
+              Gem::Version.new(release.tag_name) rescue nil
+            end.compact.select do |version|
+              # Tells if `version` matches `requirement`, don't need gem name
               Gem::Dependency.new('', requirement).match?('', version)
-            end.sort do |a, b|
-              # Comparison function for the sort method. Could use `max`
-              # instead of `sort` and `last`, but I think this is easyer to
-              # read.
-              Gem::Version.new(a) <=> Gem::Version.new(b)
-            end.last
-            repo = "https://github.com/MSMFG/#{module_name}.git"
+            end.max
+
+            repo = "#{msmfg_repo}/#{module_name}.git"
             module_name.sub!(/puppet-/,'')
-            repositories[module_name] = { 'repo' => repo, 'ref' => ref }
+
+            if ref
+              logger.notice("fixtures: using #{name} #{ref} (#{requirement})")
+              repositories[module_name] = { 'repo' => repo, 'ref' => ref }
+            else
+              logger.error("fixtures: no suitable release for #{name} #{requirement}")
+            end
           else
-            ref = PuppetForge::Module.find(name).releases.collect do |release|
-              release.version
-            end.select do |version|
-              # Chose only tags that are versions
-              Gem::Version.correct?(version) &&
-              # Tells if `version` matches `requirement`
+            # Let's query the PuppetForge
+            releases = PuppetForge::Module.find(name).releases
+
+            ref = releases.collect do |release|
+              # If it's not a proper version, collect nil
+              Gem::Version.new(release.version) rescue nil
+            end.compact.select do |version|
+              # Tells if `version` matches `requirement`, don't need gem name
               Gem::Dependency.new('', requirement).match?('', version)
-            end.sort do |a, b|
-              # Comparison function for the sort method. Could use `max`
-              # instead of `sort` and `last`, but I think this is easyer to
-              # read.
-              Gem::Version.new(a) <=> Gem::Version.new(b)
-            end.last
-            forge_modules[module_name] = { 'repo' => name, 'ref' => ref }
+            end.max
+
+            if ref
+              logger.notice("fixtures: using #{name} #{ref} (#{requirement})")
+              forge_modules[module_name] = { 'repo' => name, 'ref' => ref }
+            else
+              logger.error("fixtures: no suitable release for #{name} #{requirement}")
+            end
           end
         end
         @fixture = {

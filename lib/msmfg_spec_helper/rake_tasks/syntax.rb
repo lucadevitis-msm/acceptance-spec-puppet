@@ -1,5 +1,6 @@
 require 'metadata_json_lint'
 require 'msmfg_spec_helper'
+require 'msmfg_spec_helper/logger'
 require 'puppet-syntax'
 require 'rake'
 
@@ -9,7 +10,7 @@ namespace :syntax do
 
   desc 'Check ruby files syntax (ruby -c)'
   task :ruby do
-    puts 'Checking ruby files syntax...'
+    logger.notice('Checking ruby files syntax...')
     ruby_files.include('**/Puppetfile.*').each do |rb|
       null = if RUBY_PLATFORM =~ /cygwin|mswin|mingw|bccwin|wince|emx/
                'NUL'
@@ -22,36 +23,48 @@ namespace :syntax do
 
   desc 'Check metadata.json syntax (metadata-json-lint)'
   task :metadata_json do
-    puts 'Checking metadata.json syntax...'
+    logger.notice('Checking metadata.json syntax...')
     # MetadataJsonLint.options[:strict_license] = false
     MetadataJsonLint.parse('metadata.json') if ::File.file? 'metadata.json'
   end
 
   desc 'Check puppet manifests syntax...'
   task :manifests do
-    puts 'Checking puppet manifests syntax...'
+    logger.notice('Checking puppet manifests syntax...')
     output, has_errors = PuppetSyntax::Manifests.new.check(manifests)
-    puts output.join("\n") unless output.empty?
-    abort if has_errors || output.any?
+    if output.any?
+      if has_errors
+        logger.error(output.join("\n"))
+        abort
+      else
+        logger.warn(output.join("\n"))
+      end
+    end
   end
 
   desc 'Check templates syntax'
   task :templates do
-    puts 'Checking templates syntax...'
+    logger.notice('Checking templates syntax...')
     errors = PuppetSyntax::Templates.new.check(templates)
-    abort errors.join("\n") unless errors.empty?
+    if errors.any?
+      logger.error(errors.join("\n"))
+      abort
+    end
   end
 
   desc 'Check hieradata syntax'
   task :hieradata do
-    puts 'Checking hieradata files syntax...'
+    logger.notice('Checking hieradata files syntax...')
     errors = PuppetSyntax::Hiera.new.check(hieradata)
-    abort errors.join("\n") unless errors.empty?
+    if errors.any?
+      logger.erorr(errors.join("\n"))
+      abort
+    end
   end
 
   desc 'Check fragment syntax'
   task :fragments do
-    puts 'Checking fragments files syntax...'
+    logger.notice('Checking fragments files syntax...')
     errors = fragments.select do |fragment|
       begin
         YAML.safe_load(fragment) && nil
@@ -59,7 +72,10 @@ namespace :syntax do
         "ERROR: Failed to parse #{fragment}: #{e}"
       end
     end
-    abort errors.compact.join("\n") if errors.any?
+    if errors.any?
+      logger.error(errors.compact.join("\n"))
+      abort
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength

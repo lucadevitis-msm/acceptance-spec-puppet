@@ -1,4 +1,5 @@
 require 'msmfg_spec_helper'
+require 'msmfg_spec_helper/logger'
 require 'puppet-lint/tasks/puppet-lint'
 
 Rake::Task[:lint].clear
@@ -9,7 +10,7 @@ task :puppet_style do
   PuppetLint::OptParser.build.load(File.join(DATADIR, 'puppet-lint.rc'))
 
   linter = PuppetLint.new
-  puts 'Running puppet-lint...'
+  logger.notice('Running puppet-lint...')
   manifests.each do |manifest|
     linter.file = manifest
     linter.run

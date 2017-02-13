@@ -15,7 +15,7 @@ PUPPET_MODULE.files.each do |item|
 
   desc "Creates #{item[:name]}"
   file item[:name] => requires do |file|
-    puts "Creating #{item[:name]} ..."
+    MSMFGSpecHelper::logger.info("Creating #{item[:name]} ...")
     item[:create].call(file)
   end
 end
