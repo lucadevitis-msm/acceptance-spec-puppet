@@ -8,4 +8,4 @@ require 'bundler/gem_tasks'
 # end
 
 desc 'Run syntax check, module spec and linters'
-task :validate, [:module_path] => [:syntax, :ruby_style, :docs_coverage]
+task :validate, [:module_path] => [:syntax, :ruby_style]
