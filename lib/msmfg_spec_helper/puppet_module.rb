@@ -81,8 +81,9 @@ module MSMFGSpecHelper
           # - This class is not meant to deal malicious configurations
           # - Modulefile content should have already been reviewed by members
           #   of the staff
-          logger.info("Modulefile: reading #{modulefile}")
+          logger.debug("Modulefile: reading #{modulefile}")
           instance_eval File.read(modulefile)
+          logger.info("Modulefile: #{modulefile} loaded succefully")
         rescue Errno::ENOENT
           logger.info("Modulefile: #{modulefile} not found")
         end
@@ -100,8 +101,9 @@ module MSMFGSpecHelper
     # @api private
     def metadata_json(path = 'metadata.json')
       if @metadata_json.nil?
-        logger.info("metadata_json: reading #{path}")
+        logger.debug("metadata_json: reading #{path}")
         @metadata_json ||= JSON.parse(File.read(path))
+        logger.info("metadata_json: #{path} loaded succefully")
       end
       @metadata_json
     rescue Errno::ENOENT
@@ -178,7 +180,7 @@ module MSMFGSpecHelper
       if @metadata.nil?
         default_author = 'DevOps Core <devops-core at moneysupermarket.com>'
 
-        logger.debug('PuppetModule: metadata: calculating dependencies')
+        logger.debug('PuppetModule: metadata: calculating dependencies ...')
         dependencies = Modulefile.dependencies.reject do |name, _|
           # We can't list msmfg puppet modules as dependency (yet)
           name =~ %r{^MSMFG/puppet-}
@@ -187,7 +189,7 @@ module MSMFGSpecHelper
           { 'name' => name, 'version_requirement' => requirement }
         end
 
-        logger.debug('PuppetModule: metadata: generating metadata')
+        logger.debug('PuppetModule: metadata: generating metadata ...')
         @metadata = {
           'name' => name,
           'version' => Modulefile.version || '0.0.0',
@@ -222,23 +224,23 @@ module MSMFGSpecHelper
         repositories = {}
 
         Modulefile.dependencies.each do |name, requirement|
-          logger.info("PuppetModule: fixtures: looking for #{name} #{requirement}")
+          logger.debug("PuppetModule: fixtures: looking for #{name} #{requirement}")
 
           provider_name, module_name = name.split('/')
 
           if provider_name == 'MSMFG'
             candidate = find_repository(module_name, requirement)
-            logger.info("PuppetModule: fixtures: using #{candidate.inspect}")
+            logger.debug("PuppetModule: fixtures: using #{candidate.inspect}")
             module_name.sub!(/^puppet-/, '')
             repositories[module_name] = candidate if candidate
           else
             candidate = find_forge_module(name, requirement)
-            logger.info("PuppetModule: fixtures: using #{candidate.inspect}")
+            logger.debug("PuppetModule: fixtures: using #{candidate.inspect}")
             forge_modules[module_name] = candidate if candidate
           end
         end
 
-        logger.debug('PuppetModule: fixtures: generating fixtures')
+        logger.debug('PuppetModule: fixtures: generating fixtures ...')
         @fixtures = {
           'fixtures' => {
             'symlinks' => {
@@ -316,7 +318,7 @@ module MSMFGSpecHelper
     #
     # @api private
     def nodeset
-      logger.debug("PuppetModule: nodeset: generating beaker's nodeset")
+      logger.debug("PuppetModule: nodeset: generating beaker's nodeset ...")
       {
         'HOSTS' => {
           'default' => {
@@ -342,7 +344,7 @@ module MSMFGSpecHelper
     #
     # @api private
     def class_spec
-      logger.debug('PuppetModule: class_spec: generating class specs')
+      logger.debug('PuppetModule: class_spec: generating class specs ...')
       <<EOS.freeze
 require 'spec_helper'
 
@@ -360,7 +362,7 @@ EOS
     #
     # @api private
     def acceptance_spec
-      logger.debug('PuppetModule: acceptance_spec: generating acceptance specs')
+      logger.debug('PuppetModule: acceptance_spec: generating acceptance specs ...')
       <<EOS.freeze
 require 'spec_helper_acceptance'
 
@@ -434,7 +436,6 @@ EOS
         {
           name: 'metadata.json',
           create: proc do |file|
-            logger.info("Creating #{file.name} ...")
             File.write(file.name, JSON.pretty_generate(metadata))
           end
         },
@@ -443,14 +444,12 @@ EOS
           create: proc do |file|
             manifest = "# Initial #{class_name} documentation\n"
             manifest << "class #{class_name} {}\n"
-            logger.info("Creating #{file.name} ...")
             File.write(file.name, manifest)
           end
         },
         {
           name: '.fixtures.yaml',
           create: proc do |file|
-            logger.info("Creating #{file.name} ...")
             File.write(file.name, YAML.dump(fixtures))
           end
         },
@@ -458,7 +457,6 @@ EOS
           name: 'Rakefile',
           create: proc do |file|
             lib = 'msmfg_spec_helper/rake_tasks/puppet_module'
-            logger.info("Creating #{file.name} ...")
             File.write(file.name, "require '#{lib}'\n")
           end
         },
@@ -466,7 +464,6 @@ EOS
           name: 'Gemfile',
           create: proc do |file|
             gemfile = "source 'https://rubygems.org'\ngem 'msmfg_spec_helper'\n"
-            logger.info("Creating #{file.name} ...")
             File.write(file.name, gemfile)
           end
         },
@@ -478,7 +475,6 @@ EOS
             require 'bundler/cli/install'
             require 'bundler/ui'
             require 'bundler/ui/shell'
-            logger.info("Generating #{file.name} (from #{file.source}) ...")
             ENV['BUNDLE_GEMFILE'] = file.source
             Bundler.reset!
             Bundler.ui = Bundler::UI::Shell.new
@@ -489,14 +485,12 @@ EOS
           name: 'spec/spec_helper.rb',
           create: proc do |file|
             lib = 'msmfg_spec_helper/puppet_module/spec_helper'
-            logger.info("Creating #{file.name} ...")
             File.write(file.name, "require '#{lib}'\n")
           end
         },
         {
           name: 'spec/acceptance/nodesets/default.yml',
           create: proc do |file|
-            logger.info("Creating #{file.name} ...")
             File.write(file.name, YAML.dump(nodeset))
           end
         },
@@ -504,7 +498,6 @@ EOS
           name: 'spec/spec_helper_acceptance.rb',
           create: proc do |file|
             lib = 'msmfg_spec_helper/puppet_module/spec_helper_acceptance'
-            logger.info("Creating #{file.name} ...")
             File.write(file.name, "require '#{lib}'\n")
           end
         },
@@ -512,7 +505,6 @@ EOS
           name: "spec/classes/#{class_name}_spec.rb",
           requires: ['spec/spec_helper.rb', '.fixtures.yaml'],
           create: proc do |file|
-            logger.info("Creating #{file.name} ...")
             File.write(file.name, class_spec)
           end
         },
@@ -521,7 +513,6 @@ EOS
           requires: ['spec/spec_helper_acceptance.rb',
                      'spec/acceptance/nodesets/default.yml'],
           create: proc do |file|
-            logger.info("Creating #{file.name} ...")
             File.write(file.name, acceptance_spec)
           end
         }
