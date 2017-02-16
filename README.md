@@ -29,21 +29,28 @@ bundle exec rake validate install
 
 ## What does it provide?
 
-1. [`msmfg-puppet-module-create`](#msmfg-puppet-module-create)
+1. [Logging support](#logging-support)
+2. [`msmfg-puppet-module-create`](#msmfg-puppet-module-create)
    1. [Can create an entire module skeleton from scratch](#can-create-an-entire-module-skeleton-from-scratch)
    2. [Can add missing files to an already existsing module](#can-add-missing-files-to-an-already-existsing-module)
    3. [Will add basic catalogue and acceptance specs](#will-add-basic-catalogue-and-acceptance-specs)
-2. [`msmfg-puppet-module-validate`](#msmfg-puppet-module-validate)
+3. [`msmfg-puppet-module-validate`](#msmfg-puppet-module-validate)
    1. [Can validate the module](#can-validate-the-module)
    2. [Check syntax](#check-syntax) (anything)
    3. [Check ruby style](#check-ruby-style)
    4. [Check manifests style](#check-manifests-style)
    5. Check documentation coverage (WIP)
    6. [Runs MSMFG acceptance spes for Puppet Modules](#runs-msmfg-acceptance-spes-for-puppet-modules)
-3. [`rake` tasks](#rake-tasks)
+4. [`rake` tasks](#rake-tasks)
    1. You can cherry-pick the tasks and [use local Rakefile](#use-local-rakefile)
-4. [No-brainer gems bundle](#no-brainer-gems bundle)
-5. [No-brainer spec helpers](#no-brainer-spec-helpers)
+5. [No-brainer gems bundle](#no-brainer-gems bundle)
+6. [No-brainer spec helpers](#no-brainer-spec-helpers)
+
+## Logging support
+Each `rake` task in this library supports logging, thanks to Ruby's `::Logger`
+module. You can configure the logging behaviour with environment variables
+`LOG_FILE` and `LOG_THRESHOLD`. Refer to internal API documentation for more
+information.
 
 ## `msmfg-puppet-module-create`
 
