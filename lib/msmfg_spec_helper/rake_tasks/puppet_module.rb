@@ -60,13 +60,8 @@ require 'msmfg_spec_helper/rake_tasks/puppet_module/spec'
 require 'msmfg_spec_helper/rake_tasks/puppet_module/validate'
 require 'rake/clean'
 
-# `:clean` task is supposed to clean intermediate/temporary files
-# `CLEAN` array tells which files to remove on `clean` task.
-CLEAN.include %w(.yardoc coverage log junit)
-
-# `:clobber` task is uspposed to clean final products. Requires `:clean` task.
-# `CLOBBER` array tells which files to remove on `clobber` task.
-CLOBBER.include %(doc pkg)
+CLEAN.include %w(.yardoc coverage log junit) # :nodoc:
+CLOBBER.include %(doc pkg) # :nodoc:
 
 task :build do
   patterns = PuppetStrings::DEFAULT_SEARCH_PATTERNS

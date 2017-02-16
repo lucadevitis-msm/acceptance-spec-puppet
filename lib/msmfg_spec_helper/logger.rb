@@ -1,83 +1,80 @@
-module MSMFGSpecHelper
+require 'msmfg_spec_helper'
+require 'logger'
+
+module MSMFGSpecHelper # :nodoc:
   # Prepares and returns a customized `::Logger` instance.
+  #
+  # @example
+  #   MSMFGSpecHelper::Logger.progname = 'msmfg-puppet-module-validate'
+  #   MSMFGSpecHelper::Logger.level = ::Logger::INFO
+  #
+  #   MSMFGSpecHelper.logger.info 'Something is going on...'
   module Logger
     class << self
-
-      # Sets `progname` attribute. Must be used before instance is created
-      #
-      # @param [String] value
-      #   string to use as `progname` in `::Logger` messages
-      #
-      # @returns [String]
-      #   the value of `progname` attribute
-      #
-      # @example
-      #   MSMFGSpecHelper::Logger.progname = 'MyProg'
-      #
-      # @api public
-      def progname=(value)
-        @progname = value
-      end
-
-      # Returns `progname` attribute
+      # Returns the currently configured program name
       #
       # If it is not set, sets the value to "msmfg_spec_helper".
       #
-      # @returns [String]
-      #   the value of `progname` attribute
+      # @return [String]
+      #   the value of `@progname` attribute
       #
       # @api private
       def progname
         @progname ||= 'msmfg_spec_helper'
       end
 
-      # Sets `level` attribute. Must be used before instance is created
-      #
-      # @param [Integer] value
-      #   threshold `level` to use in `::Logger` messages
-      #
-      # @returns [Integer]
-      #   the value of `level` attribute
-      #
-      # @example
-      #   MSMFGSpecHelper::Logger.level = ::Logger::INFO
-      #
-      # @api private
-      def level=(value)
-        @level = value
-      end
+      attr_writer :progname
 
-      # Returns `level` attribute
+      # Returns the log level threshold
       #
-      # If it is not set, tryes to set the value using environment variable
-      # `LOG_THRESHOLD`. If no environment variable is set, use
+      # If it is not set, tries to use the value from `LOG_THRESHOLD`
+      # environment variable. If no environment variable is set, use
       # `::Logger::WARN`.
       #
-      # @returns [Integer]
-      #   the value of `level` attribute
+      # @return [Integer]
+      #   the value of `@level` attribute
       #
       # @raise [NameError]
       #   if environment variable does not match any known log level
       #
       # @api private
       def level
-        @level ||= Logger::Severity.get_const(ENV['LOG_THRESHOLD'] || 'WARN')
+        @level ||= ::Logger::Severity.const_get(ENV['LOG_THRESHOLD'] || 'WARN')
       end
 
+      attr_writer :level
+
+      # Returns the log file object
+      #
+      # If not set, tries to use the value from `LOG_FILE` environment
+      # variable. If no environment variable is set, use `STDOUT`.
+      #
+      # @return [File]
+      #   the value of `@log_file` attribute
+      #
+      # @api private
+      def log_file
+        if @log_file.nil?
+          @log_file = case ENV['LOG_FILE']
+                      when 'STDOUT', nil then STDOUT
+                      when 'STDERR' then STDERR
+                      else
+                        File.open(ENV['LOG_FILE'], File::WRONLY | File::APPEND)
+                      end
+        end
+        @log_file
+      end
+
+      attr_writer :log_file
 
       # Returns an already confured `::Logger` instance
       #
-      # @returns [::Logger]
+      # @return [::Logger]
       #   The logger insance
       #
-      # @example
-      #   require 'msmfg_spec_helper/logger'
-      #
-      #   include MSMFGSpecHelper
-      #
-      #   logger.info 'a useful log line'
+      # @api private
       def instance
-        unless @instance
+        if @instance.nil?
           @instance = ::Logger.new(log_file)
           @instance.level = level
           @instance.progname = progname
@@ -88,8 +85,23 @@ module MSMFGSpecHelper
     end
   end
 
-  # Returns the logger instance
-  def logger
-    MSMFGSpecHelper::Logger.instance
+  # Provides easy access to `::MSMFGSpecHelper::Logger.instance`
+  module LoggerMixIn
+    # Returns the logger instance
+    #
+    # @return [::Logger]
+    #   the configured `Logger` instance
+    #
+    # @example
+    #   require 'msmfg_spec_helper/logger'
+    #
+    #   include MSMFGSpecHelper
+    #
+    #   logger.info 'a useful log line'
+    #
+    # @api public
+    def logger
+      MSMFGSpecHelper::Logger.instance
+    end
   end
 end

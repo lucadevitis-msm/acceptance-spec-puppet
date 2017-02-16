@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 require 'github_api'
 require 'json'
 require 'msmfg_spec_helper/version'
@@ -6,14 +7,19 @@ require 'puppet_forge'
 require 'yaml'
 
 module MSMFGSpecHelper
+  # rubocop:disable Metrics/ClassLength
+
   # MSMFG puppet module class.
   # This class is mainly used to create the module's files.
-  # rubocop:disable Metrics/ClassLength
   class PuppetModule
+    include MSMFGSpecHelper::LoggerMixIn
+
     # Modulefile DSL parser
     # @api private
     class Modulefile
       class << self
+        include MSMFGSpecHelper::LoggerMixIn
+
         # `Modulefile` metadata and respective defaults
         METADATA = {
           name: nil,
@@ -46,7 +52,7 @@ module MSMFGSpecHelper
 
         # DSL method for `dependency` must be handled separatly
         #
-        # @param *args
+        # @param [Array<String>] args
         #   dependency attributes
         #
         # @return [Array]
@@ -75,16 +81,12 @@ module MSMFGSpecHelper
           # - This class is not meant to deal malicious configurations
           # - Modulefile content should have already been reviewed by members
           #   of the staff
-          if File.exist? modulefile
-            logger.notice('Modulefile: reading...')
-            instance_eval File.read(modulefile)
-          end
+          logger.info("Modulefile: reading #{modulefile}")
+          instance_eval File.read(modulefile)
+        rescue Errno::ENOENT
+          logger.info("Modulefile: #{modulefile} not found")
         end
       end
-    end
-
-    class Version < String
-      nil
     end
 
     # Returns metadata.json content or {}
@@ -93,17 +95,17 @@ module MSMFGSpecHelper
     #   metadata.json full path
     #
     # @return [Hash]
-    #   the content of metadata.json
+    #   content of metadata.json
     #
     # @api private
     def metadata_json(path = 'metadata.json')
-      unless @metadata_json
-        logger.notice("metadata.json: reading (#{path})")
+      if @metadata_json.nil?
+        logger.info("metadata_json: reading #{path}")
         @metadata_json ||= JSON.parse(File.read(path))
       end
       @metadata_json
     rescue Errno::ENOENT
-      logger.notice("metadata.json: not found (#{path})")
+      logger.info("metadata_json: #{path} not found")
       @metadata_json = {}
     end
 
@@ -128,17 +130,21 @@ module MSMFGSpecHelper
               metadata_json['name'] ||
               ENV['MODULE_NAME'] ||
               File.basename(Dir.pwd)
-      logger.debug("PuppetModule: name: #{@name}")
+      logger.debug("PuppetModule: name set to #{@name}")
 
-      PuppetForge.user_agent = "msmfg_spec_helper/#{MSMFGSpecHelper::Version}"
+      PuppetForge.user_agent = "msmfg_spec_helper/#{MSMFGSpecHelper::VERSION}"
       PuppetForge.host = ENV['PUPPETFORGE_ENDPOINT'] if ENV['PUPPETFORGE_ENDPOINT']
-      logger.debug("PuppetModule: PuppetForge: #{PuppetForge.host}")
+      logger.debug("PuppetModule: PuppetForge host set to #{PuppetForge.host}")
 
       Github.configure do |conf|
         conf.basic_auth = "#{ENV['GITHUB_USER']}:#{ENV['GITHUB_PASSWORD']}"
+        logger.debug("PuppetModule: Github basic_auth set to #{ENV['GITHUB_USER']}:i_did_not_start_yesterday")
+
         conf.endpoint = ENV['GITHUB_ENDPOINT'] if ENV['GITHUB_ENDPOINT']
+        logger.debug("PuppetModule: GitHub endpoint set to #{conf.endpoint}")
+
         conf.site = "https://#{ENV['GITHUB_FQDN']}" if ENV['GITHUB_FQDN']
-        logger.debug("PuppetModule: GitHub: #{conf.endpoint}")
+        logger.debug("PuppetModule: GitHub site set to #{conf.site}")
       end
 
       Modulefile.read
@@ -169,15 +175,19 @@ module MSMFGSpecHelper
     #
     # @api private
     def metadata
-      unless @metadata
+      if @metadata.nil?
         default_author = 'DevOps Core <devops-core at moneysupermarket.com>'
+
+        logger.debug('PuppetModule: metadata: calculating dependencies')
         dependencies = Modulefile.dependencies.reject do |name, _|
           # We can't list msmfg puppet modules as dependency (yet)
           name =~ %r{^MSMFG/puppet-}
-        end.collect do |name, version_requirement, _|
-          { 'name' => name, 'version_requirement' => version_requirement }
+        end
+        dependencies.collect! do |name, requirement, _|
+          { 'name' => name, 'version_requirement' => requirement }
         end
 
+        logger.debug('PuppetModule: metadata: generating metadata')
         @metadata = {
           'name' => name,
           'version' => Modulefile.version || '0.0.0',
@@ -207,58 +217,29 @@ module MSMFGSpecHelper
     #
     # @api private
     def fixtures
-      unless @fixtures
-        msmfg_repo = "https://#{ENV['GITHUB_USER']}:#{ENV['GITHUB_PASSWORD']}@#{ENV['GITHUB_FQDN']}/MSMFG"
+      if @fixtures.nil?
         forge_modules = {}
         repositories = {}
 
         Modulefile.dependencies.each do |name, requirement|
-          logger.notice("fixtures: looking for #{name} #{requirement}")
+          logger.info("PuppetModule: fixtures: looking for #{name} #{requirement}")
 
           provider_name, module_name = name.split('/')
 
           if provider_name == 'MSMFG'
-            # Let's query GitHub
-            releases = Github::Client::Repos::Releases.new
-
-            ref = releases.list('MSMFG', module_name).collect do |release|
-              # If it's not a proper version, collect nil
-              Gem::Version.new(release.tag_name) rescue nil
-            end.compact.select do |version|
-              # Tells if `version` matches `requirement`, don't need gem name
-              Gem::Dependency.new('', requirement).match?('', version)
-            end.max
-
-            repo = "#{msmfg_repo}/#{module_name}.git"
-            module_name.sub!(/puppet-/,'')
-
-            if ref
-              logger.notice("fixtures: using #{name} #{ref} (#{requirement})")
-              repositories[module_name] = { 'repo' => repo, 'ref' => ref }
-            else
-              logger.error("fixtures: no suitable release for #{name} #{requirement}")
-            end
+            candidate = find_repository(module_name, requirement)
+            logger.info("PuppetModule: fixtures: using #{candidate.inspect}")
+            module_name.sub!(/^puppet-/, '')
+            repositories[module_name] = candidate if candidate
           else
-            # Let's query the PuppetForge
-            releases = PuppetForge::Module.find(name).releases
-
-            ref = releases.collect do |release|
-              # If it's not a proper version, collect nil
-              Gem::Version.new(release.version) rescue nil
-            end.compact.select do |version|
-              # Tells if `version` matches `requirement`, don't need gem name
-              Gem::Dependency.new('', requirement).match?('', version)
-            end.max
-
-            if ref
-              logger.notice("fixtures: using #{name} #{ref} (#{requirement})")
-              forge_modules[module_name] = { 'repo' => name, 'ref' => ref }
-            else
-              logger.error("fixtures: no suitable release for #{name} #{requirement}")
-            end
+            candidate = find_forge_module(name, requirement)
+            logger.info("PuppetModule: fixtures: using #{candidate.inspect}")
+            forge_modules[module_name] = candidate if candidate
           end
         end
-        @fixture = {
+
+        logger.debug('PuppetModule: fixtures: generating fixtures')
+        @fixtures = {
           'fixtures' => {
             'symlinks' => {
               class_name => '#{source_dir}'
@@ -272,6 +253,62 @@ module MSMFGSpecHelper
       @fixtures
     end
 
+    # Looks for the latest repository release, matching requirements
+    #
+    # @param [String] module_name
+    #   the puppet module name (repo name)
+    #
+    # @param [String] requirement
+    #   the version requirement specification
+    #
+    # @return [Hash]
+    #   repository info, or `nil`
+    #
+    # @api private
+    def find_repository(module_name, requirement)
+      # Let's query GitHub
+      releases = Github::Client::Repos::Releases.new
+
+      # The following assumes that we use version strings as GitHub releases
+      candidates = releases.list('MSMFG', module_name).select do |release|
+        Gem::Version.correct?(release.tag_name) &&
+          Gem::Dependency.new('', requirement).match?('', release.tag_name)
+      end
+
+      repo = "#{Github.configuration.site}/MSMFG/#{module_name}.git"
+      ref = candidates.collect { |r| Gem::Version.new(r.tag_name) }.sort.last.to_s
+      ref && { 'repo' => repo, 'ref' => ref }
+    end
+
+    private :find_repository
+
+    # Looks for the latest puppet forge module, matching requirements
+    #
+    # @param [String] name
+    #   the full module name
+    #
+    # @param [String] requirement
+    #   the version requirement specification
+    #
+    # @return [Hash]
+    #   puppet forge module info, or `nil`
+    #
+    # @api private
+    def find_forge_module(name, requirement)
+      # Let's query the PuppetForge
+      releases = PuppetForge::Module.find(name.tr('/', '-')).releases
+
+      candidates = releases.select do |release|
+        Gem::Version.correct?(release.version) &&
+          Gem::Dependency.new('', requirement).match?('', release.version)
+      end
+
+      ref = candidates.map { |r| Gem::Version.new(r.version) }.sort.last.to_s
+      ref && { 'repo' => name, 'ref' => ref }
+    end
+
+    private :find_forge_module
+
     # Returns `beaker`'s default configuration
     #
     # @return [Hash]
@@ -279,6 +316,7 @@ module MSMFGSpecHelper
     #
     # @api private
     def nodeset
+      logger.debug("PuppetModule: nodeset: generating beaker's nodeset")
       {
         'HOSTS' => {
           'default' => {
@@ -304,6 +342,7 @@ module MSMFGSpecHelper
     #
     # @api private
     def class_spec
+      logger.debug('PuppetModule: class_spec: generating class specs')
       <<EOS.freeze
 require 'spec_helper'
 
@@ -321,6 +360,7 @@ EOS
     #
     # @api private
     def acceptance_spec
+      logger.debug('PuppetModule: acceptance_spec: generating acceptance specs')
       <<EOS.freeze
 require 'spec_helper_acceptance'
 
@@ -394,6 +434,7 @@ EOS
         {
           name: 'metadata.json',
           create: proc do |file|
+            logger.info("Creating #{file.name} ...")
             File.write(file.name, JSON.pretty_generate(metadata))
           end
         },
@@ -402,12 +443,14 @@ EOS
           create: proc do |file|
             manifest = "# Initial #{class_name} documentation\n"
             manifest << "class #{class_name} {}\n"
+            logger.info("Creating #{file.name} ...")
             File.write(file.name, manifest)
           end
         },
         {
           name: '.fixtures.yaml',
           create: proc do |file|
+            logger.info("Creating #{file.name} ...")
             File.write(file.name, YAML.dump(fixtures))
           end
         },
@@ -415,6 +458,7 @@ EOS
           name: 'Rakefile',
           create: proc do |file|
             lib = 'msmfg_spec_helper/rake_tasks/puppet_module'
+            logger.info("Creating #{file.name} ...")
             File.write(file.name, "require '#{lib}'\n")
           end
         },
@@ -422,6 +466,7 @@ EOS
           name: 'Gemfile',
           create: proc do |file|
             gemfile = "source 'https://rubygems.org'\ngem 'msmfg_spec_helper'\n"
+            logger.info("Creating #{file.name} ...")
             File.write(file.name, gemfile)
           end
         },
@@ -433,6 +478,7 @@ EOS
             require 'bundler/cli/install'
             require 'bundler/ui'
             require 'bundler/ui/shell'
+            logger.info("Generating #{file.name} (from #{file.source}) ...")
             ENV['BUNDLE_GEMFILE'] = file.source
             Bundler.reset!
             Bundler.ui = Bundler::UI::Shell.new
@@ -443,12 +489,14 @@ EOS
           name: 'spec/spec_helper.rb',
           create: proc do |file|
             lib = 'msmfg_spec_helper/puppet_module/spec_helper'
+            logger.info("Creating #{file.name} ...")
             File.write(file.name, "require '#{lib}'\n")
           end
         },
         {
           name: 'spec/acceptance/nodesets/default.yml',
           create: proc do |file|
+            logger.info("Creating #{file.name} ...")
             File.write(file.name, YAML.dump(nodeset))
           end
         },
@@ -456,6 +504,7 @@ EOS
           name: 'spec/spec_helper_acceptance.rb',
           create: proc do |file|
             lib = 'msmfg_spec_helper/puppet_module/spec_helper_acceptance'
+            logger.info("Creating #{file.name} ...")
             File.write(file.name, "require '#{lib}'\n")
           end
         },
@@ -463,6 +512,7 @@ EOS
           name: "spec/classes/#{class_name}_spec.rb",
           requires: ['spec/spec_helper.rb', '.fixtures.yaml'],
           create: proc do |file|
+            logger.info("Creating #{file.name} ...")
             File.write(file.name, class_spec)
           end
         },
@@ -471,6 +521,7 @@ EOS
           requires: ['spec/spec_helper_acceptance.rb',
                      'spec/acceptance/nodesets/default.yml'],
           create: proc do |file|
+            logger.info("Creating #{file.name} ...")
             File.write(file.name, acceptance_spec)
           end
         }

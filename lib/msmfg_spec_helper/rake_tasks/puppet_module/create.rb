@@ -1,10 +1,16 @@
 require 'msmfg_spec_helper/puppet_module'
 require 'rake'
 
-PUPPET_MODULE = MSMFGSpecHelper::PuppetModule.new.freeze
+PUPPET_MODULE = MSMFGSpecHelper::PuppetModule.new
 
 # Creates all the `directory` tasks
-PUPPET_MODULE.directories.each { |path| directory path }
+PUPPET_MODULE.directories.each do |path|
+  file path do |dir|
+    include MSMFGSpecHelper::LoggerMixIn
+    logger.info("Creating #{dir.name} ...")
+    mkdir_p dir.name, verbose: false
+  end
+end
 
 # Creates all the `file` tasks
 PUPPET_MODULE.files.each do |item|
@@ -15,7 +21,6 @@ PUPPET_MODULE.files.each do |item|
 
   desc "Creates #{item[:name]}"
   file item[:name] => requires do |file|
-    MSMFGSpecHelper::logger.info("Creating #{item[:name]} ...")
     item[:create].call(file)
   end
 end

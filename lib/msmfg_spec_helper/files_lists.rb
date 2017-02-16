@@ -1,8 +1,7 @@
 require 'rake/file_list'
 
-# Collection of classes and functions to help writing MSMFG puppet modules
-# files and tasks.
 module MSMFGSpecHelper
+  # Collection of functions about files lists
   module FilesListsMixIn
     # The location of data files
     DATADIR = (ENV['GEM_DATADIR'] || Gem.datadir('msmfg_spec_helper')).freeze
@@ -77,4 +76,3 @@ module MSMFGSpecHelper
     end
   end
 end
-

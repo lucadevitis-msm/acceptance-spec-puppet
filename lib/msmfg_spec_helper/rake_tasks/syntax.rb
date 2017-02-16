@@ -6,11 +6,12 @@ require 'rake'
 
 # rubocop:disable Metrics/BlockLength
 namespace :syntax do
-  include MSMFGSpecHelper
+  include MSMFGSpecHelper::FilesListsMixIn
+  include MSMFGSpecHelper::LoggerMixIn
 
   desc 'Check ruby files syntax (ruby -c)'
   task :ruby do
-    logger.notice('Checking ruby files syntax...')
+    logger.info('Checking ruby files syntax...')
     ruby_files.include('**/Puppetfile.*').each do |rb|
       null = if RUBY_PLATFORM =~ /cygwin|mswin|mingw|bccwin|wince|emx/
                'NUL'
@@ -23,14 +24,14 @@ namespace :syntax do
 
   desc 'Check metadata.json syntax (metadata-json-lint)'
   task :metadata_json do
-    logger.notice('Checking metadata.json syntax...')
+    logger.info('Checking metadata.json syntax...')
     # MetadataJsonLint.options[:strict_license] = false
     MetadataJsonLint.parse('metadata.json') if ::File.file? 'metadata.json'
   end
 
   desc 'Check puppet manifests syntax...'
   task :manifests do
-    logger.notice('Checking puppet manifests syntax...')
+    logger.info('Checking puppet manifests syntax...')
     output, has_errors = PuppetSyntax::Manifests.new.check(manifests)
     if output.any?
       if has_errors
@@ -44,7 +45,7 @@ namespace :syntax do
 
   desc 'Check templates syntax'
   task :templates do
-    logger.notice('Checking templates syntax...')
+    logger.info('Checking templates syntax...')
     errors = PuppetSyntax::Templates.new.check(templates)
     if errors.any?
       logger.error(errors.join("\n"))
@@ -54,7 +55,7 @@ namespace :syntax do
 
   desc 'Check hieradata syntax'
   task :hieradata do
-    logger.notice('Checking hieradata files syntax...')
+    logger.info('Checking hieradata files syntax...')
     errors = PuppetSyntax::Hiera.new.check(hieradata)
     if errors.any?
       logger.erorr(errors.join("\n"))
@@ -64,7 +65,7 @@ namespace :syntax do
 
   desc 'Check fragment syntax'
   task :fragments do
-    logger.notice('Checking fragments files syntax...')
+    logger.info('Checking fragments files syntax...')
     errors = fragments.select do |fragment|
       begin
         YAML.safe_load(fragment) && nil
