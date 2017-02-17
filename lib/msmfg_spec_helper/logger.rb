@@ -1,5 +1,5 @@
 require 'msmfg_spec_helper'
-require 'logger'
+require 'syslog/logger'
 
 module MSMFGSpecHelper # :nodoc:
   # Prepares and returns a customized `::Logger` instance.
@@ -27,9 +27,8 @@ module MSMFGSpecHelper # :nodoc:
 
       # Returns the log level threshold
       #
-      # If it is not set, tries to use the value from `LOG_THRESHOLD`
-      # environment variable. If no environment variable is set, use
-      # `::Logger::WARN`.
+      # If it is not set, tries to use the value from `LOG_LEVEL` environment
+      # variable. If no environment variable is set, use `::Logger::WARN`.
       #
       # @return [Integer]
       #   the value of `@level` attribute
@@ -39,33 +38,10 @@ module MSMFGSpecHelper # :nodoc:
       #
       # @api private
       def level
-        @level ||= ::Logger::Severity.const_get(ENV['LOG_THRESHOLD'] || 'WARN')
+        @level ||= ::Logger::Severity.const_get(ENV['LOG_LEVEL'] || 'WARN')
       end
 
       attr_writer :level
-
-      # Returns the log file object
-      #
-      # If not set, tries to use the value from `LOG_FILE` environment
-      # variable. If no environment variable is set, use `STDOUT`.
-      #
-      # @return [File]
-      #   the value of `@log_file` attribute
-      #
-      # @api private
-      def log_file
-        if @log_file.nil?
-          @log_file = case ENV['LOG_FILE']
-                      when 'STDOUT', nil then STDOUT
-                      when 'STDERR' then STDERR
-                      else
-                        File.open(ENV['LOG_FILE'], File::WRONLY | File::APPEND)
-                      end
-        end
-        @log_file
-      end
-
-      attr_writer :log_file
 
       # Returns an already confured `::Logger` instance
       #
@@ -75,9 +51,15 @@ module MSMFGSpecHelper # :nodoc:
       # @api private
       def instance
         if @instance.nil?
-          @instance = ::Logger.new(log_file)
+          options = ::Syslog::LOG_PID
+          options |= ::Syslog::LOG_PERROR if ENV['LOG_PERROR']
+          facility = ::Syslog::LOG_USER
+          ::Syslog::Logger.syslog = ::Syslog.open(progname, options, facility)
+          @instance = ::Syslog::Logger.new
           @instance.level = level
-          @instance.progname = progname
+          @instance.formatter = proc do |severity, datetime, _progname, msg|
+            "#{%w(D I W E F U)[severity]}: #{datetime.utc}: #{msg}\n"
+          end
           @instance.freeze
         end
         @instance

@@ -406,14 +406,9 @@ EOS
         'manifests',
         'files',
         'templates',
-        'lib',
-        'lib/puppet',
-        'lib/puppet/parser',
         'lib/puppet/parser/functions',
         'lib/puppet/provider',
         'lib/puppet/type',
-        'spec',
-        'spec/acceptance',
         'spec/acceptance/nodesets',
         'spec/classes',
         'spec/defines',
@@ -448,7 +443,7 @@ EOS
           end
         },
         {
-          name: '.fixtures.yaml',
+          name: '.fixtures.yml',
           create: proc do |file|
             File.write(file.name, YAML.dump(fixtures))
           end
@@ -482,20 +477,22 @@ EOS
           end
         },
         {
-          name: 'spec/spec_helper.rb',
-          create: proc do |file|
-            lib = 'msmfg_spec_helper/puppet_module/spec_helper'
-            File.write(file.name, "require '#{lib}'\n")
-          end
-        },
-        {
           name: 'spec/acceptance/nodesets/default.yml',
           create: proc do |file|
             File.write(file.name, YAML.dump(nodeset))
           end
         },
         {
+          name: 'spec/spec_helper.rb',
+          requires: ['spec/acceptance/nodesets/default.yml'],
+          create: proc do |file|
+            lib = 'msmfg_spec_helper/puppet_module/spec_helper'
+            File.write(file.name, "require '#{lib}'\n")
+          end
+        },
+        {
           name: 'spec/spec_helper_acceptance.rb',
+          requires: ['spec/acceptance/nodesets/default.yml'],
           create: proc do |file|
             lib = 'msmfg_spec_helper/puppet_module/spec_helper_acceptance'
             File.write(file.name, "require '#{lib}'\n")
@@ -503,7 +500,7 @@ EOS
         },
         {
           name: "spec/classes/#{class_name}_spec.rb",
-          requires: ['spec/spec_helper.rb', '.fixtures.yaml'],
+          requires: ['spec/spec_helper.rb', '.fixtures.yml'],
           create: proc do |file|
             File.write(file.name, class_spec)
           end

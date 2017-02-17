@@ -11,99 +11,90 @@ namespace :syntax do
 
   desc 'Check ruby files syntax (ruby -c)'
   task :ruby do
-    logger.info('rake_task: syntax_ruby: checking ruby files syntax ...')
     ruby_files.include('**/Puppetfile.*').each do |rb|
       null = if RUBY_PLATFORM =~ /cygwin|mswin|mingw|bccwin|wince|emx/
                'NUL'
              else
                '/dev/null'
              end
-      logger.debug("rake_task: syntax_ruby: checking #{rb} ...")
       begin
         sh "ruby -c #{rb} > #{null}", verbose: false
-      rescue
-        logger.fatal("rake_task: syntax_ruby: #{rb} syntax is wrong")
+      rescue => e
+        logger.fatal("rake_task: syntax_ruby: KO: #{rb}: #{e}")
         raise
       else
-        logger.debug("rake_task: syntax_ruby: #{rb} syntax is correct")
+        logger.info("rake_task: syntax_ruby: OK: #{rb}")
       end
     end
   end
 
   desc 'Check metadata.json syntax (metadata-json-lint)'
   task :metadata_json do
-    logger.info('rake_task: metadata_json: checking metadata.json syntax ...')
     # MetadataJsonLint.options[:strict_license] = false
     begin
       MetadataJsonLint.parse('metadata.json') if ::File.file? 'metadata.json'
-      logger.fatal("rake_task: metadata_json: metadata.json syntax is wrong")
+    rescue => e
+      logger.fatal("rake_task: syntax_metadata_json: KO: #{e}")
       raise
     else
-      logger.debug("rake_task: metadata_json: metadata.json syntax is correct")
+      logger.info('rake_task: syntax_metadata_json: OK')
     end
   end
 
   desc 'Check puppet manifests syntax'
   task :manifests do
-    logger.info('rake_task: metadata_json: checking puppet manifests syntax ...')
-    output, has_errors = PuppetSyntax::Manifests.new.check(manifests)
+    output, = PuppetSyntax::Manifests.new.check(manifests)
     if output.any?
-      if has_errors
-        logger.fatal('rake_task: metadata_json: manifests syntax is incorrect')
-        STDERR.puts(output.join("\n"))
-        abort
-      else
-        logger.warn('rake_task: metadata_json: manifests syntax have problems')
-        STDERR.puts(output.join("\n"))
+      output.each do |error|
+        logger.fatal("rake_task: syntax_manifests: KO: #{error}")
       end
+      abort
     else
-      logger.debug('rake_task: metadata_json: manifests syntax is correct')
+      logger.info('rake_task: syntax_manifests: OK')
     end
   end
 
   desc 'Check templates syntax'
   task :templates do
-    logger.info('rake_task: templates: checking templates syntax ...')
     errors = PuppetSyntax::Templates.new.check(templates)
     if errors.any?
-      logger.fatal('rake_task: templates: templates syntax is incorrect')
-      STDERR.puts(errors.join("\n"))
+      errors.each do |error|
+        logger.fatal("rake_task: syntax_templates: KO: #{error}")
+      end
       abort
     else
-      logger.debug('rake_task: templates: templates syntax is correct')
+      logger.info('rake_task: syntax_templates: OK')
     end
   end
 
   desc 'Check hieradata syntax'
   task :hieradata do
-    logger.info('rake_task: hieradata: checking hieradata files syntax ...')
-    errors = PuppetSyntax::Hiera.new.check(hieradata)
-    if errors.any?
-      logger.fatal('rake_task: hieradata: hieradata syntax is incorrect')
-      STDERR.puts(errors.join("\n"))
-      abort
-    else
-      logger.debug('rake_task: hieradata: hieradata syntax is correct')
+    errors = hieradata.select do |data|
+      begin
+        YAML.safe_load(data)
+        logger.info("rake_task: hieradata_fragments: OK: #{data}")
+        false
+      rescue => e
+        logger.fatal("rake_task: hieradata_fragments: KO: #{data}: #{e}")
+        true
+      end
     end
+    abort if errors.any?
   end
 
   desc 'Check fragment syntax'
   task :fragments do
-    logger.info('rake_task: fragments: checking fragments files syntax ...')
     errors = fragments.select do |fragment|
       begin
-        YAML.safe_load(fragment) && nil
+        YAML.safe_load(fragment)
+        logger.info("rake_task: syntax_fragments: OK: #{fragment}")
+        false
       rescue => e
-        "ERROR: Failed to parse #{fragment}: #{e}"
+        logger.fatal("rake_task: syntax_fragments: KO: #{fragment}: #{e}")
+        true
       end
     end
-    if errors.any?
-      logger.fatal('rake_task: fragments: fragments syntax is incorrect')
-      STDERR.puts(errors.compact.join("\n"))
-      abort
-    else
-      logger.debug('rake_task: fragments: fragments syntax is correct')
-    end
+    abort if errors.any?
   end
 end
 # rubocop:enable Metrics/BlockLength

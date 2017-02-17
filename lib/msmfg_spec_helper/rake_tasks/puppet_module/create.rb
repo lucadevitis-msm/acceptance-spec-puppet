@@ -7,8 +7,13 @@ PUPPET_MODULE = MSMFGSpecHelper::PuppetModule.new
 PUPPET_MODULE.directories.each do |path|
   file path do |dir|
     include MSMFGSpecHelper::LoggerMixIn
-    logger.info("Creating #{dir.name} ...")
-    mkdir_p dir.name, verbose: false
+    begin
+      mkdir_p dir.name, verbose: false
+      logger.info("rake_task: puppet_module: directory: OK: #{dir.name}")
+    rescue => e
+      logger.info("rake_task: puppet_module: directory: KO: #{dir.name}: #{e}")
+      raise
+    end
   end
 end
 
@@ -21,6 +26,13 @@ PUPPET_MODULE.files.each do |item|
 
   desc "Creates #{item[:name]}"
   file item[:name] => requires do |file|
-    item[:create].call(file)
+    include MSMFGSpecHelper::LoggerMixIn
+    begin
+      item[:create].call(file)
+      logger.info("rake_task: puppet_module: file: OK: #{file.name}")
+    rescue => e
+      logger.info("rake_task: puppet_module: file: KO: #{file.name}: #{e}")
+      raise
+    end
   end
 end

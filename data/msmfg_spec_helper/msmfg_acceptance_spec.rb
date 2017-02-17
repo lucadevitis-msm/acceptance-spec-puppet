@@ -1,5 +1,4 @@
 # rubocop:disable Metrics/LineLength
-# rubocop:disable Metrics/BlockLength
 require 'serverspec'
 require 'json'
 
@@ -53,7 +52,7 @@ describe "Puppet module \"#{full_module_name}\"" do
     end
   end
 
-  describe file('.fixtures.yaml') do
+  describe file('.fixtures.yml') do
     it { is_expected.to be_file }
     describe 'fixtures' do
       subject { described_class.content_as_yaml }
