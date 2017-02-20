@@ -9,20 +9,14 @@ namespace :syntax do
 
   desc 'Check ruby files syntax (ruby -c)'
   task :ruby do
-    ruby_files.include('**/Puppetfile.*').each do |rb|
+    ruby_files.each do |rb|
       logger = MSMFGSpecHelper::Logger.instance
-      null = if RUBY_PLATFORM =~ /cygwin|mswin|mingw|bccwin|wince|emx/
-               'NUL'
-             else
-               '/dev/null'
-             end
       begin
-        sh "ruby -c #{rb} > #{null}", verbose: false
+        sh "ruby -c #{rb} &> /dev/null", verbose: false
+        logger.info("task: syntax: ruby: OK: #{rb}")
       rescue => e
         logger.fatal("task: syntax: ruby: KO: #{rb}: #{e}")
         raise
-      else
-        logger.info("task: syntax: ruby: OK: #{rb}")
       end
     end
   end
@@ -30,75 +24,76 @@ namespace :syntax do
   desc 'Check metadata.json syntax (metadata-json-lint)'
   task :metadata_json do
     logger = MSMFGSpecHelper::Logger.instance
-    # MetadataJsonLint.options[:strict_license] = false
     begin
-      MetadataJsonLint.parse('metadata.json') if ::File.file? 'metadata.json'
+      if ::File.file? 'metadata.json'
+        MetadataJsonLint.options[:strict_dependencies] = true
+        MetadataJsonLint.parse('metadata.json')
+        logger.info('task: syntax: metadata_json: OK')
+      end
     rescue => e
       logger.fatal("task: syntax: metadata_json: KO: #{e}")
       raise
-    else
-      logger.info('task: syntax: metadata_json: OK')
     end
   end
 
   desc 'Check puppet manifests syntax'
   task :manifests do
     logger = MSMFGSpecHelper::Logger.instance
-    output, = PuppetSyntax::Manifests.new.check(manifests)
-    if output.any?
-      output.each do |error|
-        logger.fatal("task: syntax: manifests: KO: #{error}")
+    syntax = PuppetSyntax::Manifests.new
+    manifests.each do |manifest|
+      errors, = syntax.check([manifest])
+      if errors.any?
+        errors.each do |e|
+          logger.fatal("task: syntax: manifests: KO: #{manifest}: #{e}")
+        end
+        abort
       end
-      abort
-    else
-      logger.info('task: syntax: manifests: OK')
+      logger.info("task: syntax: manifests: OK: #{manifest}")
     end
   end
 
   desc 'Check templates syntax'
   task :templates do
     logger = MSMFGSpecHelper::Logger.instance
-    errors = PuppetSyntax::Templates.new.check(templates)
-    if errors.any?
-      errors.each do |error|
-        logger.fatal("task: syntax: templates: KO: #{error}")
+    syntax = PuppetSyntax::Templates.new
+    templates.each do |template|
+      errors = syntax.check([template])
+      if errors.any?
+        errors.each do |e|
+          logger.fatal("task: syntax: templates: KO: #{template}: #{e}")
+        end
+        abort
       end
-      abort
-    else
-      logger.info('task: syntax: templates: OK')
+      logger.info("task: syntax: templates: OK: #{template}")
     end
   end
 
   desc 'Check hieradata syntax'
   task :hieradata do
     logger = MSMFGSpecHelper::Logger.instance
-    errors = hieradata.select do |data|
+    hieradata.each do |data|
       begin
         YAML.safe_load(data)
-        logger.info("task: syntax: fragments: OK: #{data}")
-        false
+        logger.info("task: syntax: hieradata: OK: #{data}")
       rescue => e
-        logger.fatal("task: syntax: fragments: KO: #{data}: #{e}")
-        true
+        logger.fatal("task: syntax: hieradata: KO: #{data}: #{e}")
+        raise
       end
     end
-    abort if errors.any?
   end
 
   desc 'Check fragment syntax'
   task :fragments do
     logger = MSMFGSpecHelper::Logger.instance
-    errors = fragments.select do |fragment|
+    fragments.each do |fragment|
       begin
         YAML.safe_load(fragment)
         logger.info("task: syntax: fragments: OK: #{fragment}")
-        false
       rescue => e
         logger.fatal("task: syntax: fragments: KO: #{fragment}: #{e}")
-        true
+        raise
       end
     end
-    abort if errors.any?
   end
 end
 # rubocop:enable Metrics/BlockLength

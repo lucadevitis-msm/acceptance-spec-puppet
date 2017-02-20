@@ -14,9 +14,9 @@ task :puppet_style do
     linter.run
     linter.print_problems
     if linter.errors? || linter.warnings?
-      logger.fatal("task: puppet_style: KO: #{manifest}")
+      logger.fatal("task: style: puppet: KO: #{manifest}: #{linter.problems}")
       abort
     end
-    logger.debug("task: puppet_style: OK: #{manifest}")
+    logger.debug("task: style: puppet: OK: #{manifest}")
   end
 end
