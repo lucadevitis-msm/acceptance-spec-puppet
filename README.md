@@ -21,6 +21,7 @@ complieant to MSMFG guidelines. Other features are [coming soon](TODO.md)
 
 ### Steps
 ```sh
+gem install bundler
 git clone https://github.com/lucadevitis-msm/msmfg_spec_helper
 cd msmfg_spec_helper
 bundle install
@@ -41,18 +42,23 @@ bundle exec rake validate install
    4. [Check manifests style](#check-manifests-style)
    5. Check documentation coverage (WIP)
    6. [Runs MSMFG acceptance spes for Puppet Modules](#runs-msmfg-acceptance-spes-for-puppet-modules)
-4. [`rake` tasks](#rake-tasks)
-   1. You can cherry-pick the tasks and [use local Rakefile](#use-local-rakefile)
-5. [No-brainer gems bundle](#no-brainer-gems bundle)
+4. You can cherry-pick the tasks and [use local Rakefile](#no-brainer-rakefile)
+5. [No-brainer gems bundle](#no-brainer-gems-bundle)
 6. [No-brainer spec helpers](#no-brainer-spec-helpers)
 
 ## Logging support
-Each `rake` task in this library supports logging, thanks to Ruby's `::Logger`
-module. You can configure the logging behaviour with environment variables
-`LOG_FILE` and `LOG_THRESHOLD`. Refer to internal API documentation for more
-information.
+Each `rake` task in this library supports logging, thanks to Ruby's
+`::Syslog::Logger` module. You can configure the logging behaviour with
+environment variables `LOG_LEVEL` and `LOG_PERROR`. Refer to internal API
+documentation for more information.
+
+By default, logging has a threshold level of `WARN`, and does not print
+anything out.
 
 ## `msmfg-puppet-module-create`
+
+It actually is a `rake` application that accepts a `help` task. All standard
+`rake` options are also available.
 
 ### Can create an entire module skeleton from scratch
 If you want to create a brand new module, you can use `msmfg-create-module`. You have 3 options:
@@ -72,32 +78,33 @@ $ msmfg-puppet-module-create
 ```
 Example output:
 ```
-$ msmfg-puppet-module-create
-Creating metadata.json ...
-mkdir -p manifests
-Creating manifests/init.pp ...
-Creating .fixtures.yaml ...
-Creating Rakefile ...
-Creating Gemfile ...
-Creating Gemfile.lock ...
+$ LOG_LEVEL=INFO LOG_PERROR=1 msmfg-puppet-module-create
+luca@centos6:/tmp/puppet-something$ LOG_LEVEL=INFO msmfg-puppet-module-create
+msmfg-puppet-module-create[9342]: I: PuppetModule.metadata: metadata.json not found
+msmfg-puppet-module-create[9342]: I: Modulefile: Modulefile loaded succefully
+msmfg-puppet-module-create[9342]: I: task: file: OK: metadata.json
+msmfg-puppet-module-create[9342]: I: task: file: OK: manifests
+msmfg-puppet-module-create[9342]: I: task: file: OK: manifests/init.pp
+msmfg-puppet-module-create[9342]: I: task: file: OK: .fixtures.yml
+msmfg-puppet-module-create[9342]: I: task: file: OK: Rakefile
+msmfg-puppet-module-create[9342]: I: task: file: OK: Gemfile
 Fetching gem metadata from https://rubygems.org/..
 Fetching version metadata from https://rubygems.org/.
 Resolving dependencies...
 Using rake 10.5.0
 #
-# More bundler output here...
+# More output here
 #
-Using msmfg_spec_helper 0.0.0
-Bundle complete! 1 Gemfile dependency, 138 gems now installed.
+Bundle complete! 1 Gemfile dependency, 144 gems now installed.
 Use `bundle show [gemname]` to see where a bundled gem is installed.
-mkdir -p spec
-Creating spec/spec_helper.rb ...
-mkdir -p spec/acceptance/nodesets
-Creating spec/acceptance/nodesets/default.yml ...
-Creating spec/spec_helper_acceptance.rb ...
-mkdir -p spec/classes
-Creating spec/classes/something_spec.rb ...
-Creating spec/acceptance/something_spec.rb ...
+msmfg-puppet-module-create[9342]: I: task: file: OK: Gemfile.lock
+msmfg-puppet-module-create[9342]: I: task: file: OK: spec/acceptance/nodesets
+msmfg-puppet-module-create[9342]: I: task: file: OK: spec/acceptance/nodesets/default.yml
+msmfg-puppet-module-create[9342]: I: task: file: OK: spec/spec_helper.rb
+msmfg-puppet-module-create[9342]: I: task: file: OK: spec/spec_helper_acceptance.rb
+msmfg-puppet-module-create[9342]: I: task: file: OK: spec/classes
+msmfg-puppet-module-create[9342]: I: task: file: OK: spec/classes/ifetoolbelt_spec.rb
+msmfg-puppet-module-create[9342]: I: task: file: OK: spec/acceptance/ifetoolbelt_spec.rb
 ```
 
 ### Can add missing files to an already existsing module
@@ -122,97 +129,74 @@ Automatic guess of requirements is on the way. In the mean while you have to con
 
 ## `msmfg-puppet-module-validate`
 
+It actually is a `rake` application that accepts a `help` task. All standard
+`rake` options are also available.
+
 ### Can validate the module
 You can validate the current module against the currently implemented MSMFG acceptance specs for puppet modules:
 ```
-$ msmfg-puppet-module-validate
-Checking ruby files syntax...
-Checking metadata.json syntax...
-Checking puppet manifests syntax...
-Checking templates syntax...
-Checking hieradata files syntax...
-Checking fragments files syntax...
+$ LOG_LEVEL=INFO LOG_PERROR=1 msmfg-puppet-module-validate
+msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: Gemfile
+msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: Rakefile
+msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: spec/acceptance/ifetoolbelt_spec.rb
+msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: spec/classes/ifetoolbelt_spec.rb
+msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: spec/spec_helper.rb
+msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: spec/spec_helper_acceptance.rb
+msmfg-puppet-module-validate[9371]: I: task: syntax: metadata_json: OK
+msmfg-puppet-module-validate[9371]: I: task: syntax: manifests: OK
+msmfg-puppet-module-validate[9371]: I: task: syntax: templates: OK
+msmfg-puppet-module-validate[9371]: I: task: ruby_style: checking ruby files style...
 Running RuboCop...
 Inspecting 6 files
 ......
 
 6 files inspected, no offenses detected
-Running puppet-lint...
-YARD-Coverage: 100.0% (threshold: 100%)
+msmfg-puppet-module-validate[9371]: D: task: puppet_style: OK: manifests/init.pp
 
-Puppet module "skeleton"
+Puppet module "ifetoolbelt"
   File "metadata.json"
     should be file
     metadata
       should include {"version" => (match /^[0-9]+(\.[0-9]+){0,2}$/)}
       should include {"author" => (match /at moneysupermarket\.com/)}
-      should include {"source" => (match /https:\/\/github.com\/MSMFG\/msmfg-skeleton/)}
-      should include {"project_page" => (match /https:\/\/github.com\/MSMFG\/msmfg-skeleton/)}
-      should include {"issues_url" => (match /https:\/\/github.com\/MSMFG\/msmfg-skeleton\/issues/)}
+      should include {"source" => (match /https:\/\/github.com\/MSMFG\/ifetoolbelt/)}
+      should include {"project_page" => (match /https:\/\/msmfg.github.io\/ifetoolbelt/)}
+      should include {"issues_url" => (match /https:\/\/github.com\/MSMFG\/ifetoolbelt\/issues/)}
   File "manifests/init.pp"
     should be file
     content
-      should contain "class skeleton"
+      should contain /class ifetoolbelt/
   Directory "specs"
     should not be empty
     should include at least 1 class spec
     should include at least 1 acceptance spec
-  File ".fixtures.yaml"
+  File ".fixtures.yml"
     should be file
     fixtures
       should define a symlink to source_dir
-  File "spec/acceptance/nodesets/default.yml"
-    should be file
-    nodeset
-      should configure a masterless environment
-      should include a default host
-  File "Gemfile"
-    should be file
-    content
-      should contain "gem 'msmfg_spec_helper'"
-  File "Gemfile.lock"
-    should be file
-  File "Rakefile"
-    should be file
-    should contain "require 'msmfg_spec_helper/rake_tasks/puppet_module"
 
-Finished in 0.05903 seconds (files took 0.87694 seconds to load)
-21 examples, 0 failures
+Finished in 0.05455 seconds (files took 0.40781 seconds to load)
+13 examples, 0 failures
 ```
 
 #### Check syntax
 Check any sort of syntax:
 ```sh
 $ msmfg-puppet-module-validate syntax
-Checking ruby files syntax...
-Checking metadata.json syntax...
-Checking puppet manifests syntax...
-Checking templates syntax...
-Checking hieradata files syntax...
-Checking fragments files syntax...
-$
 ```
 You could also check specific a type of syntax:
 ```
 $ msmfg-puppet-module-validate syntax:ruby
-Checking ruby files syntax...
-$
 ```
 
 #### Check ruby style
 ```sh
 $ msmfg-puppet-module-validate ruby_style
-Running RuboCop...
-Inspecting 6 files
-......
-
-6 files inspected, no offenses detected
 ```
 
 #### Check manifests style
 ```sh
 $ msmfg-puppet-module-validate puppet_style
-Running puppet-lint...
 ```
 
 #### Runs MSMFG acceptance spes for Puppet Modules
@@ -258,19 +242,16 @@ Finished in 0.05903 seconds (files took 0.87694 seconds to load)
 21 examples, 0 failures
 ```
 
-## `rake` tasks
-Actually, `msmfg-puppet-module-create` and `msmfg-puppet-module-validate` are rake applications.
-
-### Use local Rakefile
+## No-brainer Rakefile
 There are multiple task libraries that you could `require` in your `Rakefile`:
 
 * `msmfg_spec_helper/rake_tasks/puppet_module`: loads/configure any possible task
   * `msmfg_spec_helper/rake_tasks/puppet_module/create`: defines files/directories creation tasks
   * `msmfg_spec_helper/rake_tasks/puppet_module/validate`: loads all validation tasks:
-    * `msmfg_spec_helper/rake_tasks/syntax`: see below
-    * `msmfg_spec_helper/rake_tasks/puppet_style`: see below
-    * `msmfg_spec_helper/rake_tasks/ruby_style`: see below
-    * `msmfg_spec_helper/rake_tasks/docs_coverage`: see below
+    * `msmfg_spec_helper/rake_tasks/syntax`: see above
+    * `msmfg_spec_helper/rake_tasks/puppet_style`: see above
+    * `msmfg_spec_helper/rake_tasks/ruby_style`: see above
+    * `msmfg_spec_helper/rake_tasks/docs_coverage`: see above
   * `msmfg_spec_helper/rake_tasks/puppet_module/spec`: defines puppet specs and acceptance specs tasks
 * `msmfg_spec_helper/rake_tasks/syntax`: defins all syntax checking tasks
 * `msmfg_spec_helper/rake_tasks/puppet_style`: defines the puppet style checking task

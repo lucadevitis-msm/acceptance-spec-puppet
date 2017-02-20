@@ -13,6 +13,7 @@ MSMFGSpecHelper.rake_application(APP_NAME) do
   end
 
   task :help do
+    module_files = MSMFGSpecHelper::PuppetModule.files
     puts <<-EOS
 NAME
   #{APP_NAME} - Creates the all the files required by an MSMFG puppet module

@@ -1,3 +1,5 @@
+require 'msmfg_spec_helper'
+
 module MSMFGSpecHelper
   module PuppetModule
     # Modulefile DSL parser

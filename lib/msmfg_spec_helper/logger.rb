@@ -1,4 +1,3 @@
-require 'msmfg_spec_helper'
 require 'syslog/logger'
 
 module MSMFGSpecHelper # :nodoc:
@@ -69,8 +68,8 @@ module MSMFGSpecHelper # :nodoc:
           ::Syslog::Logger.syslog = ::Syslog.open(progname, options, facility)
           @instance = ::Syslog::Logger.new
           @instance.level = level
-          @instance.formatter = proc do |severity, datetime, _progname, msg|
-            "#{%w(D I W E F U)[severity]}: #{datetime.utc}: #{msg}\n"
+          @instance.formatter = proc do |severity, _datetime, _progname, msg|
+            "#{%w(D I W E F U)[severity]}: #{msg}\n"
           end
           @instance.freeze
         end

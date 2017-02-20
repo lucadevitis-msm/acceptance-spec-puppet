@@ -1,8 +1,7 @@
 # rubocop:disable Metrics/LineLength
 require 'github_api'
 require 'json'
-require 'msmfg_spec_helper/version'
-require 'msmfg_spec_helper/logger'
+require 'msmfg_spec_helper'
 require 'msmfg_spec_helper/puppet_module/modulefile'
 require 'puppet_forge'
 require 'yaml'
@@ -208,7 +207,7 @@ module MSMFGSpecHelper
 
       # Looks for the latest repository release, matching requirements
       #
-      # @param [String] provider_name
+      # @param [String] organization
       #   the puppet module provider name (MSMFG)
       #
       # @param [String] module_name
@@ -221,22 +220,23 @@ module MSMFGSpecHelper
       #   repository info, or `nil`
       #
       # @api private
-      def find_repository(provider_name, module_name, requirement)
+      def find_repository(organization, module_name, requirement)
         # Let's query GitHub
         releases = Github::Client::Repos::Releases.new
 
+        repo_name = "puppet-#{module_name}"
         # The following assumes that we use version strings as GitHub releases
-        refs = releases.list(provider_name, module_name).select do |ref|
+        refs = releases.list(organization, repo_name).select do |ref|
           Gem::Version.correct?(ref.tag_name) &&
             Gem::Dependency.new('', requirement).match?('', ref.tag_name)
         end
 
-        repo = "#{Github.configuration.site}/MSMFG/#{module_name}.git"
+        repo = "#{Github.configuration.site}/MSMFG/#{repo_name}.git"
         ref = refs.collect { |r| Gem::Version.new(r.tag_name) }.sort.last
         ref && { 'repo' => repo, 'ref' => ref.to_s }
       rescue => e
         message = 'PuppetModule.find_repository:'
-        message << " #{provider_name}, #{module_name}, #{requirement}: #{e}"
+        message << " #{organization}, #{module_name}, #{requirement}: #{e}"
         logger.error(message)
         nil
       end
