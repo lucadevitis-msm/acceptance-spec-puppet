@@ -23,6 +23,12 @@ module MSMFGSpecHelper # :nodoc:
         @progname ||= 'msmfg_spec_helper'
       end
 
+      # Sets the program name to be used in log messages
+      #
+      # @return [String]
+      #   the value of `@progname` attribute
+      #
+      # @api private
       attr_writer :progname
 
       # Returns the log level threshold
@@ -41,6 +47,12 @@ module MSMFGSpecHelper # :nodoc:
         @level ||= ::Logger::Severity.const_get(ENV['LOG_LEVEL'] || 'WARN')
       end
 
+      # Sets the log threshold level
+      #
+      # @return [Integer]
+      #   the value of `@level` attribute
+      #
+      # @api private
       attr_writer :level
 
       # Returns an already confured `::Logger` instance

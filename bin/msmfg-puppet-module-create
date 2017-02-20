@@ -6,10 +6,11 @@ APP_NAME = File.basename(__FILE__).freeze
 MSMFGSpecHelper.rake_application(APP_NAME) do
   require 'msmfg_spec_helper/rake_tasks/puppet_module/create'
 
-  module_files = PUPPET_MODULE.files
+  task skeleton: MSMFGSpecHelper::PuppetModule.directories
 
-  task skeleton: PUPPET_MODULE.directories
-  task(:default) { module_files.each {|f| Rake::Task[f[:name]].invoke } }
+  task(:default) do
+    MSMFGSpecHelper::PuppetModule.files.each {|f| Rake::Task[f[:name]].invoke }
+  end
 
   task :help do
     puts <<-EOS

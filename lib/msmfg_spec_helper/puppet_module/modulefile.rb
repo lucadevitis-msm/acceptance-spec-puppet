@@ -79,8 +79,6 @@ module MSMFGSpecHelper
           logger.info("Modulefile: #{modulefile} loaded succefully")
         rescue Errno::ENOENT
           logger.info("Modulefile: #{modulefile} not found")
-        ensure
-          self
         end
       end
     end
