@@ -28,8 +28,9 @@ module MSMFGSpecHelper
     #
     # @api private
     def ruby_files
-      pattern = '**/{*.rb,{Gem,Rake}file,{,*}.gemspec,*.rake}'
-      exclude = ['vendor/**/*',         # bundler
+      pattern = '**/{*.{rb,rake,gemspec},{Gem,Rake}file,Puppetfile.*}'
+      exclude = ['spec/**/*',           # spces
+                 'vendor/**/*',         # bundler
                  'pkg/**/*',            # gem build process
                  'spec/fixtures/**/*']  # puppetlabs fixtures
       file_list(pattern, *exclude)

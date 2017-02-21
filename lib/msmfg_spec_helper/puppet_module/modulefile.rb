@@ -38,7 +38,7 @@ module MSMFGSpecHelper
         METADATA.keys.reject { |m| m == :dependencies }.each do |name|
           define_method(name) do |value = nil|
             if value
-              logger.debug("Modulefile: #{name}: #{value}")
+              logger.debug("Modulefile.#{name}: #{value}")
               instance_variable_set("@#{name}", value)
             end
             instance_variable_get("@#{name}")
@@ -55,7 +55,7 @@ module MSMFGSpecHelper
         #
         # @api private
         def dependency(*args)
-          logger.debug("Modulefile: dependency: #{args.join(', ')}")
+          logger.debug("Modulefile.dependency: #{args.join(', ')}")
           @dependencies << args
           args
         end
@@ -76,7 +76,7 @@ module MSMFGSpecHelper
           # - This class is not meant to deal malicious configurations
           # - Modulefile content should have already been reviewed by members
           #   of the staff
-          logger.debug("Modulefile: reading #{modulefile}")
+          logger.debug("Modulefile.reading #{modulefile}")
           instance_eval File.read(modulefile)
           logger.info("Modulefile: #{modulefile} loaded succefully")
         rescue Errno::ENOENT
