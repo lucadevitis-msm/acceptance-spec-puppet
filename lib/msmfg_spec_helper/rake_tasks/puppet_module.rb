@@ -30,7 +30,7 @@ require 'puppetlabs_spec_helper/rake_tasks'
 # syntax:templates      # Syntax check Puppet templates
 # validate              # Check syntax of Ruby files and call :syntax and :metadata_lint
 [
-  # 'build',
+  'beaker',
   'check:dot_underscore',
   'check:git_ignore',
   'check:symlinks',

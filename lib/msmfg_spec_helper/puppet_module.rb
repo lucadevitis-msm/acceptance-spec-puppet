@@ -48,7 +48,7 @@ module MSMFGSpecHelper
         end
 
         @metadata = {
-          'name' => name,
+          'name' => "msmfg-#{name}",
           'version' => Modulefile.version || '0.0.0',
           'author' => Modulefile.author || default_author,
           'license' => 'proprietary',
@@ -324,7 +324,7 @@ describe '#{class_name} class' do
     subject { apply_manifest pp, catch_failures: true }
 
     it 'should run without errors' do
-      expect(subject.exit_code).to eq 2
+      expect(subject.exit_code).to eq(0) | eq(2)
     end
 
     it 'should run a second time without changes' do
@@ -420,13 +420,14 @@ EOS
           {
             name: 'spec/acceptance/nodesets/default.yml',
             create: proc do |file|
+              ENV['DOCKER_REGISTRY'] ||= 'registry1-eu1.moneysupermarket.com:5000'
               nodeset = {
                 'HOSTS' => {
-                  'default' => {
+                  'centos_6.7-ruby_2.1.5-puppet_3.7.4' => {
                     'platform' => 'el-6-x86_64',
-                    'image' => 'centos:6.6-msm',
+                    'image' => "#{ENV['DOCKER_REGISTRY']}/centos_6.7-ruby_2.1.5-puppet_3.7.4:latest",
                     'hypervisor' => 'docker',
-                    'docker_container_name' => 'centos6.6-msm'
+                    'docker_container_name' => 'centos_6.7'
                   }
                 },
                 'CONFIG' => {

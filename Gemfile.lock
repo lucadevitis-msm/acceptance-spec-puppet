@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    msmfg_spec_helper (1.0.0)
+    msmfg_spec_helper (1.1.0)
       beaker-facter (~> 0.1.2)
       beaker-rspec (~> 6.0.0)
       bundler (~> 1.11)
@@ -23,7 +23,7 @@ PATH
       yardstick
 
 GEM
-  remote: https://rubygems.org/
+  remote: https://artifactory3-eu1.moneysupermarket.com/artifactory/gems-local/
   specs:
     CFPropertyList (2.3.5)
     addressable (2.4.0)

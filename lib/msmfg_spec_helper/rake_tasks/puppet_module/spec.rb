@@ -16,6 +16,7 @@ desc 'Run beaker acceptance tests'
 RSpec::Core::RakeTask.new :beaker do |rspec|
   rspec.pattern = 'spec/acceptance/**/*_spec.rb'
   rspec.rspec_opts = '--color --format documentation'
+  ENV['DOCKER_REGISTRY'] ||= 'https://registry1-eu1.moneysupermarket.com:5000'
   unless ENV['VERBOSE']
     rspec.ruby_opts = '-W0'
     rspec.verbose = false
