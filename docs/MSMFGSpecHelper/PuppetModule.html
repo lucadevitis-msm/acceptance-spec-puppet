@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: MSMFGSpecHelper::PuppetModule
+  
+    &mdash; Documentation by YARD 0.9.8
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "MSMFGSpecHelper::PuppetModule";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (P)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../MSMFGSpecHelper.html" title="MSMFGSpecHelper (module)">MSMFGSpecHelper</a></span></span>
+     &raquo; 
+    <span class="title">PuppetModule</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: MSMFGSpecHelper::PuppetModule
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  <dl>
+      <dt>Extended by:</dt>
+      <dd><span class='object_link'><a href="LoggerMixIn.html" title="MSMFGSpecHelper::LoggerMixIn (module)">LoggerMixIn</a></span></dd>
+  </dl>
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/msmfg_spec_helper/puppet_module.rb<span class="defines">,<br />
+  lib/msmfg_spec_helper/puppet_module/modulefile.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>MSMFG puppet module class. This class is mainly used to create the
+module&#39;s files.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="PuppetModule/Modulefile.html" title="MSMFGSpecHelper::PuppetModule::Modulefile (module)">Modulefile</a></span>
+    
+  
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#acceptance_spec-class_method" title="acceptance_spec (class method)">.<strong>acceptance_spec</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the base <code>rspec-puppet</code> acceptance spec content.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#class_name-class_method" title="class_name (class method)">.<strong>class_name</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns class name (or the module name without the provider prefix).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#class_spec-class_method" title="class_spec (class method)">.<strong>class_spec</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the base <code>rspec-puppet</code> spec content.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#directories-class_method" title="directories (class method)">.<strong>directories</strong>  &#x21d2; Array&lt;String&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the module&#39;s list of directories (mainly used by rake tasks).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#files-class_method" title="files (class method)">.<strong>files</strong>  &#x21d2; Array&lt;Hash&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the list of rake tasks data needed to create the module&#39;s
+files.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_dependencies-class_method" title="find_dependencies (class method)">.<strong>find_dependencies</strong>  &#x21d2; Array&lt;Hash&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Lookup puppet module dependencies either on <code>Github</code> or
+<code>PuppetForge</code>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_forge_module-class_method" title="find_forge_module (class method)">.<strong>find_forge_module</strong>(provider_name, module_name, requirement)  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Looks for the latest puppet forge module, matching requirements.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_repository-class_method" title="find_repository (class method)">.<strong>find_repository</strong>(organization, module_name, requirement)  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Looks for the latest repository release, matching requirements.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#fixtures-class_method" title="fixtures (class method)">.<strong>fixtures</strong>(path = &#39;.fixture.yml&#39;)  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return the module&#39;s initial fixtures configuration.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#metadata-class_method" title="metadata (class method)">.<strong>metadata</strong>(path = &#39;metadata.json&#39;)  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns metadata.json content or generate one.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-class_method" title="name (class method)">.<strong>name</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>What an MSMFG puppet module should look like on the filesystem.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name=-class_method" title="name= (class method)">.<strong>name=</strong>(value)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the name of the puppet module.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#semantic_version-class_method" title="semantic_version (class method)">.<strong>semantic_version</strong>(ref)  &#x21d2; SemanticPuppet::Version<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Use <code>semantic_puppet</code> to parse version string.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="LoggerMixIn.html" title="MSMFGSpecHelper::LoggerMixIn (module)">LoggerMixIn</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="LoggerMixIn.html#logger-instance_method" title="MSMFGSpecHelper::LoggerMixIn#logger (method)">logger</a></span></p>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="acceptance_spec-class_method">
+  
+    .<strong>acceptance_spec</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns the base <code>rspec-puppet</code> acceptance spec content</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the module&#39;s acceptance specs</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 334</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_acceptance_spec'>acceptance_spec</span>
+  <span class='heredoc_beg'>&lt;&lt;EOS</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='tstring_content'>require &#39;spec_helper_acceptance&#39;
+
+describe &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_class_name'>class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> class&#39; do
+  let(:pp) do
+    &lt;&lt;-MANIFEST
+class { &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_class_name'>class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;:
+  # You may want to put arguments here
+}
+    MANIFEST
+  end
+
+  # `catch_failures: true` runs puppet with --detailed-exitcodes, so we expect
+  # first run `exit_code` to be 2 and second to be 0. We want to run it twice,
+  # because it&#39;s good practice to draft a manifest that can be applied multiple
+  # times without any error.
+  describe &#39;puppet apply manifest&#39; do
+    # This will run the block before each of the followng examples.
+    let(:puppet_apply) { apply_manifest pp, catch_failures: true }
+
+    context &#39;first run&#39; do
+it &#39;runs without errors&#39; do
+  expect(puppet_apply.exit_code).to eq(0) | eq(2)
+end
+    end
+
+    context &#39;second run&#39; do
+it &#39;runs without changes&#39; do
+  expect(puppet_apply.exit_code).to eq 0
+end
+    end
+  end
+end
+</span><span class='heredoc_end'>EOS
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="class_name-class_method">
+  
+    .<strong>class_name</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns class name (or the module name without the provider prefix)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the module&#39;s main class name</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+117
+118
+119</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 117</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_class_name'>class_name</span>
+  <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="class_spec-class_method">
+  
+    .<strong>class_spec</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns the base <code>rspec-puppet</code> spec content</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the module&#39;s catalog specs</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 317</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_class_spec'>class_spec</span>
+  <span class='heredoc_beg'>&lt;&lt;EOS</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='tstring_content'>require &#39;spec_helper&#39;
+
+# At least the manifest should compile.
+describe &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_class_name'>class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; do
+  it { is_expected.to compile }
+end
+</span><span class='heredoc_end'>EOS
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="directories-class_method">
+  
+    .<strong>directories</strong>  &#x21d2; <tt>Array&lt;String&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns the module&#39;s list of directories (mainly used by rake tasks)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the module&#39;s directory structure</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 377</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_directories'>directories</span>
+  <span class='lbracket'>[</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>manifests</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>files</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>templates</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>lib/puppet/parser/functions</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>lib/puppet/provider</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>lib/puppet/type</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/acceptance/nodesets</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/classes</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/defines</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/functions</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/types</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="files-class_method">
+  
+    .<strong>files</strong>  &#x21d2; <tt>Array&lt;Hash&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns the list of rake tasks data needed to create the module&#39;s files</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the module&#39;s file tasks data</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 402</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_files'>files</span>
+  <span class='lbracket'>[</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>metadata.json</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_pretty_generate'>pretty_generate</span><span class='lparen'>(</span><span class='id identifier rubyid_metadata'>metadata</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>manifests/init.pp</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='id identifier rubyid_manifest'>manifest</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'># Initial </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_class_name'>class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> documentation\n</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_manifest'>manifest</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>class </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_class_name'>class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> {}\n</span><span class='tstring_end'>&quot;</span></span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_manifest'>manifest</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.fixtures.yml</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>requires:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>metadata.json</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='const'>YAML</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_fixtures'>fixtures</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Rakefile</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='id identifier rubyid_lib'>lib</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msmfg_spec_helper/rake_tasks/puppet_module</span><span class='tstring_end'>&#39;</span></span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>require &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_lib'>lib</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Gemfile</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='id identifier rubyid_gemfile'>gemfile</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>source &#39;https://rubygems.org&#39;\ngem &#39;msmfg_spec_helper&#39;\n</span><span class='tstring_end'>&quot;</span></span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_gemfile'>gemfile</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Gemfile.lock</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>requires:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Gemfile</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bundler/cli</span><span class='tstring_end'>&#39;</span></span>
+        <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bundler/cli/install</span><span class='tstring_end'>&#39;</span></span>
+        <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bundler/ui</span><span class='tstring_end'>&#39;</span></span>
+        <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bundler/ui/shell</span><span class='tstring_end'>&#39;</span></span>
+        <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>BUNDLE_GEMFILE</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span>
+        <span class='const'>Bundler</span><span class='period'>.</span><span class='id identifier rubyid_reset!'>reset!</span>
+        <span class='comment'># Bundler.ui = Bundler::UI::Shell.new
+</span>        <span class='const'>Bundler</span><span class='op'>::</span><span class='const'>CLI</span><span class='op'>::</span><span class='const'>Install</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>jobs</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='int'>7</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/acceptance/nodesets/default.yml</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>DOCKER_REGISTRY</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>registry1-eu1.moneysupermarket.com:5000</span><span class='tstring_end'>&#39;</span></span>
+        <span class='id identifier rubyid_nodeset'>nodeset</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+          <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>HOSTS</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+            <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>centos_6.7-ruby_2.1.5-puppet_3.7.4</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+              <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>platform</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>el-6-x86_64</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>image</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>DOCKER_REGISTRY</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>/centos_6.7-ruby_2.1.5-puppet_3.7.4:latest</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hypervisor</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>docker</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+              <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>docker_container_name</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>centos_6.7</span><span class='tstring_end'>&#39;</span></span>
+            <span class='rbrace'>}</span>
+          <span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>CONFIG</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+            <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>log_level</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>warn</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>quite</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>type</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foss</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>masterless</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+          <span class='rbrace'>}</span>
+        <span class='rbrace'>}</span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='const'>YAML</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_nodeset'>nodeset</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/spec_helper.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>requires:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/acceptance/nodesets/default.yml</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.fixtures.yml</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='id identifier rubyid_lib'>lib</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msmfg_spec_helper/puppet_module/spec_helper</span><span class='tstring_end'>&#39;</span></span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>require &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_lib'>lib</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/spec_helper_acceptance.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>requires:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/acceptance/nodesets/default.yml</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.fixtures.yml</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='id identifier rubyid_lib'>lib</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msmfg_spec_helper/puppet_module/spec_helper_acceptance</span><span class='tstring_end'>&#39;</span></span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>require &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_lib'>lib</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spec/classes/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_class_name'>class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>_spec.rb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='label'>requires:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/spec_helper.rb</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_class_spec'>class_spec</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spec/acceptance/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_class_name'>class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>_spec.rb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='label'>requires:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/spec_helper_acceptance.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                 <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec/acceptance/nodesets/default.yml</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>create:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_acceptance_spec'>acceptance_spec</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='rbrace'>}</span>
+  <span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_dependencies-class_method">
+  
+    .<strong>find_dependencies</strong>  &#x21d2; <tt>Array&lt;Hash&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Lookup puppet module dependencies either on <code>Github</code> or
+<code>PuppetForge</code></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p><code>repositories</code> and <code>forge_modules</code></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 179</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_dependencies'>find_dependencies</span>
+  <span class='id identifier rubyid_forge_modules'>forge_modules</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_repositories'>repositories</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>dependencies</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
+    <span class='id identifier rubyid_provider_name'>provider_name</span><span class='comma'>,</span> <span class='id identifier rubyid_module_name'>module_name</span> <span class='op'>=</span> <span class='id identifier rubyid_dep'>dep</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>name</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span>
+
+    <span class='comment'># Just for logging
+</span>    <span class='id identifier rubyid_file_path'>file_path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>name</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>version_requirement</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.fixtures:</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                 <span class='label'>file_path:</span> <span class='id identifier rubyid_file_path'>file_path</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>looking up</span><span class='tstring_end'>&#39;</span></span>
+
+    <span class='comment'># Build the arguments for the lookup function call
+</span>    <span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_lookup'>lookup</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_provider_name'>provider_name</span>
+                    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>MSMFG</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>then</span> <span class='lbracket'>[</span><span class='id identifier rubyid_repositories'>repositories</span><span class='comma'>,</span> <span class='symbol'>:find_repository</span><span class='rbracket'>]</span>
+                    <span class='kw'>else</span> <span class='lbracket'>[</span><span class='id identifier rubyid_forge_modules'>forge_modules</span><span class='comma'>,</span> <span class='symbol'>:find_forge_module</span><span class='rbracket'>]</span>
+                    <span class='kw'>end</span>
+
+    <span class='comment'># Call the lookup function
+</span>    <span class='id identifier rubyid_candidate'>candidate</span> <span class='op'>=</span> <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_lookup'>lookup</span><span class='comma'>,</span> <span class='id identifier rubyid_provider_name'>provider_name</span><span class='comma'>,</span> <span class='id identifier rubyid_module_name'>module_name</span><span class='comma'>,</span>
+                     <span class='id identifier rubyid_dep'>dep</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>version_requirement</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_candidate'>candidate</span>
+      <span class='id identifier rubyid_group'>group</span><span class='lbracket'>[</span><span class='id identifier rubyid_module_name'>module_name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_candidate'>candidate</span>
+      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.fixtures</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>file_path:</span> <span class='id identifier rubyid_file_path'>file_path</span><span class='comma'>,</span>
+                   <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>using </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_candidate'>candidate</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>repo</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_candidate'>candidate</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ref</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='label'>function:</span>  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.fixtures</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                   <span class='label'>file_path:</span> <span class='id identifier rubyid_file_path'>file_path</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>no candidate</span><span class='tstring_end'>&#39;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='lbracket'>[</span><span class='id identifier rubyid_repositories'>repositories</span><span class='comma'>,</span> <span class='id identifier rubyid_forge_modules'>forge_modules</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_forge_module-class_method">
+  
+    .<strong>find_forge_module</strong>(provider_name, module_name, requirement)  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Looks for the latest puppet forge module, matching requirements</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>provider_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the puppet module provider name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>module_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the puppet module name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>requirement</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the version requirement specification</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>puppet forge module info, or <code>nil</code></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 290</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_forge_module'>find_forge_module</span><span class='lparen'>(</span><span class='id identifier rubyid_provider_name'>provider_name</span><span class='comma'>,</span> <span class='id identifier rubyid_module_name'>module_name</span><span class='comma'>,</span> <span class='id identifier rubyid_requirement'>requirement</span><span class='rparen'>)</span>
+  <span class='comment'># Let&#39;s query the PuppetForge
+</span>  <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_provider_name'>provider_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_module_name'>module_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_range'>range</span> <span class='op'>=</span> <span class='const'>SemanticPuppet</span><span class='op'>::</span><span class='const'>VersionRange</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_requirement'>requirement</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_releases'>releases</span> <span class='op'>=</span> <span class='const'>PuppetForge</span><span class='op'>::</span><span class='const'>Module</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_releases'>releases</span>
+
+  <span class='id identifier rubyid_refs'>refs</span> <span class='op'>=</span> <span class='id identifier rubyid_releases'>releases</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_semantic_version'>semantic_version</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_ref'>ref</span> <span class='op'>=</span> <span class='id identifier rubyid_refs'>refs</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_range'>range</span><span class='period'>.</span><span class='id identifier rubyid_cover?'>cover?</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+
+  <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>repo</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ref</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_ref'>ref</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_ref'>ref</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_error'>error</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.find_forge_module</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+               <span class='label'>file_path:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_requirement'>requirement</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>text:</span> <span class='id identifier rubyid_error'>error</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_repository-class_method">
+  
+    .<strong>find_repository</strong>(organization, module_name, requirement)  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Looks for the latest repository release, matching requirements</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>organization</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the puppet module provider name (MSMFG)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>module_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the puppet module name (repo name)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>requirement</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the version requirement specification</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>repository info, or <code>nil</code></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 250</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_repository'>find_repository</span><span class='lparen'>(</span><span class='id identifier rubyid_organization'>organization</span><span class='comma'>,</span> <span class='id identifier rubyid_module_name'>module_name</span><span class='comma'>,</span> <span class='id identifier rubyid_requirement'>requirement</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_repo_name'>repo_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>puppet-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_module_name'>module_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_range'>range</span> <span class='op'>=</span> <span class='const'>SemanticPuppet</span><span class='op'>::</span><span class='const'>VersionRange</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_requirement'>requirement</span><span class='rparen'>)</span>
+
+  <span class='comment'># Let&#39;s query GitHub
+</span>  <span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'>Github</span><span class='op'>::</span><span class='const'>Client</span><span class='op'>::</span><span class='const'>Repos</span><span class='op'>::</span><span class='const'>Releases</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_releases'>releases</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_list'>list</span><span class='lparen'>(</span><span class='id identifier rubyid_organization'>organization</span><span class='comma'>,</span> <span class='id identifier rubyid_repo_name'>repo_name</span><span class='rparen'>)</span>
+
+  <span class='comment'># The following assumes that we use version strings as GitHub releases
+</span>  <span class='id identifier rubyid_refs'>refs</span> <span class='op'>=</span> <span class='id identifier rubyid_releases'>releases</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_semantic_version'>semantic_version</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_tag_name'>tag_name</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Github</span><span class='period'>.</span><span class='id identifier rubyid_configuration'>configuration</span><span class='period'>.</span><span class='id identifier rubyid_site'>site</span><span class='embexpr_end'>}</span><span class='tstring_content'>/MSMFG/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo_name'>repo_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.git</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_ref'>ref</span> <span class='op'>=</span> <span class='id identifier rubyid_refs'>refs</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_range'>range</span><span class='period'>.</span><span class='id identifier rubyid_cover?'>cover?</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+
+  <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>repo</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ref</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_ref'>ref</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_ref'>ref</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_error'>error</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.find_repository</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+               <span class='label'>file_path:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo_name'>repo_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_requirement'>requirement</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>text:</span> <span class='id identifier rubyid_error'>error</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="fixtures-class_method">
+  
+    .<strong>fixtures</strong>(path = &#39;.fixture.yml&#39;)  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Return the module&#39;s initial fixtures configuration</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the module&#39;s fixtures configuration</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 127</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_fixtures'>fixtures</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.fixture.yml</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='ivar'>@fixtures</span> <span class='op'>||=</span> <span class='kw'>begin</span>
+    <span class='ivar'>@fixtures</span> <span class='op'>=</span> <span class='const'>YAML</span><span class='period'>.</span><span class='id identifier rubyid_safe_load'>safe_load</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.fixtures</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                 <span class='label'>file_path:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>loaded</span><span class='tstring_end'>&#39;</span></span>
+    <span class='ivar'>@fixtures</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+  <span class='kw'>end</span>
+<span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.fixtures</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+               <span class='label'>file_path:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>not found</span><span class='tstring_end'>&#39;</span></span>
+
+  <span class='const'>PuppetForge</span><span class='period'>.</span><span class='id identifier rubyid_user_agent'>user_agent</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>msmfg_spec_helper/</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../MSMFGSpecHelper.html" title="MSMFGSpecHelper (module)">MSMFGSpecHelper</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../MSMFGSpecHelper.html#VERSION-constant" title="MSMFGSpecHelper::VERSION (constant)">VERSION</a></span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='const'>PuppetForge</span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span> <span class='op'>=</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PUPPETFORGE_HOST</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PUPPETFORGE_HOST</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.fixtures</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+               <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PuppetForge.host = </span><span class='embexpr_beg'>#{</span><span class='const'>PuppetForge</span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='const'>Github</span><span class='period'>.</span><span class='id identifier rubyid_configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_conf'>conf</span><span class='op'>|</span>
+    <span class='id identifier rubyid_conf'>conf</span><span class='period'>.</span><span class='id identifier rubyid_basic_auth'>basic_auth</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>GITHUB_USER</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>GITHUB_PASSWORD</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_basic_auth'>basic_auth</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>GITHUB_USER</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>:i_didn_t_start_yesterday</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.fixtures</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                 <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Github.basic_auth = </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_basic_auth'>basic_auth</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='id identifier rubyid_conf'>conf</span><span class='period'>.</span><span class='id identifier rubyid_endpoint'>endpoint</span> <span class='op'>=</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>GITHUB_ENDPOINT</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>GITHUB_ENDPOINT</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.fixtures</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                 <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GitHub.endpoint = </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_conf'>conf</span><span class='period'>.</span><span class='id identifier rubyid_endpoint'>endpoint</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='id identifier rubyid_conf'>conf</span><span class='period'>.</span><span class='id identifier rubyid_site'>site</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://</span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>GITHUB_SITE</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>GITHUB_SITE</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.fixtures</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                 <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GitHub.site = </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_conf'>conf</span><span class='period'>.</span><span class='id identifier rubyid_site'>site</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='ivar'>@fixtures</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fixtures</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>symlinks</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+        <span class='id identifier rubyid_class_name'>class_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#{source_dir}</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_repositories'>repositories</span><span class='comma'>,</span> <span class='id identifier rubyid_forge_modules'>forge_modules</span> <span class='op'>=</span> <span class='id identifier rubyid_find_dependencies'>find_dependencies</span>
+
+  <span class='ivar'>@fixtures</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>repositories</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_repositories'>repositories</span> <span class='kw'>if</span> <span class='id identifier rubyid_repositories'>repositories</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='ivar'>@fixtures</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>forge_modules</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_forge_modules'>forge_modules</span> <span class='kw'>if</span> <span class='id identifier rubyid_forge_modules'>forge_modules</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='ivar'>@fixtures</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="metadata-class_method">
+  
+    .<strong>metadata</strong>(path = &#39;metadata.json&#39;)  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns metadata.json content or generate one</p>
+
+<p>If <code>metadata.json</code> is not available, tries to use
+<code>Modulefile</code>. If <code>Modulefile</code> is not available, uses
+deffaults.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;metadata.json&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>metadata.json full path</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>content of metadata.json</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 30</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>metadata.json</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='ivar'>@metadata</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='ivar'>@metadata</span> <span class='op'>||=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.metadata</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                 <span class='label'>file_path:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>loaded</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+  <span class='ivar'>@metadata</span>
+<span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.metadata</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+               <span class='label'>file_path:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>not found</span><span class='tstring_end'>&#39;</span></span>
+
+  <span class='const'><span class='object_link'><a href="PuppetModule/Modulefile.html" title="MSMFGSpecHelper::PuppetModule::Modulefile (module)">Modulefile</a></span></span><span class='period'>.</span><span class='id identifier rubyid_read'><span class='object_link'><a href="PuppetModule/Modulefile.html#read-class_method" title="MSMFGSpecHelper::PuppetModule::Modulefile.read (method)">read</a></span></span>
+
+  <span class='id identifier rubyid_default_author'>default_author</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>DevOps Core &lt;devops-core at moneysupermarket.com&gt;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_dependencies'>dependencies</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PuppetModule/Modulefile.html" title="MSMFGSpecHelper::PuppetModule::Modulefile (module)">Modulefile</a></span></span><span class='period'>.</span><span class='id identifier rubyid_dependencies'><span class='object_link'><a href="PuppetModule/Modulefile.html#dependencies-class_method" title="MSMFGSpecHelper::PuppetModule::Modulefile.dependencies (method)">dependencies</a></span></span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_requirement'>requirement</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='op'>|</span>
+    <span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>name</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^MSMFG/puppet-</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>MSMFG/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>version_requirement</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_requirement'>requirement</span>
+    <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
+  <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>name</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="PuppetModule/Modulefile.html" title="MSMFGSpecHelper::PuppetModule::Modulefile (module)">Modulefile</a></span></span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.0.0</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>author</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="PuppetModule/Modulefile.html" title="MSMFGSpecHelper::PuppetModule::Modulefile (module)">Modulefile</a></span></span><span class='period'>.</span><span class='id identifier rubyid_author'>author</span> <span class='op'>||</span> <span class='id identifier rubyid_default_author'>default_author</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>license</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>proprietary</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>summary</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="PuppetModule/Modulefile.html" title="MSMFGSpecHelper::PuppetModule::Modulefile (module)">Modulefile</a></span></span><span class='period'>.</span><span class='id identifier rubyid_summary'>summary</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>source</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://github.com/MSMFG/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>issues_url</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://github.com/MSMFG/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>/issues</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>project_page</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://msmfg.github.io/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>operatingsystem_support</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span>
+      <span class='lbrace'>{</span>
+        <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>operatingsystem</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>CentOS</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>operatingsystemrelease</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>5.0</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>6.0</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>7.0</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+      <span class='rbrace'>}</span>
+    <span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>data_provider</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hiera</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>dependencies</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_dependencies'>dependencies</span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="name-class_method">
+  
+    .<strong>name</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>What an MSMFG puppet module should look like on the filesystem</p>
+
+<p>If not specified, module&#39;s name is guessed from <code>Modulefile</code>
+and then <code>metadata.json</code>, if available. If not, for example you
+are creating a new module, module&#39;s name is taken from environment
+variable <code>MODULE_NAME</code>. If environment variable is not present,
+module&#39;s name is taken from current working directory.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the puppet module</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 83</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span>
+  <span class='kw'>if</span> <span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PuppetModule/Modulefile.html" title="MSMFGSpecHelper::PuppetModule::Modulefile (module)">Modulefile</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>||</span>
+                <span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>name</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>||</span>
+                <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>MODULE_NAME</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>||</span>
+                <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='ivar'>@name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="name=-class_method">
+  
+    .<strong>name=</strong>(value)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Sets the name of the puppet module</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>name</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../MSMFGSpecHelper.html" title="MSMFGSpecHelper (module)">MSMFGSpecHelper</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="MSMFGSpecHelper::PuppetModule (module)">PuppetModule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'><span class='object_link'><a href="#name-class_method" title="MSMFGSpecHelper::PuppetModule.name (method)">name</a></span></span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msmfg-something</span><span class='tstring_end'>&#39;</span></span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The name of the puppet module.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the puppet module</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 105</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_name='>name=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.name</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>set to </span><span class='embexpr_beg'>#{</span><span class='ivar'>@name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="semantic_version-class_method">
+  
+    .<strong>semantic_version</strong>(ref)  &#x21d2; <tt>SemanticPuppet::Version</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Use <code>semantic_puppet</code> to parse version string.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ref</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the version string</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>SemanticPuppet::Version</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The <code>semantic_puppet</code> version object, or nil</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+225
+226
+227
+228
+229
+230
+231</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/puppet_module.rb', line 225</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_semantic_version'>semantic_version</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
+  <span class='const'>SemanticPuppet</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_error'>error</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span> <span class='label'>function:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>PuppetModule.semantic_version</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+              <span class='label'>file_path:</span> <span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='id identifier rubyid_error'>error</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Feb 24 20:59:49 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.8 (ruby-2.2.5).
+</div>
+
+    </div>
+  </body>
+</html>

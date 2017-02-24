@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.8
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-msmfg_spec_helper"><code>msmfg_spec_helper</code></h1>
+
+<h2 id="label-What+is+it-3F">What is it?</h2>
+
+<p>It&#39;s a ruby gem whose purpose is to make it easyer to develop puppet
+modules complieant to MSMFG guidelines. Other features are <a
+href="TODO.md">coming soon</a></p>
+
+<h2 id="label-How+do+I+install+it-3F">How do I install it?</h2>
+
+<h3 id="label-Requires">Requires</h3>
+<ul><li>
+<p><code>git</code></p>
+</li><li>
+<p><code>ruby</code> (&gt;= 2.1.5)</p>
+</li><li>
+<p><code>bundler</code> (to handle dependencies)</p>
+</li></ul>
+
+<h3 id="label-Recommended">Recommended</h3>
+<ul><li>
+<p><code>rvm</code>/<code>rbenv</code> (to handle multiple local version of
+<code>ruby</code>)</p>
+</li><li>
+<p><code>docker</code> (to run acceptance tests)</p>
+</li></ul>
+
+<h3 id="label-Windows+WARNINGS">Windows <strong>WARNINGS</strong></h3>
+<ul><li>
+<p>Be sure you install  <a
+href="https://github.com/oneclick/rubyinstaller/wiki/Development-Kit">DevKit</a></p>
+</li><li>
+<p><code>ruby-augeas</code> will <strong>NOT</strong> install</p>
+</li></ul>
+
+<h3 id="label-Steps">Steps</h3>
+
+<pre class="code ruby"><code class="ruby">gem install bundler
+git clone https://github.com/lucadevitis-msm/msmfg_spec_helper
+cd msmfg_spec_helper
+bundle install
+bundle exec rake validate install</code></pre>
+
+<h2 id="label-What+does+it+provide-3F">What does it provide?</h2>
+<ol><li>
+<p><a href="#logging-and-unified-output">Logging support</a></p>
+</li><li>
+<p><a href="#msmfg-puppet-module-create">msmfg-puppet-module-create</a></p>
+</li><li>
+<p><a href="#can-create-an-entire-module-skeleton-from-scratch">Can create an
+entire module skeleton from scratch</a></p>
+</li><li>
+<p><a href="#can-add-missing-files-to-an-already-existsing-module">Can add
+missing files to an already existsing module</a></p>
+</li><li>
+<p><a href="#will-add-basic-catalogue-and-acceptance-specs">Will add basic
+catalogue and acceptance specs</a></p>
+</li><li>
+<p><a href="#msmfg-puppet-module-validate">msmfg-puppet-module-validate</a></p>
+</li><li>
+<p><a href="#can-validate-the-module">Can validate the module</a></p>
+</li><li>
+<p><a href="#check-syntax">Check syntax</a> (anything)</p>
+</li><li>
+<p><a href="#check-ruby-style">Check ruby style</a></p>
+</li><li>
+<p><a href="#check-manifests-style">Check manifests style</a></p>
+</li><li>
+<p>Check documentation coverage (WIP)</p>
+</li><li>
+<p><a href="#runs-msmfg-acceptance-spes-for-puppet-modules">Runs MSMFG
+acceptance spes for Puppet Modules</a></p>
+</li><li>
+<p>You can cherry-pick the tasks and <a href="#no-brainer-rakefile">use local
+Rakefile</a></p>
+</li><li>
+<p><a href="#no-brainer-gems-bundle">No-brainer gems bundle</a></p>
+</li><li>
+<p><a href="#no-brainer-spec-helpers">No-brainer spec helpers</a></p>
+</li></ol>
+
+<h2 id="label-Logging+and+unified+output">Logging and unified output</h2>
+
+<p>Each <code>rake</code> task, class or method in this library, logs messages
+through a <code>::Logger</code> compliant class. Logs are displayed to
+screen but also turned into a <code>JSON</code> document and sent to
+<code>Syslog</code> service. Few formatting extensions have been
+implemented for common ruby ecosystem tools, in order to provide
+consistent, unified and colored output. You can configure the logging
+behaviour with environment variable <code>LOG_LEVEL</code> by setting it to
+one of the following strings as threshold:</p>
+<ul><li>
+<p><code>DEBUG</code></p>
+</li><li>
+<p><code>INFO</code></p>
+</li><li>
+<p><code>WARN</code></p>
+</li><li>
+<p><code>ERROR</code></p>
+</li><li>
+<p><code>FATAL</code></p>
+</li><li>
+<p><code>UNKNOWN</code></p>
+</li></ul>
+
+<p>By default, logging has a threshold level of <code>WARN</code>, and does
+not print anything out.</p>
+
+<h2 id="label-msmfg-puppet-module-create"><code>msmfg-puppet-module-create</code></h2>
+
+<p>It actually is a <code>rake</code> application that accepts a
+<code>help</code> task. All standard <code>rake</code> options are also
+available.</p>
+
+<h3 id="label-Can+create+an+entire+module+skeleton+from+scratch">Can create an entire module skeleton from scratch</h3>
+
+<p>If you want to create a brand new module, you can use
+<code>msmfg-create-module</code>. You have 3 options: Using environment
+variable <code>MODULE_NAME</code> <code>sh MODULE_NAME=puppet-something
+msmfg-puppet-module-create </code> Using rake argument variable
+<code>MODULE_NAME</code> <code>sh msmfg-puppet-module-create
+MODULE_NAME=puppet-something </code> Letting
+<code>msmfg-puppet-module-create</code> to guess the module&#39;s name from
+the current working directory <code>sh $ mkdir puppet-something $ cd
+puppet-something $ msmfg-puppet-module-create </code> Example output:
+<code> $ LOG_LEVEL=INFO LOG_PERROR=1 msmfg-puppet-module-create
+luca@centos6:/tmp/puppet-something$ LOG_LEVEL=INFO
+msmfg-puppet-module-create I: create: metadata.json: OK I: create:
+manifests: OK I: create: manifests/init.pp: OK I: create: .fixtures.yml: OK
+I: create: Rakefile: OK I: create: Gemfile: OK I: create: Gemfile.lock: OK
+I: create: spec/acceptance/nodesets: OK I: create:
+spec/acceptance/nodesets/default.yml: OK I: create: spec/spec_helper.rb: OK
+I: create: spec/spec_helper_acceptance.rb: OK I: create: spec/classes: OK
+I: create: spec/classes/ifetoolbelt_spec.rb: OK I: create:
+spec/acceptance/ifetoolbelt_spec.rb: OK </code></p>
+
+<h3 id="label-Can+add+missing+files+to+an+already+existsing+module">Can add missing files to an already existsing module</h3>
+
+<p>If you already have a module and you want to let this gem fill the gap, you
+can just run the <code>msmfg-puppet-module-create</code> command. The
+script will not override existing files.
+<code>msmfg-puppet-module-create</code> will try to guess the module name
+from the <code>metadata.json</code> file or current working directory
+basename. <code>sh $ cd /path/to/your/puppet-something $
+msmfg-create-module </code></p>
+
+<h3 id="label-Will+add+basic+catalogue+and+acceptance+specs">Will add basic catalogue and acceptance specs</h3>
+
+<p>The script will take care of creating <code>spec/spec_helper.rb</code>,
+<code>spec/spec_helper_acceptance</code> and
+<code>spec/acceptance/nodesets/default.yml</code> for you. Gven a module
+name like <code>puppet-something</code>, the script will also:</p>
+<ol><li>
+<p>Create a basic catalogue spec <code>spec/classes/something_spec.rb</code>
+that is supposed to test the catalogue compilation.</p>
+</li><li>
+<p>Create a basic acceptance spec
+<code>spec/acceptance/something_spec.rb</code> that will try to apply the
+class manifest, twice.</p>
+</li></ol>
+
+<p>Automatic guess of requirements is on the way. In the mean while you have
+to configure <a
+href="https://github.com/puppetlabs/puppetlabs_spec_helper#using-fixtures">.fixtures.yaml</a></p>
+
+<h2 id="label-msmfg-puppet-module-validate"><code>msmfg-puppet-module-validate</code></h2>
+
+<p>It actually is a <code>rake</code> application that accepts a
+<code>help</code> task. All standard <code>rake</code> options are also
+available.</p>
+
+<h3 id="label-Can+validate+the+module">Can validate the module</h3>
+
+<p>You can validate the current module against the currently implemented MSMFG
+acceptance specs for puppet modules: <code> $ LOG_LEVEL=INFO
+msmfg-puppet-module-validate I: syntax: Gemfile: OK I: syntax: Rakefile: OK
+I: syntax: spec/acceptance/ifetoolbelt_spec.rb: OK I: syntax:
+spec/classes/ifetoolbelt_spec.rb: OK I: syntax: spec/spec_helper.rb: OK I:
+syntax: spec/spec_helper_acceptance.rb: OK I: syntax: manifests/init.pp: OK
+I: syntax: metadata.json: OK I: lint: metadata.json: OK I: lint:
+manifests/init.pp: OK I: lint: Gemfile: OK I: lint: Rakefile: OK I: lint:
+spec/acceptance/ifetoolbelt_spec.rb: OK I: lint:
+spec/classes/ifetoolbelt_spec.rb: OK I: lint: spec/spec_helper.rb: OK I:
+lint: spec/spec_helper_acceptance.rb: OK I: docs: manifests/init.pp: OK
+</code></p>
+
+<h4 id="label-Check+syntax">Check syntax</h4>
+
+<p>Check any sort of syntax: <code>sh $ msmfg-puppet-module-validate syntax
+</code> You could also check specific a type of syntax: <code> $
+msmfg-puppet-module-validate syntax:ruby </code></p>
+
+<h4 id="label-Check+ruby+style">Check ruby style</h4>
+
+<pre class="code ruby"><code class="ruby">$ msmfg-puppet-module-validate ruby_style</code></pre>
+
+<h4 id="label-Check+manifests+style">Check manifests style</h4>
+
+<pre class="code ruby"><code class="ruby">$ msmfg-puppet-module-validate puppet_style</code></pre>
+
+<h4 id="label-Runs+MSMFG+acceptance+spes+for+Puppet+Modules">Runs MSMFG acceptance spes for Puppet Modules</h4>
+
+<pre class="code ruby"><code class="ruby">$ msmfg-puppet-module-validate msmfg_acceptance_spec
+Puppet module &quot;skeleton&quot;
+  File &quot;metadata.json&quot;
+    should be file
+    metadata
+      should include {&quot;version&quot; =&gt; (match /^[0-9]+(\.[0-9]+){0,2}$/)}
+      should include {&quot;author&quot; =&gt; (match /at moneysupermarket\.com/)}
+      should include {&quot;source&quot; =&gt; (match /https:\/\/github.com\/MSMFG\/msmfg-skeleton/)}
+      should include {&quot;project_page&quot; =&gt; (match /https:\/\/github.com\/MSMFG\/msmfg-skeleton/)}
+      should include {&quot;issues_url&quot; =&gt; (match /https:\/\/github.com\/MSMFG\/msmfg-skeleton\/issues/)}
+  File &quot;manifests/init.pp&quot;
+    should be file
+    content
+      should contain &quot;class skeleton&quot;
+  Directory &quot;specs&quot;
+    should not be empty
+    should include at least 1 class spec
+    should include at least 1 acceptance spec
+  File &quot;.fixtures.yaml&quot;
+    should be file
+    fixtures
+      should define a symlink to source_dir
+  File &quot;spec/acceptance/nodesets/default.yml&quot;
+    should be file
+    nodeset
+      should configure a masterless environment
+      should include a default host
+  File &quot;Gemfile&quot;
+    should be file
+    content
+      should contain &quot;gem &#39;msmfg_spec_helper&#39;&quot;
+  File &quot;Gemfile.lock&quot;
+    should be file
+  File &quot;Rakefile&quot;
+    should be file
+    should contain &quot;require &#39;msmfg_spec_helper/rake_tasks/puppet_module&quot;
+
+Finished in 0.05903 seconds (files took 0.87694 seconds to load)
+21 examples, 0 failures</code></pre>
+
+<h2 id="label-No-brainer+Rakefile">No-brainer Rakefile</h2>
+
+<p>There are multiple task libraries that you could <code>require</code> in
+your <code>Rakefile</code>:</p>
+<ul><li>
+<p><code>msmfg_spec_helper/rake_tasks/puppet_module</code>: loads/configure
+any possible task</p>
+</li><li>
+<p><code>msmfg_spec_helper/rake_tasks/puppet_module/create</code>: defines
+files/directories creation tasks</p>
+</li><li>
+<p><code>msmfg_spec_helper/rake_tasks/puppet_module/validate</code>: loads all
+validation tasks:</p>
+<ul><li>
+<p><code>msmfg_spec_helper/rake_tasks/syntax</code>: see above</p>
+</li><li>
+<p><code>msmfg_spec_helper/rake_tasks/puppet_style</code>: see above</p>
+</li><li>
+<p><code>msmfg_spec_helper/rake_tasks/ruby_style</code>: see above</p>
+</li><li>
+<p><code>msmfg_spec_helper/rake_tasks/docs_coverage</code>: see above</p>
+</li></ul>
+</li><li>
+<p><code>msmfg_spec_helper/rake_tasks/puppet_module/spec</code>: defines
+puppet specs and acceptance specs tasks</p>
+</li><li>
+<p><code>msmfg_spec_helper/rake_tasks/syntax</code>: defins all syntax
+checking tasks</p>
+</li><li>
+<p><code>msmfg_spec_helper/rake_tasks/puppet_style</code>: defines the puppet
+style checking task</p>
+</li><li>
+<p><code>msmfg_spec_helper/rake_tasks/ruby_style</code>: defines the ruby
+style checking task</p>
+</li><li>
+<p><code>msmfg_spec_helper/rake_tasks/docs_coverage</code>: defines the
+documentation coverage checking task</p>
+</li></ul>
+
+<p>When you create the <code>Rakefile</code> with
+<code>msmfg-puppet-module-create</code>, it will look like <code>ruby
+require &#39;msmfg_spec_helper/rake_tasks/puppet_module&#39; </code></p>
+
+<h2 id="label-No-brainer+gems+bundle">No-brainer gems bundle</h2>
+
+<p>If you write your <code>Gemfile</code> like: <code>ruby source
+&#39;https://rubygems.org&#39; gem &#39;msmfg_spec_helper&#39; </code> and
+run <code>bundle install</code> this gem will require all the goodies you
+might need to develop your module (currently around 139 gems).</p>
+
+<p>When you create the <code>Gemfile</code> with
+<code>msmfg-puppet-module-create</code>, it will look liket the example
+above.</p>
+
+<h2 id="label-No-brainer+spec+helpers">No-brainer spec helpers</h2>
+
+<p>If you write yout <code>specs/spec_helper.rb</code> like: <code>ruby
+require &#39;msmfg_spec_helper/puppet_module/spec_helper_acceptance&#39;
+</code> and your <code>specs/spec_helper_acceptance.rb</code> like:
+<code>ruby require &#39;msmfg_spec_helper/puppet_module/spec_helper&#39;
+</code> Those 2 <code>ruby</code> libs will take care of the specs
+configuration</p>
+
+<p>When you create the <code>specs/spec_helper.rb</code> and
+<code>specs/spec_helper_acceptance.rb</code> with
+<code>msmfg-puppet-module-create</code>, they will look liket the examples
+above.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Fri Feb 24 20:59:48 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.8 (ruby-2.2.5).
+</div>
+
+    </div>
+  </body>
+</html>

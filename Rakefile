@@ -10,3 +10,8 @@ require 'bundler/gem_tasks'
 
 desc 'Run syntax check, module spec and linters'
 task validate: [:syntax, :lint, :coverage]
+
+task :build do
+  patterns = PuppetStrings::DEFAULT_SEARCH_PATTERNS
+  PuppetStrings.generate(patterns, yard_args: %w(--output-dir docs))
+end

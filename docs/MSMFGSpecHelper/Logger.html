@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: MSMFGSpecHelper::Logger
+  
+    &mdash; Documentation by YARD 0.9.8
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "MSMFGSpecHelper::Logger";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (L)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../MSMFGSpecHelper.html" title="MSMFGSpecHelper (module)">MSMFGSpecHelper</a></span></span>
+     &raquo; 
+    <span class="title">Logger</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: MSMFGSpecHelper::Logger
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">MSMFGSpecHelper::Logger</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd>Singleton</dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/msmfg_spec_helper/logger.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Prepares and returns a customized <code>::Logger</code> like instance.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../MSMFGSpecHelper.html" title="MSMFGSpecHelper (module)">MSMFGSpecHelper</a></span></span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_progname'><span class='object_link'><a href="#progname-instance_method" title="MSMFGSpecHelper::Logger#progname (method)">progname</a></span></span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msmfg-puppet-module-validate</span><span class='tstring_end'>&#39;</span></span>
+<span class='const'><span class='object_link'><a href="../MSMFGSpecHelper.html" title="MSMFGSpecHelper (module)">MSMFGSpecHelper</a></span></span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_level'><span class='object_link'><a href="#level-instance_method" title="MSMFGSpecHelper::Logger#level (method)">level</a></span></span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>Logger</span><span class='op'>::</span><span class='const'>INFO</span>
+
+<span class='const'><span class='object_link'><a href="../MSMFGSpecHelper.html" title="MSMFGSpecHelper (module)">MSMFGSpecHelper</a></span></span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Something is going on...</span><span class='tstring_end'>&#39;</span></span></code></pre>
+    
+  </div>
+
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#level-instance_method" title="#level (instance method)">#<strong>level</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the log level threshold.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#progname-instance_method" title="#progname (instance method)">#<strong>progname</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the currently configured program name.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#logging_method-class_method" title="logging_method (class method)">.<strong>logging_method</strong>(severity)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Define a logging method based on the severity level.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#debug-instance_method" title="#debug (instance method)">#<strong>debug</strong>(log)  &#x21d2; true </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Shortcut method to quickly log a message with debug severity.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#error-instance_method" title="#error (instance method)">#<strong>error</strong>(log)  &#x21d2; true </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Shortcut method to quickly log a message with error severity.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#fatal-instance_method" title="#fatal (instance method)">#<strong>fatal</strong>(log)  &#x21d2; true </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Shortcut method to quickly log a message with fatal severity.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#info-instance_method" title="#info (instance method)">#<strong>info</strong>(log)  &#x21d2; true </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Shortcut method to quickly log a message with info severity.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>  &#x21d2; ::Logger </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns an already confured <code>::Logger</code> instance.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#loggers-instance_method" title="#loggers (instance method)">#<strong>loggers</strong>  &#x21d2; Array </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the list of <code>::Logger</code> compatible objects.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unknown-instance_method" title="#unknown (instance method)">#<strong>unknown</strong>(log)  &#x21d2; true </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Shortcut method to quickly log a message with unknown severity.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#warn-instance_method" title="#warn (instance method)">#<strong>warn</strong>(log)  &#x21d2; true </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Shortcut method to quickly log a message with warn severity.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>  &#x21d2; <tt>::Logger</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns an already confured <code>::Logger</code> instance</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 111</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
+  <span class='op'>::</span><span class='const'>Syslog</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_syslog'>syslog</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>Syslog</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_progname'>progname</span><span class='comma'>,</span>
+                                          <span class='op'>::</span><span class='const'>Syslog</span><span class='op'>::</span><span class='const'>LOG_PID</span><span class='comma'>,</span>
+                                          <span class='op'>::</span><span class='const'>Syslog</span><span class='op'>::</span><span class='const'>LOG_USER</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_syslog'>syslog</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>Syslog</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_syslog'>syslog</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='op'>=</span> <span class='id identifier rubyid_level'>level</span>
+  <span class='id identifier rubyid_syslog'>syslog</span><span class='period'>.</span><span class='id identifier rubyid_formatter'>formatter</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_log'>log</span><span class='op'>|</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span><span class='lparen'>(</span><span class='id identifier rubyid_log'>log</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_loggers'>loggers</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_syslog'>syslog</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+
+  <span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>STDOUT</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_progname'>progname</span> <span class='op'>=</span> <span class='id identifier rubyid_progname'>progname</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='op'>=</span> <span class='id identifier rubyid_level'>level</span>
+  <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_formatter'>formatter</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_severity'>severity</span><span class='comma'>,</span> <span class='id identifier rubyid__datetime'>_datetime</span><span class='comma'>,</span> <span class='id identifier rubyid__progname'>_progname</span><span class='comma'>,</span> <span class='id identifier rubyid_log'>log</span><span class='op'>|</span>
+    <span class='id identifier rubyid_parts'>parts</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_parts'>parts</span> <span class='op'>&lt;&lt;</span> <span class='kw'>case</span> <span class='id identifier rubyid_severity'>severity</span>
+             <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>DEBUG</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>then</span> <span class='id identifier rubyid_severity'>severity</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_color'>color</span><span class='lparen'>(</span><span class='symbol'>:green</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bright'>bright</span>
+             <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>INFO</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>then</span> <span class='id identifier rubyid_severity'>severity</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_color'>color</span><span class='lparen'>(</span><span class='symbol'>:blue</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bright'>bright</span>
+             <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>WARN</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>then</span> <span class='id identifier rubyid_severity'>severity</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_color'>color</span><span class='lparen'>(</span><span class='symbol'>:orangered</span><span class='rparen'>)</span>
+             <span class='kw'>else</span> <span class='id identifier rubyid_severity'>severity</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_color'>color</span><span class='lparen'>(</span><span class='symbol'>:red</span><span class='rparen'>)</span>
+             <span class='kw'>end</span>
+    <span class='id identifier rubyid_parts'>parts</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='id identifier rubyid_log'>log</span><span class='lbracket'>[</span><span class='symbol'>:function</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_log'>log</span><span class='lbracket'>[</span><span class='symbol'>:task</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_color'>color</span><span class='lparen'>(</span><span class='symbol'>:yellow</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_parts'>parts</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='id identifier rubyid_log'>log</span><span class='lbracket'>[</span><span class='symbol'>:file_path</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_color'>color</span><span class='lparen'>(</span><span class='symbol'>:cyan</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_parts'>parts</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_log'>log</span><span class='lbracket'>[</span><span class='symbol'>:file_line</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_parts'>parts</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_log'>log</span><span class='lbracket'>[</span><span class='symbol'>:check_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_color'>color</span><span class='lparen'>(</span><span class='symbol'>:magenta</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_log'>log</span><span class='lbracket'>[</span><span class='symbol'>:check_name</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_parts'>parts</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='id identifier rubyid_log'>log</span><span class='lbracket'>[</span><span class='symbol'>:text</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>OK</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_parts'>parts</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>: </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_loggers'>loggers</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="level=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="level-instance_method">
+  
+    #<strong>level</strong>  &#x21d2; <tt>Integer</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns the log level threshold</p>
+
+<p>If it is not set, tries to use the value from <code>LOG_LEVEL</code>
+environment variable. If no environment variable is set, use
+<code>::Logger::WARN</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the value of <code>@level</code> attribute</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>NameError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if environment variable does not match any known log level</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+83
+84
+85</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 83</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_level'>level</span>
+  <span class='ivar'>@level</span> <span class='op'>||=</span> <span class='op'>::</span><span class='const'>Logger</span><span class='op'>::</span><span class='const'>Severity</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>LOG_LEVEL</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>WARN</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="progname=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="progname-instance_method">
+  
+    #<strong>progname</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns the currently configured program name</p>
+
+<p>If it is not set, sets the value to “msmfg_spec_helper”.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the value of <code>@progname</code> attribute</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 59</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_progname'>progname</span>
+  <span class='ivar'>@progname</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msmfg_spec_helper</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="logging_method-class_method">
+  
+    .<strong>logging_method</strong>(severity)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+<p class="note returns_void">This method returns an undefined value.</p>
+<p>Define a logging method based on the severity level</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>severity</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the severity level</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_logging_method'>logging_method</span><span class='lparen'>(</span><span class='id identifier rubyid_severity'>severity</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='id identifier rubyid_severity'>severity</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='op'>|</span>
+    <span class='id identifier rubyid_loggers'>loggers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_logger'>logger</span><span class='op'>|</span> <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_severity'>severity</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="debug-instance_method">
+  
+    #<strong>debug</strong>(log)  &#x21d2; <tt>true</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Shortcut method to quickly log a message with debug severity</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>log</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the log information</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the result the logging</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+44</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 44</span>
+
+<span class='id identifier rubyid_logging_method'>logging_method</span> <span class='symbol'>:debug</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="error-instance_method">
+  
+    #<strong>error</strong>(log)  &#x21d2; <tt>true</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Shortcut method to quickly log a message with error severity</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>log</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the log information</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the result the logging</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 47</span>
+
+<span class='id identifier rubyid_logging_method'>logging_method</span> <span class='symbol'>:error</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="fatal-instance_method">
+  
+    #<strong>fatal</strong>(log)  &#x21d2; <tt>true</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Shortcut method to quickly log a message with fatal severity</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>log</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the log information</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the result the logging</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 48</span>
+
+<span class='id identifier rubyid_logging_method'>logging_method</span> <span class='symbol'>:fatal</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="info-instance_method">
+  
+    #<strong>info</strong>(log)  &#x21d2; <tt>true</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Shortcut method to quickly log a message with info severity</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>log</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the log information</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the result the logging</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 45</span>
+
+<span class='id identifier rubyid_logging_method'>logging_method</span> <span class='symbol'>:info</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="loggers-instance_method">
+  
+    #<strong>loggers</strong>  &#x21d2; <tt>Array</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns the list of <code>::Logger</code> compatible objects</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the lsit of loggers</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+101
+102
+103</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 101</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_loggers'>loggers</span>
+  <span class='ivar'>@loggers</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unknown-instance_method">
+  
+    #<strong>unknown</strong>(log)  &#x21d2; <tt>true</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Shortcut method to quickly log a message with unknown severity</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>log</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the log information</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the result the logging</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 49</span>
+
+<span class='id identifier rubyid_logging_method'>logging_method</span> <span class='symbol'>:unknown</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="warn-instance_method">
+  
+    #<strong>warn</strong>(log)  &#x21d2; <tt>true</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Shortcut method to quickly log a message with warn severity</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>log</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the log information</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the result the logging</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+46</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/msmfg_spec_helper/logger.rb', line 46</span>
+
+<span class='id identifier rubyid_logging_method'>logging_method</span> <span class='symbol'>:warn</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Feb 24 20:59:49 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.8 (ruby-2.2.5).
+</div>
+
+    </div>
+  </body>
+</html>
