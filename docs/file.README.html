@@ -177,18 +177,21 @@ available.</p>
 <p>If you want to create a brand new module, you can use
 <code>msmfg-create-module</code>. You have 3 options: Using environment
 variable <code>MODULE_NAME</code> <code>sh MODULE_NAME=puppet-something
-msmfg-puppet-module-create </code> Using rake argument variable
-<code>MODULE_NAME</code> <code>sh msmfg-puppet-module-create
-MODULE_NAME=puppet-something </code> Letting
-<code>msmfg-puppet-module-create</code> to guess the module&#39;s name from
-the current working directory <code>sh $ mkdir puppet-something $ cd
-puppet-something $ msmfg-puppet-module-create </code> Example output:
-<code> $ LOG_LEVEL=INFO LOG_PERROR=1 msmfg-puppet-module-create
-luca@centos6:/tmp/puppet-something$ LOG_LEVEL=INFO
-msmfg-puppet-module-create I: create: metadata.json: OK I: create:
-manifests: OK I: create: manifests/init.pp: OK I: create: .fixtures.yml: OK
-I: create: Rakefile: OK I: create: Gemfile: OK I: create: Gemfile.lock: OK
-I: create: spec/acceptance/nodesets: OK I: create:
+msmfg-puppet-module-create </code></p>
+
+<p>Using rake argument variable <code>MODULE_NAME</code> <code>sh
+msmfg-puppet-module-create MODULE_NAME=puppet-something </code></p>
+
+<p>Letting <code>msmfg-puppet-module-create</code> to guess the module&#39;s
+name from the current working directory <code>sh $ mkdir puppet-something $
+cd puppet-something $ msmfg-puppet-module-create </code></p>
+
+<p>Example output: <code> $ LOG_LEVEL=INFO LOG_PERROR=1
+msmfg-puppet-module-create luca@centos6:/tmp/puppet-something$
+LOG_LEVEL=INFO msmfg-puppet-module-create I: create: metadata.json: OK I:
+create: manifests: OK I: create: manifests/init.pp: OK I: create:
+.fixtures.yml: OK I: create: Rakefile: OK I: create: Gemfile: OK I: create:
+Gemfile.lock: OK I: create: spec/acceptance/nodesets: OK I: create:
 spec/acceptance/nodesets/default.yml: OK I: create: spec/spec_helper.rb: OK
 I: create: spec/spec_helper_acceptance.rb: OK I: create: spec/classes: OK
 I: create: spec/classes/ifetoolbelt_spec.rb: OK I: create:
@@ -247,7 +250,9 @@ lint: spec/spec_helper_acceptance.rb: OK I: docs: manifests/init.pp: OK
 <h4 id="label-Check+syntax">Check syntax</h4>
 
 <p>Check any sort of syntax: <code>sh $ msmfg-puppet-module-validate syntax
-</code> You could also check specific a type of syntax: <code> $
+</code></p>
+
+<p>You could also check specific a type of syntax: <code> $
 msmfg-puppet-module-validate syntax:ruby </code></p>
 
 <h4 id="label-Check+ruby+style">Check ruby style</h4>
@@ -346,9 +351,10 @@ require &#39;msmfg_spec_helper/rake_tasks/puppet_module&#39; </code></p>
 <h2 id="label-No-brainer+gems+bundle">No-brainer gems bundle</h2>
 
 <p>If you write your <code>Gemfile</code> like: <code>ruby source
-&#39;https://rubygems.org&#39; gem &#39;msmfg_spec_helper&#39; </code> and
-run <code>bundle install</code> this gem will require all the goodies you
-might need to develop your module (currently around 139 gems).</p>
+&#39;https://rubygems.org&#39; gem &#39;msmfg_spec_helper&#39; </code></p>
+
+<p>and run <code>bundle install</code> this gem will require all the goodies
+you might need to develop your module (currently around 139 gems).</p>
 
 <p>When you create the <code>Gemfile</code> with
 <code>msmfg-puppet-module-create</code>, it will look liket the example
@@ -358,10 +364,12 @@ above.</p>
 
 <p>If you write yout <code>specs/spec_helper.rb</code> like: <code>ruby
 require &#39;msmfg_spec_helper/puppet_module/spec_helper_acceptance&#39;
-</code> and your <code>specs/spec_helper_acceptance.rb</code> like:
-<code>ruby require &#39;msmfg_spec_helper/puppet_module/spec_helper&#39;
-</code> Those 2 <code>ruby</code> libs will take care of the specs
-configuration</p>
+</code></p>
+
+<p>and your <code>specs/spec_helper_acceptance.rb</code> like: <code>ruby
+require &#39;msmfg_spec_helper/puppet_module/spec_helper&#39; </code></p>
+
+<p>Those 2 <code>ruby</code> libs will take care of the specs configuration</p>
 
 <p>When you create the <code>specs/spec_helper.rb</code> and
 <code>specs/spec_helper_acceptance.rb</code> with
@@ -370,7 +378,7 @@ above.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Fri Feb 24 20:59:48 2017 by
+  Generated on Fri Feb 24 21:53:08 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.8 (ruby-2.2.5).
 </div>
