@@ -1,6 +1,6 @@
-require 'msmfg_spec_helper/rake_tasks/ruby_style'
+$VERBOSE = nil
+require 'msmfg_spec_helper/rake_tasks/lint'
 require 'msmfg_spec_helper/rake_tasks/syntax'
-require 'msmfg_spec_helper/rake_tasks/docs_coverage'
 require 'bundler/gem_tasks'
 
 # Yardstick::Rake::Verify.new(:yard_coverage) do |verify|
@@ -8,4 +8,4 @@ require 'bundler/gem_tasks'
 # end
 
 desc 'Run syntax check, module spec and linters'
-task :validate, [:module_path] => [:syntax, :ruby_style]
+task validate: [:syntax, :lint]

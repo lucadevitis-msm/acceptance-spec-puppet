@@ -1,8 +1,6 @@
 require 'msmfg_spec_helper'
-require 'msmfg_spec_helper/rake_tasks/puppet_style'
-require 'msmfg_spec_helper/rake_tasks/ruby_style'
+require 'msmfg_spec_helper/rake_tasks/lint'
 require 'msmfg_spec_helper/rake_tasks/syntax'
-require 'msmfg_spec_helper/rake_tasks/docs_coverage'
 require 'rspec/core/rake_task'
 
 desc 'Check the module against MSMFG acceptance specs'
@@ -17,7 +15,4 @@ RSpec::Core::RakeTask.new :msmfg_acceptance_spec do |rspec|
 end
 
 desc 'Run syntax check, module spec and linters'
-task validate: [:syntax,
-                :ruby_style,
-                :puppet_style,
-                :msmfg_acceptance_spec]
+task validate: [:syntax, :lint, :msmfg_acceptance_spec]

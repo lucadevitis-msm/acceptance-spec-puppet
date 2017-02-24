@@ -1,96 +1,85 @@
+require 'json'
 require 'metadata_json_lint'
 require 'msmfg_spec_helper'
+require 'open3'
 require 'puppet-syntax'
 require 'rake'
+require 'yaml'
 
 # rubocop:disable Metrics/BlockLength
 namespace :syntax do
   include MSMFGSpecHelper::FilesListsMixIn
+  logger = MSMFGSpecHelper::Logger.instance
 
-  desc 'Check ruby files syntax (ruby -c)'
+  desc 'Check ruby files syntax'
   task :ruby do
+    report = { task: 'syntax', file_type: 'ruby' }
     ruby_files.each do |rb|
-      logger = MSMFGSpecHelper::Logger.instance
-      begin
-        sh "ruby -c #{rb} &> /dev/null", verbose: false
-        logger.info("task: syntax: ruby: OK: #{rb}")
-      rescue => e
-        logger.fatal("task: syntax: ruby: KO: #{rb}: #{e}")
-        raise
+      Open3.popen2e('ruby', '-c', rb) do |_, output, thread|
+        if thread.value.exitstatus != 0
+          _, line, message = output.read.lines.first.split(':', 3)
+          logger.error report.merge(file_path: rb,
+                                    file_line: line,
+                                    text: message.strip)
+          abort
+        end
+        logger.info report.merge(file_path: rb)
       end
-    end
-  end
-
-  desc 'Check metadata.json syntax (metadata-json-lint)'
-  task :metadata_json do
-    logger = MSMFGSpecHelper::Logger.instance
-    begin
-      if ::File.file? 'metadata.json'
-        MetadataJsonLint.options[:strict_dependencies] = true
-        MetadataJsonLint.parse('metadata.json')
-        logger.info('task: syntax: metadata_json: OK')
-      end
-    rescue => e
-      logger.fatal("task: syntax: metadata_json: KO: #{e}")
-      raise
     end
   end
 
   desc 'Check puppet manifests syntax'
   task :manifests do
-    logger = MSMFGSpecHelper::Logger.instance
+    report = { task: 'syntax', file_type: 'manifest' }
     syntax = PuppetSyntax::Manifests.new
     manifests.each do |manifest|
       errors, = syntax.check([manifest])
-      if errors.any?
-        errors.each do |e|
-          logger.fatal("task: syntax: manifests: KO: #{manifest}: #{e}")
-        end
-        abort
+      errors.each do |error|
+        logger.error report.merge(file_path: manifest, text: error)
       end
-      logger.info("task: syntax: manifests: OK: #{manifest}")
+      abort if errors.any?
+      logger.info report.merge(file_path: manifest)
     end
   end
 
   desc 'Check templates syntax'
   task :templates do
-    logger = MSMFGSpecHelper::Logger.instance
+    report = { task: 'syntax', file_type: 'template' }
     syntax = PuppetSyntax::Templates.new
     templates.each do |template|
       errors = syntax.check([template])
-      if errors.any?
-        errors.each do |e|
-          logger.fatal("task: syntax: templates: KO: #{template}: #{e}")
-        end
-        abort
+      errors.each do |error|
+        logger.error report.merge(file_path: template, text: error)
       end
-      logger.info("task: syntax: templates: OK: #{template}")
+      abort if errors.any?
+      logger.info report.merge(file_path: template)
     end
   end
 
-  desc 'Check hieradata syntax'
-  task :hieradata do
-    logger = MSMFGSpecHelper::Logger.instance
-    hieradata.each do |data|
+  desc 'Check YAML files syntax'
+  task :yaml do
+    report = { task: 'syntax', file_type: 'yaml' }
+    yaml_files.each do |path|
       begin
-        YAML.safe_load(data)
-        logger.info("task: syntax: hieradata: OK: #{data}")
-      rescue => e
-        logger.fatal("task: syntax: hieradata: KO: #{data}: #{e}")
+        YAML.safe_load(path)
+        logger.info report.merge(file_path: path)
+      rescue => error
+        logger.error report.merge(file_path: path, text: error)
         raise
       end
     end
   end
 
-  desc 'Check fragment syntax'
-  task :fragments do
+  desc 'Check JSON files syntax'
+  task :json do
+    report = { task: 'syntax', file_type: 'json' }
     logger = MSMFGSpecHelper::Logger.instance
-    fragments.each do |fragment|
+    json_files.each do |path|
       begin
-        YAML.safe_load(fragment)
-        logger.info("task: syntax: fragments: OK: #{fragment}")
-      rescue => e
-        logger.fatal("task: syntax: fragments: KO: #{fragment}: #{e}")
+        JSON.parse(File.read(path))
+        logger.info report.merge(file_path: path)
+      rescue => error
+        logger.error report.merge(file_path: path, text: error)
         raise
       end
     end
@@ -101,9 +90,8 @@ end
 desc 'Run all the syntax checks'
 task :syntax do
   [:'syntax:ruby',
-   :'syntax:metadata_json',
    :'syntax:manifests',
    :'syntax:templates',
-   :'syntax:hieradata',
-   :'syntax:fragments'].each { |syntax_check| Rake::Task[syntax_check].invoke }
+   :'syntax:yaml',
+   :'syntax:json'].each { |syntax_check| Rake::Task[syntax_check].invoke }
 end

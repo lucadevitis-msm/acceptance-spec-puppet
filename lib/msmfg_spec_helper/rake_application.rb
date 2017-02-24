@@ -14,10 +14,12 @@ module MSMFGSpecHelper # :nodoc:
   #
   # @api private
   def self.rake_application(app_name)
-    MSMFGSpecHelper::Logger.progname = app_name
+    MSMFGSpecHelper::Logger.instance.progname = app_name
+    $VERBOSE = nil
     if ARGV.include? '--trace'
       ENV['LOG_LEVEL'] = 'DEBUG'
       ENV['LOG_PERROR'] = 'true'
+      $VERBOSE = true
     end
     Rake.application.standard_exception_handling do
       Rake.application.init(app_name)

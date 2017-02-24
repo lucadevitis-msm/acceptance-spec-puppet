@@ -7,9 +7,9 @@ MSMFGSpecHelper::PuppetModule.directories.each do |path|
   file path do |dir|
     begin
       mkdir_p dir.name, verbose: false
-      logger.info("task: file: OK: #{dir.name}")
+      logger.info("create: directory: #{dir.name}")
     rescue => e
-      logger.info("task: file: KO: #{dir.name}: #{e}")
+      logger.error("create: directory: #{dir.name}: #{e}")
       raise
     end
   end
@@ -27,9 +27,9 @@ MSMFGSpecHelper::PuppetModule.files.each do |item|
   file item[:name] => requires do |file|
     begin
       item[:create].call(file)
-      logger.info("task: file: OK: #{file.name}")
+      logger.info("create: file: #{file.name}")
     rescue => e
-      logger.info("task: file: KO: #{file.name}: #{e}")
+      logger.error("create: file: #{file.name}: #{e}")
       raise
     end
   end

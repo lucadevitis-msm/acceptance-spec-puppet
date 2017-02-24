@@ -16,7 +16,7 @@ Metrics/CyclomaticComplexity:
 # Assignment Branch Condition is strictly a software size metric, although it
 # has often been misconstrued as a complexity metric.
 Metrics/AbcSize:
-  Max: 40
+  Max: 50
 
 Metrics/PerceivedComplexity:
   Max: 10

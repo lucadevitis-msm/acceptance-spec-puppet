@@ -29,13 +29,14 @@ module MSMFGSpecHelper
       # @api private
       def metadata(path = 'metadata.json')
         if @metadata.nil?
-          logger.debug("PuppetModule.metadata: #{path} loading")
           @metadata ||= JSON.parse(File.read(path)).freeze
-          logger.debug("PuppetModule.metadata: #{path} loaded")
+          logger.debug function: 'PuppetModule.metadata',
+                       file_path: path, text: 'loaded'
         end
         @metadata
       rescue Errno::ENOENT
-        logger.info("PuppetModule.metadata: #{path} not found")
+        logger.info function: 'PuppetModule.metadata',
+                    file_path: path, text: 'not found'
 
         Modulefile.read
 
@@ -103,7 +104,8 @@ module MSMFGSpecHelper
       # @api public
       def name=(value)
         @name = value
-        logger.debug("PuppetModule.name: set to #{@name}")
+        logger.debug function: 'PuppetModule.name', text: "set to #{@name}"
+        @name
       end
 
       # Returns class name (or the module name without the provider prefix)
@@ -123,29 +125,34 @@ module MSMFGSpecHelper
       #
       # @api private
       def fixtures(path = '.fixture.yml')
-        if @fixtures.nil?
-          logger.debug("PuppetModule.fixtures: #{path} loading")
+        @fixtures ||= begin
           @fixtures = YAML.safe_load(File.read(path)).freeze
-          logger.debug("PuppetModule.fixtures: #{path} loaded")
+          logger.debug function: 'PuppetModule.fixtures',
+                       file_path: path, text: 'loaded'
+          @fixtures.freeze
         end
-        @fixtures
       rescue Errno::ENOENT
-        logger.debug("PuppetModule.fixtures: #{path} not found")
+        logger.debug function: 'PuppetModule.fixtures',
+                     file_path: path, text: 'not found'
 
         PuppetForge.user_agent = "msmfg_spec_helper/#{MSMFGSpecHelper::VERSION}"
         PuppetForge.host = ENV['PUPPETFORGE_HOST'] if ENV['PUPPETFORGE_HOST']
-        logger.debug("PuppetModule.fixtures: PuppetForge.host = #{PuppetForge.host}")
+        logger.debug function: 'PuppetModule.fixtures',
+                     text: "PuppetForge.host = #{PuppetForge.host}"
 
         Github.configure do |conf|
           conf.basic_auth = "#{ENV['GITHUB_USER']}:#{ENV['GITHUB_PASSWORD']}"
           basic_auth = "#{ENV['GITHUB_USER']}:i_didn_t_start_yesterday"
-          logger.debug("PuppetModule.fixtures: Github.basic_auth = #{basic_auth}")
+          logger.debug function: 'PuppetModule.fixtures',
+                       text: "Github.basic_auth = #{basic_auth}"
 
           conf.endpoint = ENV['GITHUB_ENDPOINT'] if ENV['GITHUB_ENDPOINT']
-          logger.debug("PuppetModule.fixtures: GitHub.endpoint = #{conf.endpoint}")
+          logger.debug function: 'PuppetModule.fixtures',
+                       text: "GitHub.endpoint = #{conf.endpoint}"
 
           conf.site = "https://#{ENV['GITHUB_SITE']}" if ENV['GITHUB_SITE']
-          logger.debug("PuppetModule.fixtures: GitHub.site = #{conf.site}")
+          logger.debug function: 'PuppetModule.fixtures',
+                       text: "GitHub.site = #{conf.site}"
         end
 
         @fixtures = {
@@ -173,14 +180,14 @@ module MSMFGSpecHelper
         forge_modules = {}
         repositories = {}
 
-        metadata['dependencies'].each do |dependency|
-          provider_name, module_name = dependency['name'].split('/', 2)
+        metadata['dependencies'].each do |dep|
+          provider_name, module_name = dep['name'].split('/', 2)
 
-          # Log message prefix
-          prefix = 'PuppetModule.fixtures:' \
-                   " #{dependency['name']}" \
-                   " #{dependency['version_requirement']}"
-          logger.debug("#{prefix}: looking up")
+          # Just for logging
+          file_path = "#{dep['name']} #{dep['version_requirement']}"
+
+          logger.debug function: 'PuppetModule.fixtures:',
+                       file_path: file_path, text: 'looking up'
 
           # Build the arguments for the lookup function call
           group, lookup = case provider_name
@@ -190,13 +197,14 @@ module MSMFGSpecHelper
 
           # Call the lookup function
           candidate = send(lookup, provider_name, module_name,
-                           dependency['version_requirement'])
+                           dep['version_requirement'])
           if candidate
             group[module_name] = candidate
-            using = "using #{candidate['repo']} #{candidate['ref']}"
-            logger.debug("#{prefix}: #{using}")
+            logger.debug function: 'PuppetModule.fixtures', file_path: file_path,
+                         text: "using #{candidate['repo']} #{candidate['ref']}"
           else
-            logger.warn("#{prefix}: not found")
+            logger.error function:  'PuppetModule.fixtures',
+                         file_path: file_path, text: 'no candidate'
           end
         end
 
@@ -221,10 +229,11 @@ module MSMFGSpecHelper
       #
       # @api private
       def find_repository(organization, module_name, requirement)
+        repo_name = "puppet-#{module_name}"
+
         # Let's query GitHub
         releases = Github::Client::Repos::Releases.new
 
-        repo_name = "puppet-#{module_name}"
         # The following assumes that we use version strings as GitHub releases
         refs = releases.list(organization, repo_name).select do |ref|
           Gem::Version.correct?(ref.tag_name) &&
@@ -234,10 +243,9 @@ module MSMFGSpecHelper
         repo = "#{Github.configuration.site}/MSMFG/#{repo_name}.git"
         ref = refs.collect { |r| Gem::Version.new(r.tag_name) }.sort.last
         ref && { 'repo' => repo, 'ref' => ref.to_s }
-      rescue => e
-        message = 'PuppetModule.find_repository:'
-        message << " #{organization}, #{module_name}, #{requirement}: #{e}"
-        logger.error(message)
+      rescue => error
+        logger.error function: 'PuppetModule.find_repository',
+                     file_path: "#{repo_name} #{requirement}", text: error
         nil
       end
 
@@ -270,10 +278,9 @@ module MSMFGSpecHelper
 
         ref = refs.collect { |r| Gem::Version.new(r.version) }.sort.last
         ref && { 'repo' => name, 'ref' => ref.to_s }
-      rescue => e
-        message = 'PuppetModule.find_forge_module:'
-        message << " #{provider_name}, #{module_name}, #{requirement}: #{e}"
-        logger.error(message)
+      rescue => error
+        logger.error function: 'PuppetModule.find_forge_module',
+                     file_path: "#{name} #{requirement}", text: error
         nil
       end
 

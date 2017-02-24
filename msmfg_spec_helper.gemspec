@@ -33,15 +33,15 @@ Gem::Specification.new do |spec|
   # https://tickets.puppetlabs.com/browse/BKR-1034
   spec.add_runtime_dependency('net-ssh', '>= 2.6.5')
   spec.add_runtime_dependency('pry')
+  spec.add_runtime_dependency('pry-doc')
   spec.add_runtime_dependency('puppet', '~> 3.7.4')
   spec.add_runtime_dependency('puppetlabs_spec_helper', '~> 1.2.0')
   spec.add_runtime_dependency('puppet-strings', '~> 1.0.0')
   spec.add_runtime_dependency('puppet_forge', '~> 2.2.0')
   spec.add_runtime_dependency('rake', '~> 10.0')
   spec.add_runtime_dependency('rubocop', '~> 0.47.1')
+  spec.add_runtime_dependency('rubocop-rspec', '~> 1.12.0')
   spec.add_runtime_dependency('safe_yaml', '~> 1.0.0')
   spec.add_runtime_dependency('simplecov', '~> 0.12.0')
   spec.add_runtime_dependency('simplecov-html', '~> 0.10.0')
-  spec.add_runtime_dependency('wirble')
-  spec.add_runtime_dependency('yardstick')
 end

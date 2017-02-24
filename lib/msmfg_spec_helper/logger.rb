@@ -1,4 +1,7 @@
+require 'logger'
+require 'singleton'
 require 'syslog/logger'
+require 'rainbow/ext/string'
 
 module MSMFGSpecHelper # :nodoc:
   # Prepares and returns a customized `::Logger` instance.
@@ -8,73 +11,105 @@ module MSMFGSpecHelper # :nodoc:
   #   MSMFGSpecHelper::Logger.level = ::Logger::INFO
   #
   #   MSMFGSpecHelper.logger.info 'Something is going on...'
-  module Logger
+  class Logger
+    include Singleton
     class << self
-      # Returns the currently configured program name
-      #
-      # If it is not set, sets the value to "msmfg_spec_helper".
-      #
-      # @return [String]
-      #   the value of `@progname` attribute
-      #
-      # @api private
-      def progname
-        @progname ||= 'msmfg_spec_helper'
-      end
-
-      # Sets the program name to be used in log messages
-      #
-      # @return [String]
-      #   the value of `@progname` attribute
-      #
-      # @api private
-      attr_writer :progname
-
-      # Returns the log level threshold
-      #
-      # If it is not set, tries to use the value from `LOG_LEVEL` environment
-      # variable. If no environment variable is set, use `::Logger::WARN`.
-      #
-      # @return [Integer]
-      #   the value of `@level` attribute
-      #
-      # @raise [NameError]
-      #   if environment variable does not match any known log level
-      #
-      # @api private
-      def level
-        @level ||= ::Logger::Severity.const_get(ENV['LOG_LEVEL'] || 'WARN')
-      end
-
-      # Sets the log threshold level
-      #
-      # @return [Integer]
-      #   the value of `@level` attribute
-      #
-      # @api private
-      attr_writer :level
-
-      # Returns an already confured `::Logger` instance
-      #
-      # @return [::Logger]
-      #   The logger insance
-      #
-      # @api private
-      def instance
-        if @instance.nil?
-          options = ::Syslog::LOG_PID
-          options |= ::Syslog::LOG_PERROR if ENV['LOG_PERROR']
-          facility = ::Syslog::LOG_USER
-          ::Syslog::Logger.syslog = ::Syslog.open(progname, options, facility)
-          @instance = ::Syslog::Logger.new
-          @instance.level = level
-          @instance.formatter = proc do |severity, _datetime, _progname, msg|
-            "#{%w(D I W E F U)[severity]}: #{msg}\n"
-          end
-          @instance.freeze
+      def logging_method(severity)
+        define_method(severity) do |*args|
+          loggers.each { |logger| logger.send(severity, *args) }
         end
-        @instance
       end
+    end
+
+    logging_method :debug
+    logging_method :info
+    logging_method :warn
+    logging_method :error
+    logging_method :fatal
+    logging_method :unknown
+
+    # Returns the currently configured program name
+    #
+    # If it is not set, sets the value to "msmfg_spec_helper".
+    #
+    # @return [String]
+    #   the value of `@progname` attribute
+    #
+    # @api private
+    def progname
+      @progname ||= 'msmfg_spec_helper'
+    end
+
+    # Sets the program name to be used in log messages
+    #
+    # @return [String]
+    #   the value of `@progname` attribute
+    #
+    # @api private
+    attr_writer :progname
+
+    # Returns the log level threshold
+    #
+    # If it is not set, tries to use the value from `LOG_LEVEL` environment
+    # variable. If no environment variable is set, use `::Logger::WARN`.
+    #
+    # @return [Integer]
+    #   the value of `@level` attribute
+    #
+    # @raise [NameError]
+    #   if environment variable does not match any known log level
+    #
+    # @api private
+    def level
+      @level ||= ::Logger::Severity.const_get(ENV['LOG_LEVEL'] || 'WARN')
+    end
+
+    # Sets the log threshold level
+    #
+    # @return [Integer]
+    #   the value of `@level` attribute
+    #
+    # @api private
+    attr_writer :level
+
+    def loggers
+      @loggers ||= []
+    end
+
+    # Returns an already confured `::Logger` instance
+    #
+    # @return [::Logger]
+    #   The logger insance
+    #
+    # @api private
+    def initialize
+      ::Syslog::Logger.syslog = ::Syslog.open(progname,
+                                              ::Syslog::LOG_PID,
+                                              ::Syslog::LOG_USER)
+      syslog = ::Syslog::Logger.new
+      syslog.level = level
+      syslog.formatter = proc { |_, _, _, log| JSON.generate(log) }
+      loggers << syslog.freeze
+
+      logger = ::Logger.new(STDOUT)
+      logger.progname = progname
+      logger.level = level
+      logger.formatter = proc do |severity, _datetime, _progname, log|
+        parts = []
+        parts << case severity
+                 when 'DEBUG' then severity[0].color(:green).bright
+                 when 'INFO' then severity[0].color(:blue).bright
+                 when 'WARN' then severity[0].color(:orangered)
+                 else severity[0].color(:red)
+                 end
+        parts << (log[:function] || log[:task]).color(:yellow)
+        parts << log[:file_path].color(:cyan) if log[:file_path]
+        parts << log[:file_line]
+        parts << log[:check_name].color(:magenta) if log[:check_name]
+        parts << log[:text]
+        parts.compact.join(': ') + "\n"
+      end
+      loggers << logger.freeze
     end
   end
 

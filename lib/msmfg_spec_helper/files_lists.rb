@@ -17,8 +17,13 @@ module MSMFGSpecHelper
     #   A list of absolute paths
     #
     # @api private
-    def file_list(pattern, *unwanted)
-      FileList[pattern].exclude(*unwanted).reject { |f| File.directory? f }
+    def file_list(pattern)
+      FileList[pattern].tap do |list|
+        list.exclude 'vendor/**/*',       # bundler
+                     'pkg/**/*',          # gem build process
+                     'spec/fixtures/**/*' # puppetlabs fixtures
+        list.reject! { |f| File.directory? f }
+      end
     end
 
     # Returns the list of the repo's ruby files
@@ -28,12 +33,7 @@ module MSMFGSpecHelper
     #
     # @api private
     def ruby_files
-      pattern = '**/{*.{rb,rake,gemspec},{Gem,Rake}file,Puppetfile.*}'
-      exclude = ['spec/**/*',           # spces
-                 'vendor/**/*',         # bundler
-                 'pkg/**/*',            # gem build process
-                 'spec/fixtures/**/*']  # puppetlabs fixtures
-      file_list(pattern, *exclude)
+      file_list '**/{*.{rb,rake,gemspec},{Gem,Rake}file,Puppetfile.*}'
     end
 
     # Returns the list of the repo's puppet manifests
@@ -43,7 +43,7 @@ module MSMFGSpecHelper
     #
     # @api private
     def manifests
-      file_list('{manifests,puppet}/**/*.pp')
+      file_list '{manifests,puppet}/**/*.pp'
     end
 
     # Returns the list of the repo's templates
@@ -53,27 +53,28 @@ module MSMFGSpecHelper
     #
     # @api private
     def templates
-      file_list('{templates,puppet}/**/*.{erb,epp}')
+      file_list '{templates,puppet}/**/*.{erb,epp}'
     end
 
-    # Returns the list of the repo's hieradata/config files
+    # Returns the list of the repo's fragments/hieradata/config files
     #
     # @return [Rake::FileList]
     #   A list of absolute paths
     #
     # @api private
-    def hieradata
-      file_list('{,puppet/}{,hiera}data/**/*.{yaml,eyaml}')
+    def yaml_files
+      file_list('{,puppet/}{,hiera}data/**/*.{yaml,eyaml}') +
+        file_list('config/**/*.yml')
     end
 
-    # Returns the list of the repo's fragments files
+    # Returns the list of the repo's JSON files
     #
     # @return [Rake::FileList]
     #   A list of absolute paths
     #
     # @api private
-    def fragments
-      file_list('config/**/*.yml')
+    def json_files
+      file_list '**/*.json'
     end
   end
 end

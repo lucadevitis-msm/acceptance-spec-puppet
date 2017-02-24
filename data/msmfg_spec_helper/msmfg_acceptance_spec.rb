@@ -15,10 +15,15 @@ require 'json'
 set :backend, :exec
 
 full_module_name = JSON.parse(File.read('metadata.json'))['name']
-
 module_name = full_module_name.split('-').last
 
-describe "Puppet module \"#{full_module_name}\"" do
+module MSMFGAcceptance # :nodoc:
+  def to_s
+    "Puppet module \"#{full_module_name}\""
+  end
+end
+
+describe MSMFGAcceptance do
   describe file('metadata.json') do
     it { is_expected.to be_file }
     describe 'metadata' do
@@ -44,10 +49,10 @@ describe "Puppet module \"#{full_module_name}\"" do
   describe 'Directory "specs"' do
     subject { Dir['spec/{classes,defines,functions,acceptance}/**/*_spec.rb'] }
     it { is_expected.not_to be_empty }
-    it 'should include at least 1 class spec' do
+    it 'includes at least 1 class spec' do
       is_expected.to include(match(%r{^spec/classes/}))
     end
-    it 'should include at least 1 acceptance spec' do
+    it 'includes at least 1 acceptance spec' do
       is_expected.to include(match(%r{^spec/acceptance/}))
     end
   end
@@ -56,7 +61,7 @@ describe "Puppet module \"#{full_module_name}\"" do
     it { is_expected.to be_file }
     describe 'fixtures' do
       subject { described_class.content_as_yaml }
-      it 'should define a symlink to source_dir' do
+      it 'defines a symlink to source_dir' do
         is_expected.to include('fixtures' => include('symlinks' => { module_name => '#{source_dir}' }))
       end
     end
