@@ -15,6 +15,6 @@ task :build do
   patterns = PuppetStrings::DEFAULT_SEARCH_PATTERNS
   yard_args = %w(--output-dir docs --markup markdown
                  --markup-provider rdoc
-                 --no-stats --no-progress)
+                 --no-stats --no-progress - *.md)
   PuppetStrings.generate(patterns, yard_args: yard_args)
 end
