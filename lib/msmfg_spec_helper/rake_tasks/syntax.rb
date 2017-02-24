@@ -13,7 +13,7 @@ namespace :syntax do
 
   desc 'Check ruby files syntax'
   task :ruby do
-    report = { task: 'syntax', file_type: 'ruby' }
+    report = { task: 'syntax' }
     ruby_files.each do |rb|
       Open3.popen2e('ruby', '-c', rb) do |_, output, thread|
         if thread.value.exitstatus != 0
@@ -30,7 +30,7 @@ namespace :syntax do
 
   desc 'Check puppet manifests syntax'
   task :manifests do
-    report = { task: 'syntax', file_type: 'manifest' }
+    report = { task: 'syntax' }
     syntax = PuppetSyntax::Manifests.new
     manifests.each do |manifest|
       errors, = syntax.check([manifest])
@@ -44,7 +44,7 @@ namespace :syntax do
 
   desc 'Check templates syntax'
   task :templates do
-    report = { task: 'syntax', file_type: 'template' }
+    report = { task: 'syntax' }
     syntax = PuppetSyntax::Templates.new
     templates.each do |template|
       errors = syntax.check([template])
@@ -58,7 +58,7 @@ namespace :syntax do
 
   desc 'Check YAML files syntax'
   task :yaml do
-    report = { task: 'syntax', file_type: 'yaml' }
+    report = { task: 'syntax' }
     yaml_files.each do |path|
       begin
         YAML.safe_load(path)
@@ -72,7 +72,7 @@ namespace :syntax do
 
   desc 'Check JSON files syntax'
   task :json do
-    report = { task: 'syntax', file_type: 'json' }
+    report = { task: 'syntax' }
     logger = MSMFGSpecHelper::Logger.instance
     json_files.each do |path|
       begin

@@ -1,4 +1,5 @@
 require 'msmfg_spec_helper'
+require 'open3'
 require 'puppet-lint/tasks/puppet-lint'
 require 'rubocop/rake_task'
 
@@ -9,20 +10,25 @@ namespace :lint do
 
   desc 'Lint metadata.json'
   task :metadata_json do
-    report = {
-      task: 'lint',
-      file_type: 'metadata_json',
-      file_path: 'metadata.json'
-    }
-    begin
-      if ::File.file? 'metadata.json'
-        MetadataJsonLint.options[:strict_dependencies] = true
-        MetadataJsonLint.parse('metadata.json')
-        logger.info report
+    metadata_json_lint = %w(metadata-json-lint
+                            --strict-dependencies
+                            --strict-license
+                            --fail-on-warnings)
+    Open3.popen3(*metadata_json_lint) do |_, output, _, thread|
+      report = { task: 'lint', file_path: 'metadata.json' }
+      if thread.value.exitstatus != 0
+        output.each_line do |line|
+          level, text = case line
+                        when /^Error: (.*)/ then [:error, Regexp.last_match(1)]
+                        when /^(Invalid .*)/ then [:error, Regexp.last_match(1)]
+                        when /^Warning: (.*)/ then [:warn, Regexp.last_match(1)]
+                        end
+          next unless level && text
+          logger.send level, report.merge(text: text)
+        end
+        abort
       end
-    rescue => error
-      logger.error report.merge(text: error)
-      raise
+      logger.info report
     end
   end
 
@@ -32,7 +38,7 @@ namespace :lint do
 
     linter = PuppetLint.new
     manifests.each do |manifest|
-      report = { task: 'lint', file_type: 'manifest', file_path: manifest }
+      report = { task: 'lint', file_path: manifest }
       linter.file = manifest
       linter.run
       problems = linter.problems.collect do |problem|

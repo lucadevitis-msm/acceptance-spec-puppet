@@ -420,7 +420,7 @@ EOS
               require 'bundler/ui/shell'
               ENV['BUNDLE_GEMFILE'] = file.source
               Bundler.reset!
-              Bundler.ui = Bundler::UI::Shell.new
+              # Bundler.ui = Bundler::UI::Shell.new
               Bundler::CLI::Install.new('jobs' => 7).run
             end
           },
