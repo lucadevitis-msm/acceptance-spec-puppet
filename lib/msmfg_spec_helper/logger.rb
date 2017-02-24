@@ -4,7 +4,7 @@ require 'syslog/logger'
 require 'rainbow/ext/string'
 
 module MSMFGSpecHelper # :nodoc:
-  # Prepares and returns a customized {::Logger} like instance.
+  # Prepares and returns a customized `::Logger` like instance.
   #
   # @example
   #   MSMFGSpecHelper::Logger.progname = 'msmfg-puppet-module-validate'
@@ -92,7 +92,7 @@ module MSMFGSpecHelper # :nodoc:
     # @api private
     attr_writer :level
 
-    # Returns the list of {::Logger} compatible objects
+    # Returns the list of `::Logger` compatible objects
     #
     # @return [Array]
     #   the lsit of loggers

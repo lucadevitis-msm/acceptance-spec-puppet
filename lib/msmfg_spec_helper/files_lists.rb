@@ -4,7 +4,7 @@ module MSMFGSpecHelper
   # Collection of functions about files lists
   module FilesListsMixIn
     # The location of data files
-    DATADIR = (ENV['GEM_DATADIR'] || Gem.datadir('msmfg_spec_helper')).freeze
+    DATADIR = (ENV['DATADIR'] || Gem.datadir('msmfg_spec_helper')).freeze
 
     # Returns a list of files, matching a pattern
     #

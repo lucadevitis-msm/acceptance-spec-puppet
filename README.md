@@ -30,7 +30,7 @@ bundle exec rake validate install
 
 ## What does it provide?
 
-1. [Logging support](#logging-support)
+1. [Logging support](#logging-and-unified-output)
 2. [`msmfg-puppet-module-create`](#msmfg-puppet-module-create)
    1. [Can create an entire module skeleton from scratch](#can-create-an-entire-module-skeleton-from-scratch)
    2. [Can add missing files to an already existsing module](#can-add-missing-files-to-an-already-existsing-module)
@@ -46,11 +46,21 @@ bundle exec rake validate install
 5. [No-brainer gems bundle](#no-brainer-gems-bundle)
 6. [No-brainer spec helpers](#no-brainer-spec-helpers)
 
-## Logging support
-Each `rake` task in this library supports logging, thanks to Ruby's
-`::Syslog::Logger` module. You can configure the logging behaviour with
-environment variables `LOG_LEVEL` and `LOG_PERROR`. Refer to internal API
-documentation for more information.
+## Logging and unified output
+Each `rake` task, class or method in this library, logs messages through a
+`::Logger` compliant class. Logs are displayed to screen but also turned into a
+`JSON` document and sent to `Syslog` service. Few formatting extensions have
+been implemented for common ruby ecosystem tools, in order to provide consistent,
+unified and colored output. You can configure the logging behaviour with
+environment variable `LOG_LEVEL` by setting it to one of the following strings
+as threshold:
+
+* `DEBUG`
+* `INFO`
+* `WARN`
+* `ERROR`
+* `FATAL`
+* `UNKNOWN`
 
 By default, logging has a threshold level of `WARN`, and does not print
 anything out.
@@ -80,31 +90,20 @@ Example output:
 ```
 $ LOG_LEVEL=INFO LOG_PERROR=1 msmfg-puppet-module-create
 luca@centos6:/tmp/puppet-something$ LOG_LEVEL=INFO msmfg-puppet-module-create
-msmfg-puppet-module-create[9342]: I: PuppetModule.metadata: metadata.json not found
-msmfg-puppet-module-create[9342]: I: Modulefile: Modulefile loaded succefully
-msmfg-puppet-module-create[9342]: I: task: file: OK: metadata.json
-msmfg-puppet-module-create[9342]: I: task: file: OK: manifests
-msmfg-puppet-module-create[9342]: I: task: file: OK: manifests/init.pp
-msmfg-puppet-module-create[9342]: I: task: file: OK: .fixtures.yml
-msmfg-puppet-module-create[9342]: I: task: file: OK: Rakefile
-msmfg-puppet-module-create[9342]: I: task: file: OK: Gemfile
-Fetching gem metadata from https://rubygems.org/..
-Fetching version metadata from https://rubygems.org/.
-Resolving dependencies...
-Using rake 10.5.0
-#
-# More output here
-#
-Bundle complete! 1 Gemfile dependency, 144 gems now installed.
-Use `bundle show [gemname]` to see where a bundled gem is installed.
-msmfg-puppet-module-create[9342]: I: task: file: OK: Gemfile.lock
-msmfg-puppet-module-create[9342]: I: task: file: OK: spec/acceptance/nodesets
-msmfg-puppet-module-create[9342]: I: task: file: OK: spec/acceptance/nodesets/default.yml
-msmfg-puppet-module-create[9342]: I: task: file: OK: spec/spec_helper.rb
-msmfg-puppet-module-create[9342]: I: task: file: OK: spec/spec_helper_acceptance.rb
-msmfg-puppet-module-create[9342]: I: task: file: OK: spec/classes
-msmfg-puppet-module-create[9342]: I: task: file: OK: spec/classes/ifetoolbelt_spec.rb
-msmfg-puppet-module-create[9342]: I: task: file: OK: spec/acceptance/ifetoolbelt_spec.rb
+I: create: metadata.json: OK
+I: create: manifests: OK
+I: create: manifests/init.pp: OK
+I: create: .fixtures.yml: OK
+I: create: Rakefile: OK
+I: create: Gemfile: OK
+I: create: Gemfile.lock: OK
+I: create: spec/acceptance/nodesets: OK
+I: create: spec/acceptance/nodesets/default.yml: OK
+I: create: spec/spec_helper.rb: OK
+I: create: spec/spec_helper_acceptance.rb: OK
+I: create: spec/classes: OK
+I: create: spec/classes/ifetoolbelt_spec.rb: OK
+I: create: spec/acceptance/ifetoolbelt_spec.rb: OK
 ```
 
 ### Can add missing files to an already existsing module
@@ -135,48 +134,24 @@ It actually is a `rake` application that accepts a `help` task. All standard
 ### Can validate the module
 You can validate the current module against the currently implemented MSMFG acceptance specs for puppet modules:
 ```
-$ LOG_LEVEL=INFO LOG_PERROR=1 msmfg-puppet-module-validate
-msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: Gemfile
-msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: Rakefile
-msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: spec/acceptance/ifetoolbelt_spec.rb
-msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: spec/classes/ifetoolbelt_spec.rb
-msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: spec/spec_helper.rb
-msmfg-puppet-module-validate[9371]: I: task: syntax: ruby: OK: spec/spec_helper_acceptance.rb
-msmfg-puppet-module-validate[9371]: I: task: syntax: metadata_json: OK
-msmfg-puppet-module-validate[9371]: I: task: syntax: manifests: OK
-msmfg-puppet-module-validate[9371]: I: task: syntax: templates: OK
-msmfg-puppet-module-validate[9371]: I: task: ruby_style: checking ruby files style...
-Running RuboCop...
-Inspecting 6 files
-......
-
-6 files inspected, no offenses detected
-msmfg-puppet-module-validate[9371]: D: task: puppet_style: OK: manifests/init.pp
-
-Puppet module "ifetoolbelt"
-  File "metadata.json"
-    should be file
-    metadata
-      should include {"version" => (match /^[0-9]+(\.[0-9]+){0,2}$/)}
-      should include {"author" => (match /at moneysupermarket\.com/)}
-      should include {"source" => (match /https:\/\/github.com\/MSMFG\/ifetoolbelt/)}
-      should include {"project_page" => (match /https:\/\/msmfg.github.io\/ifetoolbelt/)}
-      should include {"issues_url" => (match /https:\/\/github.com\/MSMFG\/ifetoolbelt\/issues/)}
-  File "manifests/init.pp"
-    should be file
-    content
-      should contain /class ifetoolbelt/
-  Directory "specs"
-    should not be empty
-    should include at least 1 class spec
-    should include at least 1 acceptance spec
-  File ".fixtures.yml"
-    should be file
-    fixtures
-      should define a symlink to source_dir
-
-Finished in 0.05455 seconds (files took 0.40781 seconds to load)
-13 examples, 0 failures
+$ LOG_LEVEL=INFO msmfg-puppet-module-validate
+I: syntax: Gemfile: OK
+I: syntax: Rakefile: OK
+I: syntax: spec/acceptance/ifetoolbelt_spec.rb: OK
+I: syntax: spec/classes/ifetoolbelt_spec.rb: OK
+I: syntax: spec/spec_helper.rb: OK
+I: syntax: spec/spec_helper_acceptance.rb: OK
+I: syntax: manifests/init.pp: OK
+I: syntax: metadata.json: OK
+I: lint: metadata.json: OK
+I: lint: manifests/init.pp: OK
+I: lint: Gemfile: OK
+I: lint: Rakefile: OK
+I: lint: spec/acceptance/ifetoolbelt_spec.rb: OK
+I: lint: spec/classes/ifetoolbelt_spec.rb: OK
+I: lint: spec/spec_helper.rb: OK
+I: lint: spec/spec_helper_acceptance.rb: OK
+I: docs: manifests/init.pp: OK
 ```
 
 #### Check syntax

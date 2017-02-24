@@ -42,6 +42,9 @@ Style/MultilineMethodCallBraceLayout:
 Style/MultilineArrayBraceLayout:
   EnforcedStyle: symmetrical
 
+RSpec/DescribeClass:
+  Enabled: false
+
 # Windows compatibility
 Style/EndOfLine:
   Enabled: false

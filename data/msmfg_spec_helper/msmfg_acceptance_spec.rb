@@ -17,18 +17,12 @@ set :backend, :exec
 full_module_name = JSON.parse(File.read('metadata.json'))['name']
 module_name = full_module_name.split('-').last
 
-module MSMFGAcceptance # :nodoc:
-  def to_s # :nodoc:
-    "Puppet module \"#{full_module_name}\""
-  end
-end
-
-describe MSMFGAcceptance do
+describe "Puppet module \"#{full_module_name}\"" do
   describe file('metadata.json') do
     it { is_expected.to be_file }
     describe 'metadata' do
       subject { described_class.content_as_json }
-      github = 'https://github.com/MSMFG'
+      github = '(https://github.com/MSMFG)|(https://ghe1.moneysupermarketgroup.com/)'
       gh_pages = 'https://msmfg.github.io'
       # should include "version" matching sematic versioning
       it { is_expected.to include('version' => match(/^[0-9]+(\.[0-9]+){0,2}$/)) }

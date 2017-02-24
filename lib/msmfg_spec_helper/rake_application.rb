@@ -18,7 +18,6 @@ module MSMFGSpecHelper # :nodoc:
     $VERBOSE = nil
     if ARGV.include? '--trace'
       ENV['LOG_LEVEL'] = 'DEBUG'
-      ENV['LOG_PERROR'] = 'true'
       $VERBOSE = true
     end
     Rake.application.standard_exception_handling do

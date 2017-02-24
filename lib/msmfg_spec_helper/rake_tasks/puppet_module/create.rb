@@ -5,11 +5,12 @@ require 'rake'
 MSMFGSpecHelper::PuppetModule.directories.each do |path|
   logger = MSMFGSpecHelper::Logger.instance
   file path do |dir|
+    report = { task: 'create', file_path: path }
     begin
       mkdir_p dir.name, verbose: false
-      logger.info("create: directory: #{dir.name}")
-    rescue => e
-      logger.error("create: directory: #{dir.name}: #{e}")
+      logger.info report
+    rescue => error
+      logger.fatal report.merge(text: error)
       raise
     end
   end
@@ -25,11 +26,12 @@ MSMFGSpecHelper::PuppetModule.files.each do |item|
 
   desc "Creates #{item[:name]}"
   file item[:name] => requires do |file|
+    report = { task: 'create', file_path: file }
     begin
       item[:create].call(file)
-      logger.info("create: file: #{file.name}")
-    rescue => e
-      logger.error("create: file: #{file.name}: #{e}")
+      logger.info report
+    rescue => error
+      logger.fatal report.merge(text: error)
       raise
     end
   end

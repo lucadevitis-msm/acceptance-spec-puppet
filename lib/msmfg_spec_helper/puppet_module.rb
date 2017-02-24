@@ -35,8 +35,8 @@ module MSMFGSpecHelper
         end
         @metadata
       rescue Errno::ENOENT
-        logger.info function: 'PuppetModule.metadata',
-                    file_path: path, text: 'not found'
+        logger.debug function: 'PuppetModule.metadata',
+                     file_path: path, text: 'not found'
 
         Modulefile.read
 
@@ -49,7 +49,7 @@ module MSMFGSpecHelper
         end
 
         @metadata = {
-          'name' => "msmfg-#{name}",
+          'name' => name,
           'version' => Modulefile.version || '0.0.0',
           'author' => Modulefile.author || default_author,
           'license' => 'proprietary',
@@ -213,6 +213,25 @@ module MSMFGSpecHelper
 
       private :find_dependencies
 
+      # Use `semantic_puppet` to parse version string.
+      #
+      # @param [String] ref
+      #   the version string
+      #
+      # @return [SemanticPuppet::Version, nil]
+      #   The `semantic_puppet` version object, or nil
+      #
+      # @api private
+      def semantic_version(ref)
+        SemanticPuppet::Version.parse(ref)
+      rescue => error
+        logger.warn function: 'PuppetModule.semantic_version',
+                    file_path: ref, text: error
+        nil
+      end
+
+      private :semantic_version
+
       # Looks for the latest repository release, matching requirements
       #
       # @param [String] organization
@@ -231,18 +250,20 @@ module MSMFGSpecHelper
       def find_repository(organization, module_name, requirement)
         repo_name = "puppet-#{module_name}"
 
+        range = SemanticPuppet::VersionRange.parse(requirement)
+
         # Let's query GitHub
-        releases = Github::Client::Repos::Releases.new
+        client = Github::Client::Repos::Releases.new
+        releases = client.list(organization, repo_name)
 
         # The following assumes that we use version strings as GitHub releases
-        refs = releases.list(organization, repo_name).select do |ref|
-          Gem::Version.correct?(ref.tag_name) &&
-            Gem::Dependency.new('', requirement).match?('', ref.tag_name)
-        end
+        refs = releases.collect { |r| semantic_version(r.tag_name) }
 
         repo = "#{Github.configuration.site}/MSMFG/#{repo_name}.git"
-        ref = refs.collect { |r| Gem::Version.new(r.tag_name) }.sort.last
-        ref && { 'repo' => repo, 'ref' => ref.to_s }
+
+        ref = refs.select { |r| r && range.cover?(r) }.max
+
+        { 'repo' => repo, 'ref' => ref.to_s } if ref
       rescue => error
         logger.error function: 'PuppetModule.find_repository',
                      file_path: "#{repo_name} #{requirement}", text: error
@@ -269,15 +290,16 @@ module MSMFGSpecHelper
       def find_forge_module(provider_name, module_name, requirement)
         # Let's query the PuppetForge
         name = "#{provider_name}-#{module_name}"
+
+        range = SemanticPuppet::VersionRange.parse(requirement)
+
         releases = PuppetForge::Module.find(name).releases
 
-        refs = releases.select do |release|
-          Gem::Version.correct?(release.version) &&
-            Gem::Dependency.new('', requirement).match?('', release.version)
-        end
+        refs = releases.collect { |r| semantic_version(r.version) }
 
-        ref = refs.collect { |r| Gem::Version.new(r.version) }.sort.last
-        ref && { 'repo' => name, 'ref' => ref.to_s }
+        ref = refs.select { |r| r && range.cover?(r) }.max
+
+        { 'repo' => name, 'ref' => ref.to_s } if ref
       rescue => error
         logger.error function: 'PuppetModule.find_forge_module',
                      file_path: "#{name} #{requirement}", text: error
@@ -328,14 +350,18 @@ describe '#{class_name} class' do
   # times without any error.
   describe 'puppet apply manifest' do
     # This will run the block before each of the followng examples.
-    subject { apply_manifest pp, catch_failures: true }
+    let(:puppet_apply) { apply_manifest pp, catch_failures: true }
 
-    it 'should run without errors' do
-      expect(subject.exit_code).to eq(0) | eq(2)
+    context 'first run' do
+      it 'runs without errors' do
+        expect(puppet_apply.exit_code).to eq(0) | eq(2)
+      end
     end
 
-    it 'should run a second time without changes' do
-      expect(subject.exit_code).to eq 0
+    context 'second run' do
+      it 'runs without changes' do
+        expect(puppet_apply.exit_code).to eq 0
+      end
     end
   end
 end

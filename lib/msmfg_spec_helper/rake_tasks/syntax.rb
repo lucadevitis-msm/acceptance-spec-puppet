@@ -18,7 +18,7 @@ namespace :syntax do
       Open3.popen2e('ruby', '-c', rb) do |_, output, thread|
         if thread.value.exitstatus != 0
           _, line, message = output.read.lines.first.split(':', 3)
-          logger.error report.merge(file_path: rb,
+          logger.fatal report.merge(file_path: rb,
                                     file_line: line,
                                     text: message.strip)
           abort
@@ -35,7 +35,7 @@ namespace :syntax do
     manifests.each do |manifest|
       errors, = syntax.check([manifest])
       errors.each do |error|
-        logger.error report.merge(file_path: manifest, text: error)
+        logger.fatal report.merge(file_path: manifest, text: error)
       end
       abort if errors.any?
       logger.info report.merge(file_path: manifest)
@@ -49,7 +49,7 @@ namespace :syntax do
     templates.each do |template|
       errors = syntax.check([template])
       errors.each do |error|
-        logger.error report.merge(file_path: template, text: error)
+        logger.fatal report.merge(file_path: template, text: error)
       end
       abort if errors.any?
       logger.info report.merge(file_path: template)
@@ -64,7 +64,7 @@ namespace :syntax do
         YAML.safe_load(path)
         logger.info report.merge(file_path: path)
       rescue => error
-        logger.error report.merge(file_path: path, text: error)
+        logger.fatal report.merge(file_path: path, text: error)
         raise
       end
     end
@@ -79,7 +79,7 @@ namespace :syntax do
         JSON.parse(File.read(path))
         logger.info report.merge(file_path: path)
       rescue => error
-        logger.error report.merge(file_path: path, text: error)
+        logger.fatal report.merge(file_path: path, text: error)
         raise
       end
     end

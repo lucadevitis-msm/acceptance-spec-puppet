@@ -67,6 +67,6 @@ end
 
 # This block is only needed to get rid of a Yardoc warning.
 begin
-  const_get(:CLEAN).include %w(.yardoc coverage log junit)
-  const_get(:CLOBBER).include %(doc pkg)
+  CLEAN.include %w(.yardoc coverage log junit)
+  CLOBBER.include %(doc pkg)
 end
