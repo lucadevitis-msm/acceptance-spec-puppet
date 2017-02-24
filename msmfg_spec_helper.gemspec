@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency('bundler', '~> 1.11')
   spec.add_runtime_dependency('github_api', '~> 0.14.0')
   spec.add_runtime_dependency('hiera-puppet-helper', '~> 1.0.0')
+  spec.add_runtime_dependency('markdown', '~> 1.2.0')
   spec.add_runtime_dependency('metadata-json-lint', '~> 1.0.0')
   # https://tickets.puppetlabs.com/browse/BKR-1034
   spec.add_runtime_dependency('net-ssh', '>= 2.6.5')
@@ -39,6 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency('puppet-strings', '~> 1.0.0')
   spec.add_runtime_dependency('puppet_forge', '~> 2.2.0')
   spec.add_runtime_dependency('rake', '~> 10.0')
+  spec.add_runtime_dependency('rdoc', '~> 4.2.0')
   spec.add_runtime_dependency('rubocop', '~> 0.47.1')
   spec.add_runtime_dependency('rubocop-rspec', '~> 1.12.0')
   spec.add_runtime_dependency('safe_yaml', '~> 1.0.0')

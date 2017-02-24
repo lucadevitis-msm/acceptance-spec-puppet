@@ -13,6 +13,7 @@ task validate: [:syntax, :lint, :coverage]
 
 task :build do
   patterns = PuppetStrings::DEFAULT_SEARCH_PATTERNS
-  yard_args = %w(--output-dir docs --markup-provider markdown)
+  yard_args = %w(--output-dir docs --markup markdown
+                 --markup-provider rdoc)
   PuppetStrings.generate(patterns, yard_args: yard_args)
 end

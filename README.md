@@ -96,8 +96,7 @@ $ msmfg-puppet-module-create
 Example output:
 
 ```
-$ LOG_LEVEL=INFO LOG_PERROR=1 msmfg-puppet-module-create
-luca@centos6:/tmp/puppet-something$ LOG_LEVEL=INFO msmfg-puppet-module-create
+$ LOG_LEVEL=INFO msmfg-puppet-module-create
 I: create: metadata.json: OK
 I: create: manifests: OK
 I: create: manifests/init.pp: OK
