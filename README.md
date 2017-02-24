@@ -41,7 +41,7 @@ bundle exec rake validate install
    2. [Check syntax](#check-syntax) (anything)
    3. [Check ruby style](#check-ruby-style)
    4. [Check manifests style](#check-manifests-style)
-   5. Check documentation coverage (WIP)
+   5. Check documentation coverage
    6. [Runs MSMFG acceptance spes for Puppet Modules](#runs-msmfg-acceptance-spes-for-puppet-modules)
 4. You can cherry-pick the tasks and [use local Rakefile](#no-brainer-rakefile)
 5. [No-brainer gems bundle](#no-brainer-gems-bundle)
