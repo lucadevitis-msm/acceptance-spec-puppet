@@ -176,26 +176,39 @@ available.</p>
 
 <p>If you want to create a brand new module, you can use
 <code>msmfg-create-module</code>. You have 3 options: Using environment
-variable <code>MODULE_NAME</code> <code>sh MODULE_NAME=puppet-something
-msmfg-puppet-module-create </code></p>
+variable <code>MODULE_NAME</code></p>
 
-<p>Using rake argument variable <code>MODULE_NAME</code> <code>sh
-msmfg-puppet-module-create MODULE_NAME=puppet-something </code></p>
+<pre class="code ruby"><code class="ruby">MODULE_NAME=puppet-something msmfg-puppet-module-create</code></pre>
+
+<p>Using rake argument variable <code>MODULE_NAME</code></p>
+
+<pre class="code ruby"><code class="ruby">msmfg-puppet-module-create MODULE_NAME=puppet-something</code></pre>
 
 <p>Letting <code>msmfg-puppet-module-create</code> to guess the module&#39;s
-name from the current working directory <code>sh $ mkdir puppet-something $
-cd puppet-something $ msmfg-puppet-module-create </code></p>
+name from the current working directory</p>
 
-<p>Example output: <code> $ LOG_LEVEL=INFO LOG_PERROR=1
-msmfg-puppet-module-create luca@centos6:/tmp/puppet-something$
-LOG_LEVEL=INFO msmfg-puppet-module-create I: create: metadata.json: OK I:
-create: manifests: OK I: create: manifests/init.pp: OK I: create:
-.fixtures.yml: OK I: create: Rakefile: OK I: create: Gemfile: OK I: create:
-Gemfile.lock: OK I: create: spec/acceptance/nodesets: OK I: create:
-spec/acceptance/nodesets/default.yml: OK I: create: spec/spec_helper.rb: OK
-I: create: spec/spec_helper_acceptance.rb: OK I: create: spec/classes: OK
-I: create: spec/classes/ifetoolbelt_spec.rb: OK I: create:
-spec/acceptance/ifetoolbelt_spec.rb: OK </code></p>
+<pre class="code ruby"><code class="ruby">$ mkdir puppet-something
+$ cd puppet-something
+$ msmfg-puppet-module-create</code></pre>
+
+<p>Example output:</p>
+
+<pre class="code ruby"><code class="ruby">$ LOG_LEVEL=INFO LOG_PERROR=1 msmfg-puppet-module-create
+luca@centos6:/tmp/puppet-something$ LOG_LEVEL=INFO msmfg-puppet-module-create
+I: create: metadata.json: OK
+I: create: manifests: OK
+I: create: manifests/init.pp: OK
+I: create: .fixtures.yml: OK
+I: create: Rakefile: OK
+I: create: Gemfile: OK
+I: create: Gemfile.lock: OK
+I: create: spec/acceptance/nodesets: OK
+I: create: spec/acceptance/nodesets/default.yml: OK
+I: create: spec/spec_helper.rb: OK
+I: create: spec/spec_helper_acceptance.rb: OK
+I: create: spec/classes: OK
+I: create: spec/classes/ifetoolbelt_spec.rb: OK
+I: create: spec/acceptance/ifetoolbelt_spec.rb: OK</code></pre>
 
 <h3 id="label-Can+add+missing+files+to+an+already+existsing+module">Can add missing files to an already existsing module</h3>
 
@@ -204,8 +217,10 @@ can just run the <code>msmfg-puppet-module-create</code> command. The
 script will not override existing files.
 <code>msmfg-puppet-module-create</code> will try to guess the module name
 from the <code>metadata.json</code> file or current working directory
-basename. <code>sh $ cd /path/to/your/puppet-something $
-msmfg-create-module </code></p>
+basename.</p>
+
+<pre class="code ruby"><code class="ruby">$ cd /path/to/your/puppet-something
+$ msmfg-create-module</code></pre>
 
 <h3 id="label-Will+add+basic+catalogue+and+acceptance+specs">Will add basic catalogue and acceptance specs</h3>
 
@@ -235,25 +250,36 @@ available.</p>
 <h3 id="label-Can+validate+the+module">Can validate the module</h3>
 
 <p>You can validate the current module against the currently implemented MSMFG
-acceptance specs for puppet modules: <code> $ LOG_LEVEL=INFO
-msmfg-puppet-module-validate I: syntax: Gemfile: OK I: syntax: Rakefile: OK
-I: syntax: spec/acceptance/ifetoolbelt_spec.rb: OK I: syntax:
-spec/classes/ifetoolbelt_spec.rb: OK I: syntax: spec/spec_helper.rb: OK I:
-syntax: spec/spec_helper_acceptance.rb: OK I: syntax: manifests/init.pp: OK
-I: syntax: metadata.json: OK I: lint: metadata.json: OK I: lint:
-manifests/init.pp: OK I: lint: Gemfile: OK I: lint: Rakefile: OK I: lint:
-spec/acceptance/ifetoolbelt_spec.rb: OK I: lint:
-spec/classes/ifetoolbelt_spec.rb: OK I: lint: spec/spec_helper.rb: OK I:
-lint: spec/spec_helper_acceptance.rb: OK I: docs: manifests/init.pp: OK
-</code></p>
+acceptance specs for puppet modules:</p>
+
+<pre class="code ruby"><code class="ruby">$ LOG_LEVEL=INFO msmfg-puppet-module-validate
+I: syntax: Gemfile: OK
+I: syntax: Rakefile: OK
+I: syntax: spec/acceptance/ifetoolbelt_spec.rb: OK
+I: syntax: spec/classes/ifetoolbelt_spec.rb: OK
+I: syntax: spec/spec_helper.rb: OK
+I: syntax: spec/spec_helper_acceptance.rb: OK
+I: syntax: manifests/init.pp: OK
+I: syntax: metadata.json: OK
+I: lint: metadata.json: OK
+I: lint: manifests/init.pp: OK
+I: lint: Gemfile: OK
+I: lint: Rakefile: OK
+I: lint: spec/acceptance/ifetoolbelt_spec.rb: OK
+I: lint: spec/classes/ifetoolbelt_spec.rb: OK
+I: lint: spec/spec_helper.rb: OK
+I: lint: spec/spec_helper_acceptance.rb: OK
+I: docs: manifests/init.pp: OK</code></pre>
 
 <h4 id="label-Check+syntax">Check syntax</h4>
 
-<p>Check any sort of syntax: <code>sh $ msmfg-puppet-module-validate syntax
-</code></p>
+<p>Check any sort of syntax:</p>
 
-<p>You could also check specific a type of syntax: <code> $
-msmfg-puppet-module-validate syntax:ruby </code></p>
+<pre class="code ruby"><code class="ruby">$ msmfg-puppet-module-validate syntax</code></pre>
+
+<p>You could also check specific a type of syntax:</p>
+
+<pre class="code ruby"><code class="ruby">$ msmfg-puppet-module-validate syntax:ruby</code></pre>
 
 <h4 id="label-Check+ruby+style">Check ruby style</h4>
 
@@ -345,13 +371,18 @@ documentation coverage checking task</p>
 </li></ul>
 
 <p>When you create the <code>Rakefile</code> with
-<code>msmfg-puppet-module-create</code>, it will look like <code>ruby
-require &#39;msmfg_spec_helper/rake_tasks/puppet_module&#39; </code></p>
+<code>msmfg-puppet-module-create</code>, it will look like</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msmfg_spec_helper/rake_tasks/puppet_module</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
 
 <h2 id="label-No-brainer+gems+bundle">No-brainer gems bundle</h2>
 
-<p>If you write your <code>Gemfile</code> like: <code>ruby source
-&#39;https://rubygems.org&#39; gem &#39;msmfg_spec_helper&#39; </code></p>
+<p>If you write your <code>Gemfile</code> like:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_source'>source</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://rubygems.org</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msmfg_spec_helper</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
 
 <p>and run <code>bundle install</code> this gem will require all the goodies
 you might need to develop your module (currently around 139 gems).</p>
@@ -362,12 +393,15 @@ above.</p>
 
 <h2 id="label-No-brainer+spec+helpers">No-brainer spec helpers</h2>
 
-<p>If you write yout <code>specs/spec_helper.rb</code> like: <code>ruby
-require &#39;msmfg_spec_helper/puppet_module/spec_helper_acceptance&#39;
-</code></p>
+<p>If you write yout <code>specs/spec_helper.rb</code> like:</p>
 
-<p>and your <code>specs/spec_helper_acceptance.rb</code> like: <code>ruby
-require &#39;msmfg_spec_helper/puppet_module/spec_helper&#39; </code></p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msmfg_spec_helper/puppet_module/spec_helper_acceptance</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>and your <code>specs/spec_helper_acceptance.rb</code> like:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msmfg_spec_helper/puppet_module/spec_helper</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
 
 <p>Those 2 <code>ruby</code> libs will take care of the specs configuration</p>
 
@@ -378,7 +412,7 @@ above.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Fri Feb 24 21:53:07 2017 by
+  Generated on Fri Feb 24 21:56:32 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.8 (ruby-2.2.5).
 </div>
