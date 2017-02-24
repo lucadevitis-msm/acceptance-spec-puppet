@@ -76,16 +76,19 @@ Using environment variable `MODULE_NAME`
 ```sh
 MODULE_NAME=puppet-something msmfg-puppet-module-create
 ```
+
 Using rake argument variable `MODULE_NAME`
 ```sh
 msmfg-puppet-module-create MODULE_NAME=puppet-something
 ```
+
 Letting `msmfg-puppet-module-create` to guess the module's name from the current working directory
 ```sh
 $ mkdir puppet-something
 $ cd puppet-something
 $ msmfg-puppet-module-create
 ```
+
 Example output:
 ```
 $ LOG_LEVEL=INFO LOG_PERROR=1 msmfg-puppet-module-create
@@ -159,6 +162,7 @@ Check any sort of syntax:
 ```sh
 $ msmfg-puppet-module-validate syntax
 ```
+
 You could also check specific a type of syntax:
 ```
 $ msmfg-puppet-module-validate syntax:ruby
@@ -244,6 +248,7 @@ If you write your `Gemfile` like:
 source 'https://rubygems.org'
 gem 'msmfg_spec_helper'
 ```
+
 and run `bundle install` this gem will require all the goodies you might need
 to develop your module (currently around 139 gems).
 
@@ -255,10 +260,12 @@ If you write yout `specs/spec_helper.rb` like:
 ```ruby
 require 'msmfg_spec_helper/puppet_module/spec_helper_acceptance'
 ```
+
 and your `specs/spec_helper_acceptance.rb` like:
 ```ruby
 require 'msmfg_spec_helper/puppet_module/spec_helper'
 ```
+
 Those 2 `ruby` libs will take care of the specs configuration
 
 When you create the `specs/spec_helper.rb` and
