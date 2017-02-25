@@ -1,3 +1,4 @@
+require 'json'
 require 'logger'
 require 'singleton'
 require 'syslog/logger'
@@ -102,32 +103,32 @@ module MSMFGSpecHelper # :nodoc:
       @loggers ||= []
     end
 
-    # Returns an already confured `::Logger` instance
-    #
-    # @return [::Logger]
-    #   The logger insance
+    # Initialize a `::MSMFGSpecHelper::Logger.instance`
     #
     # @api private
     def initialize
-      ::Syslog::Logger.syslog = ::Syslog.open(progname,
-                                              ::Syslog::LOG_PID,
-                                              ::Syslog::LOG_USER)
-      syslog = ::Syslog::Logger.new
-      syslog.level = level
-      syslog.formatter = proc { |_, _, _, log| JSON.generate(log) }
-      loggers << syslog.freeze
+      initialize_logger
+      initialize_syslog
+    end
 
+    # Initialize a `::Logger` instance
+    #
+    # @api private
+    def initialize_logger
       logger = ::Logger.new(STDOUT)
       logger.progname = progname
       logger.level = level
       logger.formatter = proc do |severity, _datetime, _progname, log|
+        severity_id = case severity
+                      when 'DEBUG' then severity[0].color(:green).bright
+                      when 'INFO' then severity[0].color(:blue).bright
+                      when 'WARN' then severity[0].color(:orangered)
+                      when 'ERROR' then severity[0].color(:red)
+                      when 'FATAL' then severity[0].color(:red)
+                      else 'U'.color(:red)
+                      end
         parts = []
-        parts << case severity
-                 when 'DEBUG' then severity[0].color(:green).bright
-                 when 'INFO' then severity[0].color(:blue).bright
-                 when 'WARN' then severity[0].color(:orangered)
-                 else severity[0].color(:red)
-                 end
+        parts << severity_id
         parts << (log[:function] || log[:task]).to_s.color(:yellow)
         parts << (log[:file_path] || '.').to_s.color(:cyan)
         parts << log[:file_line]
@@ -136,6 +137,24 @@ module MSMFGSpecHelper # :nodoc:
         parts.compact.join(': ') + "\n"
       end
       loggers << logger.freeze
+    end
+
+    # Initialize a `::Syslog::Logger` instance
+    #
+    # @api private
+    def initialize_syslog
+      label = %w(debug info warning error fatal unknown unknown unknown)
+      ::Syslog::Logger.syslog = ::Syslog.open(progname,
+                                              ::Syslog::LOG_PID,
+                                              ::Syslog::LOG_USER)
+      syslog = ::Syslog::Logger.new
+      syslog.level = level
+      syslog.formatter = proc do |severity, datetime, progname_, log|
+        JSON.generate(log.merge(severity: label[severity],
+                                timestamp: datetime.utc.to_s,
+                                progname: progname_ || progname))
+      end
+      loggers << syslog.freeze
     end
   end
 
@@ -155,7 +174,7 @@ module MSMFGSpecHelper # :nodoc:
     #
     # @api public
     def logger
-      MSMFGSpecHelper::Logger.instance
+      ::MSMFGSpecHelper::Logger.instance
     end
   end
 end
