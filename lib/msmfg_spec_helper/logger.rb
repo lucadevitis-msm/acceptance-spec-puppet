@@ -108,7 +108,7 @@ module MSMFGSpecHelper # :nodoc:
     # @api private
     def initialize
       initialize_logger
-      initialize_syslog
+      initialize_syslog if ENV['LOG_SYSLOG']
     end
 
     # Initialize a `::Logger` instance
@@ -176,5 +176,9 @@ module MSMFGSpecHelper # :nodoc:
     def logger
       ::MSMFGSpecHelper::Logger.instance
     end
+  end
+
+  class << self
+    include ::MSMFGSpecHelper::LoggerMixIn
   end
 end

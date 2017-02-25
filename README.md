@@ -31,21 +31,36 @@ bundle exec rake validate install
 
 ## What does it provide?
 
-1. [Logging support](#logging-and-unified-output)
-2. [`msmfg-puppet-module-create`](#msmfg-puppet-module-create)
+1. [Configuration throug environment variables](#configuration-throug-environment-variables)
+2. [Logging support](#logging-and-unified-output)
+3. [`msmfg-puppet-module-create`](#msmfg-puppet-module-create)
    1. [Can create an entire module skeleton from scratch](#can-create-an-entire-module-skeleton-from-scratch)
    2. [Can add missing files to an already existsing module](#can-add-missing-files-to-an-already-existsing-module)
    3. [Will add basic catalogue and acceptance specs](#will-add-basic-catalogue-and-acceptance-specs)
-3. [`msmfg-puppet-module-validate`](#msmfg-puppet-module-validate)
-   1. [Can validate the module](#can-validate-the-module)
+4. [`msmfg-spec-helper-validate`](#msmfg-spec-helper-validate)
+   1. [Can validate the repository](#can-validate-the-repository)
    2. [Check syntax](#check-syntax) (anything)
-   3. [Check ruby style](#check-ruby-style)
-   4. [Check manifests style](#check-manifests-style)
-   5. Check documentation coverage
+   3. [Check lint-ness](#check-lint-ness)
+   4. [Check documentation coverage](#check-documentation-coverage)
    6. [Runs MSMFG acceptance spes for Puppet Modules](#runs-msmfg-acceptance-spes-for-puppet-modules)
-4. You can cherry-pick the tasks and [use local Rakefile](#no-brainer-rakefile)
-5. [No-brainer gems bundle](#no-brainer-gems-bundle)
-6. [No-brainer spec helpers](#no-brainer-spec-helpers)
+5. You can cherry-pick the tasks and [use local Rakefile](#no-brainer-rakefile)
+6. [No-brainer gems bundle](#no-brainer-gems-bundle)
+7. [No-brainer spec helpers](#no-brainer-spec-helpers)
+
+## Configuration throug environment variables
+The following variables are used:
+
+* `DATADIR`: location of data/configuration files
+* `DOCKER_REGISTRY`: Docker registry URL
+* `GITHUB_ENDPOINT`: GitHub API endpoint
+* `GITHUB_PASSWORD`: GitHub user tocken/password
+* `GITHUB_SITE`: GitHub website URL
+* `GITHUB_USER`: GitHub username
+* `LOG_LEVEL`: logging level threshold
+* `LOG_SYSLOG`: if set, library will also log to `::Syslog`
+* `MODULE_NAME`: the puppet module name
+* `PUPPETFORGE_HOST`: the PuppetForge API endpoint
+* `VERBOSE`: if set, `rake` and `ruby` will be more verbose
 
 ## Logging and unified output
 Each `rake` task, class or method in this library, logs messages through a
@@ -63,8 +78,7 @@ as threshold:
 * `FATAL`
 * `UNKNOWN`
 
-By default, logging has a threshold level of `WARN`, and does not print
-anything out.
+By default, logging has a threshold level of `WARN`.
 
 ## `msmfg-puppet-module-create`
 
@@ -119,8 +133,11 @@ The script will not override existing files. `msmfg-puppet-module-create` will t
 file or current working directory basename.
 
 ```sh
-$ cd /path/to/your/puppet-something
-$ msmfg-create-module
+$ cd /path/to/your/puppet-module
+$ rm spec/classes/myclass_spec.rb
+$ msmfg-puppet-module-create
+I: create: spec/classes/myclass_spec.rb: OK
+$
 ```
 
 ### Will add basic catalogue and acceptance specs
@@ -134,7 +151,7 @@ script will also:
 Automatic guess of requirements is on the way. In the mean while you have to configure
 [`.fixtures.yaml`](https://github.com/puppetlabs/puppetlabs_spec_helper#using-fixtures)
 
-## `msmfg-puppet-module-validate`
+## `msmfg-spec-helper-validate`
 
 It actually is a `rake` application that accepts a `help` task. All standard
 `rake` options are also available.
@@ -143,7 +160,7 @@ It actually is a `rake` application that accepts a `help` task. All standard
 You can validate the current module against the currently implemented MSMFG acceptance specs for puppet modules:
 
 ```
-$ LOG_LEVEL=INFO msmfg-puppet-module-validate
+$ LOG_LEVEL=INFO msmfg-spec-helper-validate
 I: syntax: Gemfile: OK
 I: syntax: Rakefile: OK
 I: syntax: spec/acceptance/ifetoolbelt_spec.rb: OK
@@ -167,31 +184,38 @@ I: docs: manifests/init.pp: OK
 Check any sort of syntax:
 
 ```sh
-$ msmfg-puppet-module-validate syntax
+$ msmfg-spec-helper-validate syntax
 ```
 
-You could also check specific a type of syntax:
+You could also target specific file type:
 
 ```
-$ msmfg-puppet-module-validate syntax:ruby
+$ msmfg-spec-helper-validate syntax:ruby
 ```
 
-#### Check ruby style
+#### Check lint-ness
+Check files against their respective linters:
 
 ```sh
-$ msmfg-puppet-module-validate ruby_style
+$ msmfg-spec-helper-validate lint
 ```
 
-#### Check manifests style
+You could also target specific file type:
+
+```
+$ msmfg-spec-helper-validate lint:manifests
+```
+
+#### Check documentation coverage
 
 ```sh
-$ msmfg-puppet-module-validate puppet_style
+$ msmfg-spec-helper-validate coverage:docs
 ```
 
 #### Runs MSMFG acceptance spes for Puppet Modules
 
 ```sh
-$ msmfg-puppet-module-validate msmfg_acceptance_spec
+$ msmfg-spec-helper-validate msmfg_acceptance_spec
 Puppet module "skeleton"
   File "metadata.json"
     should be file
@@ -218,15 +242,6 @@ Puppet module "skeleton"
     nodeset
       should configure a masterless environment
       should include a default host
-  File "Gemfile"
-    should be file
-    content
-      should contain "gem 'msmfg_spec_helper'"
-  File "Gemfile.lock"
-    should be file
-  File "Rakefile"
-    should be file
-    should contain "require 'msmfg_spec_helper/rake_tasks/puppet_module"
 
 Finished in 0.05903 seconds (files took 0.87694 seconds to load)
 21 examples, 0 failures

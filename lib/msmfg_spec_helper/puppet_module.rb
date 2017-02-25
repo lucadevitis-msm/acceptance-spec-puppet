@@ -227,7 +227,7 @@ module MSMFGSpecHelper
       rescue => error
         logger.warn function: 'PuppetModule.semantic_version',
                     file_path: ref, text: error
-        nil
+        SemanticPuppet::Version.new(0, 0, 0)
       end
 
       private :semantic_version
@@ -249,6 +249,7 @@ module MSMFGSpecHelper
       # @api private
       def find_repository(organization, module_name, requirement)
         repo_name = "puppet-#{module_name}"
+        repo = "#{Github.configuration.site}/MSMFG/#{repo_name}.git"
 
         range = SemanticPuppet::VersionRange.parse(requirement)
 
@@ -257,11 +258,7 @@ module MSMFGSpecHelper
         releases = client.list(organization, repo_name)
 
         # The following assumes that we use version strings as GitHub releases
-        refs = releases.collect { |r| semantic_version(r.tag_name) }
-
-        repo = "#{Github.configuration.site}/MSMFG/#{repo_name}.git"
-
-        ref = refs.select { |r| r && range.cover?(r) }.max
+        ref = releases.collect { |r| semantic_version(r.tag_name) }.max
 
         { 'repo' => repo, 'ref' => ref.to_s } if ref
       rescue => error
@@ -295,9 +292,7 @@ module MSMFGSpecHelper
 
         releases = PuppetForge::Module.find(name).releases
 
-        refs = releases.collect { |r| semantic_version(r.version) }
-
-        ref = refs.select { |r| r && range.cover?(r) }.max
+        ref = releases.collect { |r| semantic_version(r.version) }.max
 
         { 'repo' => name, 'ref' => ref.to_s } if ref
       rescue => error

@@ -4,7 +4,7 @@ require 'msmfg_spec_helper/rake_application'
 APP_NAME = File.basename(__FILE__).freeze
 
 MSMFGSpecHelper.rake_application(APP_NAME) do
-  require 'msmfg_spec_helper/rake_tasks/puppet_module/validate'
+  require 'msmfg_spec_helper/rake_tasks/validate'
 
   task(:default) { Rake::Task[:validate].invoke }
 
@@ -21,12 +21,8 @@ DESCRIPTION
   helps). If no task is specified, default (validate) task is run.
 
 TASKS
-  #{APP_NAME} help                  # Shows this help
-  #{APP_NAME} default               # Runs all the tasks
-  #{APP_NAME} syntax                # Syntax check
-  #{APP_NAME} ruby_style            # Ruby style check
-  #{APP_NAME} puppet_style          # Puppet style check
-  #{APP_NAME} msmfg_acceptance_spec # MSMFG acceptance check
+  For a full list, run
+    #{APP_NAME} --tasks
     EOS
   end
 end

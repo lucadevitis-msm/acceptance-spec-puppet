@@ -5,6 +5,7 @@ require 'puppet-strings/yard'
 require 'rake'
 
 namespace :coverage do
+  desc 'Run documentation coverage check'
   task :docs do
     include MSMFGSpecHelper::FilesListsMixIn
     logger = MSMFGSpecHelper::Logger.instance

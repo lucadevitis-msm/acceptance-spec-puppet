@@ -1,6 +1,6 @@
 require 'rake/file_list'
 
-module MSMFGSpecHelper
+module MSMFGSpecHelper # :nodoc:
   # Collection of functions about files lists
   module FilesListsMixIn
     # The location of data files
@@ -74,5 +74,9 @@ module MSMFGSpecHelper
     def json_files
       file_list '**/*.json'
     end
+  end
+
+  class << self
+    include ::MSMFGSpecHelper::FilesListsMixIn
   end
 end
