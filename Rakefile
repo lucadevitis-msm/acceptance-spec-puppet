@@ -11,7 +11,7 @@ require 'bundler/gem_tasks'
 desc 'Run syntax check, module spec and linters'
 task validate: [:syntax, :lint, :coverage]
 
-task :build do
+task :docs do
   patterns = PuppetStrings::DEFAULT_SEARCH_PATTERNS
   yard_args = %w(--use-cache --output-dir docs
                  --no-stats --no-progress
