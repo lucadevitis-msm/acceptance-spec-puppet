@@ -29,7 +29,7 @@ module MSMFGSpecHelper
       # @api private
       def metadata(path = 'metadata.json')
         if @metadata.nil?
-          @metadata ||= JSON.parse(File.read(path)).freeze
+          @metadata = JSON.parse(File.read(path)).freeze
           logger.debug function: 'PuppetModule.metadata',
                        file_path: path, text: 'loaded'
         end
@@ -227,7 +227,7 @@ module MSMFGSpecHelper
       rescue => error
         logger.warn function: 'PuppetModule.semantic_version',
                     file_path: ref, text: error
-        SemanticPuppet::Version.new(0, 0, 0)
+        nil
       end
 
       private :semantic_version
@@ -255,11 +255,11 @@ module MSMFGSpecHelper
 
         # Let's query GitHub
         client = Github::Client::Repos::Releases.new
-        releases = client.list(organization, repo_name)
 
-        # The following assumes that we use version strings as GitHub releases
-        ref = releases.collect { |r| semantic_version(r.tag_name) }.max
+        releases = client.list(organization, repo_name).to_a
+        releases.collect! { |r| semantic_version(r.tag_name) }
 
+        ref = releases.select { |r| r && range.cover?(r) }.max
         { 'repo' => repo, 'ref' => ref.to_s } if ref
       rescue => error
         logger.error function: 'PuppetModule.find_repository',
@@ -290,9 +290,10 @@ module MSMFGSpecHelper
 
         range = SemanticPuppet::VersionRange.parse(requirement)
 
-        releases = PuppetForge::Module.find(name).releases
+        releases = PuppetForge::Module.find(name).releases.to_a
+        releases.collect! { |r| semantic_version(r.version) }
 
-        ref = releases.collect { |r| semantic_version(r.version) }.max
+        ref = releases.select { |r| r && range.cover?(r) }.max
 
         { 'repo' => name, 'ref' => ref.to_s } if ref
       rescue => error
@@ -399,7 +400,10 @@ EOS
           {
             name: 'metadata.json',
             create: proc do |file|
-              File.write(file.name, JSON.pretty_generate(metadata))
+              # Untill we use our PuppetForge
+              metadata_ = JSON.parse(JSON.dump(metadata))
+              metadata_['dependencies'].reject! { |r| r['name'] =~ %r{^MSMFG/} }
+              File.write(file.name, JSON.pretty_generate(metadata_))
             end
           },
           {
