@@ -1,4 +1,5 @@
 require 'msmfg_spec_helper'
+require 'msmfg_spec_helper/rake_tasks/coverage'
 require 'msmfg_spec_helper/rake_tasks/lint'
 require 'msmfg_spec_helper/rake_tasks/syntax'
 require 'rspec/core/rake_task'
@@ -15,4 +16,4 @@ RSpec::Core::RakeTask.new :msmfg_acceptance_spec do |rspec|
 end
 
 desc 'Run syntax check, module spec and linters'
-task validate: [:syntax, :lint, :msmfg_acceptance_spec]
+task validate: [:syntax, :lint, :coverage, :msmfg_acceptance_spec]
