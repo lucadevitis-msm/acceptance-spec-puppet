@@ -23,7 +23,7 @@ PATH
       simplecov-html (~> 0.10.0)
 
 GEM
-  remote: https://artifactory3-eu1.moneysupermarket.com/artifactory/gems-local/
+  remote: https://rubygems.org/
   specs:
     CFPropertyList (2.3.5)
     addressable (2.4.0)

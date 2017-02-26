@@ -60,10 +60,13 @@ require 'msmfg_spec_helper/rake_tasks/puppet_module/spec'
 require 'msmfg_spec_helper/rake_tasks/puppet_module/validate'
 require 'rake/clean'
 
-CLEAN.include %w(.yardoc coverage log junit) # :nodoc:
-CLOBBER.include %(doc pkg) # :nodoc:
-
 task :build do
   patterns = PuppetStrings::DEFAULT_SEARCH_PATTERNS
   PuppetStrings.generate(patterns, yard_args: %w(--output-dir docs))
+end
+
+# This block is only needed to get rid of a Yardoc warning.
+begin
+  const_get(:CLEAN).include %w(.yardoc coverage log junit)
+  const_get(:CLOBBER).include %(doc pkg)
 end

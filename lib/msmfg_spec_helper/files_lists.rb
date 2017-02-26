@@ -10,8 +10,6 @@ module MSMFGSpecHelper
     #
     # @param [String] pattern
     #   A Ruby globbing expression
-    # @param [Array<String>] unwanted
-    #   Globbing patterns to exclude
     #
     # @return [Rake::FileList]
     #   A list of absolute paths

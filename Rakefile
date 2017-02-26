@@ -1,4 +1,5 @@
 $VERBOSE = nil
+require 'msmfg_spec_helper/rake_tasks/coverage'
 require 'msmfg_spec_helper/rake_tasks/lint'
 require 'msmfg_spec_helper/rake_tasks/syntax'
 require 'bundler/gem_tasks'
@@ -8,4 +9,4 @@ require 'bundler/gem_tasks'
 # end
 
 desc 'Run syntax check, module spec and linters'
-task validate: [:syntax, :lint]
+task validate: [:syntax, :lint, :coverage]

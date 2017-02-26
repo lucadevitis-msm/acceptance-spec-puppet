@@ -92,7 +92,7 @@ module MSMFGSpecHelper
 
       # Sets the name of the puppet module
       #
-      # @param [String] name
+      # @param [String] value
       #   The name of the puppet module.
       #
       # @return [String]

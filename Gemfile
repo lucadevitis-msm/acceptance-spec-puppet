@@ -1,2 +1,2 @@
-source 'https://artifactory3-eu1.moneysupermarket.com/artifactory/gems-local/'
+source 'https://rubygems.org/'
 gemspec

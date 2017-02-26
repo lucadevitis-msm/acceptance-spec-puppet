@@ -18,7 +18,7 @@ full_module_name = JSON.parse(File.read('metadata.json'))['name']
 module_name = full_module_name.split('-').last
 
 module MSMFGAcceptance # :nodoc:
-  def to_s
+  def to_s # :nodoc:
     "Puppet module \"#{full_module_name}\""
   end
 end

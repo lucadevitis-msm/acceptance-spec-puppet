@@ -4,7 +4,7 @@ require 'syslog/logger'
 require 'rainbow/ext/string'
 
 module MSMFGSpecHelper # :nodoc:
-  # Prepares and returns a customized `::Logger` instance.
+  # Prepares and returns a customized {::Logger} like instance.
   #
   # @example
   #   MSMFGSpecHelper::Logger.progname = 'msmfg-puppet-module-validate'
@@ -14,6 +14,26 @@ module MSMFGSpecHelper # :nodoc:
   class Logger
     include Singleton
     class << self
+      # Define a logging method based on the severity level
+      #
+      # @param [Symbol] severity
+      #   the severity level
+      #
+      # @return [void]
+      #
+      # @api private
+      #
+      # @!macro [attach] logging_method
+      #   @!method $1(log)
+      #     Shortcut method to quickly log a message with $1 severity
+      #
+      #     @param [Hash] log
+      #       the log information
+      #
+      #     @return [true]
+      #       the result the logging
+      #
+      #     @api private
       def logging_method(severity)
         define_method(severity) do |*args|
           loggers.each { |logger| logger.send(severity, *args) }
@@ -72,6 +92,12 @@ module MSMFGSpecHelper # :nodoc:
     # @api private
     attr_writer :level
 
+    # Returns the list of {::Logger} compatible objects
+    #
+    # @return [Array]
+    #   the lsit of loggers
+    #
+    # @api private
     def loggers
       @loggers ||= []
     end
@@ -103,10 +129,10 @@ module MSMFGSpecHelper # :nodoc:
                  else severity[0].color(:red)
                  end
         parts << (log[:function] || log[:task]).color(:yellow)
-        parts << log[:file_path].color(:cyan) if log[:file_path]
+        parts << (log[:file_path] || '.').color(:cyan)
         parts << log[:file_line]
         parts << log[:check_name].color(:magenta) if log[:check_name]
-        parts << log[:text]
+        parts << (log[:text] || 'OK')
         parts.compact.join(': ') + "\n"
       end
       loggers << logger.freeze

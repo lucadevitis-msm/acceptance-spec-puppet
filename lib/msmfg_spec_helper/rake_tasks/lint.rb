@@ -3,6 +3,8 @@ require 'open3'
 require 'puppet-lint/tasks/puppet-lint'
 require 'rubocop/rake_task'
 
+Rake::Task[:lint].clear
+
 # rubocop:disable Metrics/BlockLength
 namespace :lint do
   logger = MSMFGSpecHelper::Logger.instance
@@ -10,25 +12,28 @@ namespace :lint do
 
   desc 'Lint metadata.json'
   task :metadata_json do
-    metadata_json_lint = %w(metadata-json-lint
-                            --strict-dependencies
-                            --strict-license
-                            --fail-on-warnings)
-    Open3.popen3(*metadata_json_lint) do |_, output, _, thread|
-      report = { task: 'lint', file_path: 'metadata.json' }
-      if thread.value.exitstatus != 0
-        output.each_line do |line|
-          level, text = case line
-                        when /^Error: (.*)/ then [:error, Regexp.last_match(1)]
-                        when /^(Invalid .*)/ then [:error, Regexp.last_match(1)]
-                        when /^Warning: (.*)/ then [:warn, Regexp.last_match(1)]
-                        end
-          next unless level && text
-          logger.send level, report.merge(text: text)
+    if File.file? 'metadata.json'
+      metadata_json_lint = %w(metadata-json-lint
+                              --strict-dependencies
+                              --strict-license
+                              --fail-on-warnings)
+      Open3.popen3(*metadata_json_lint) do |_, output, _, thread|
+        report = { task: 'lint', file_path: 'metadata.json' }
+        if thread.value.exitstatus != 0
+          output.each_line do |line|
+            level, text = case line
+                          when /^Error: (.*)/, /^(Invalid .*)/
+                            [:error, Regexp.last_match(1)]
+                          when /^Warning: (.*)/
+                            [:warn, Regexp.last_match(1)]
+                          end
+            next unless level && text
+            logger.send level, report.merge(text: text)
+          end
+          abort
         end
-        abort
+        logger.info report
       end
-      logger.info report
     end
   end
 
@@ -68,7 +73,6 @@ namespace :lint do
 end
 # rubocop:enable Metrics/BlockLength
 
-Rake::Task[:lint].clear
 desc 'Run all the lint checks'
 task :lint do
   [:'lint:metadata_json',

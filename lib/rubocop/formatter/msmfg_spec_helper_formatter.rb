@@ -5,6 +5,9 @@ module RuboCop # :nodoc:
     # Format the offenses report
     class MSMFGSpecHelperFormatter < BaseFormatter
       include MSMFGSpecHelper::LoggerMixIn
+      # Print RuboCop report for a single file, using {MSMFGSpecHelper::Logger}
+      #
+      # @api private
       def file_finished(file, offenses)
         report = {
           task: 'lint',
