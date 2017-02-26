@@ -128,10 +128,10 @@ module MSMFGSpecHelper # :nodoc:
                  when 'WARN' then severity[0].color(:orangered)
                  else severity[0].color(:red)
                  end
-        parts << (log[:function] || log[:task]).color(:yellow)
-        parts << (log[:file_path] || '.').color(:cyan)
+        parts << (log[:function] || log[:task]).to_s.color(:yellow)
+        parts << (log[:file_path] || '.').to_s.color(:cyan)
         parts << log[:file_line]
-        parts << log[:check_name].color(:magenta) if log[:check_name]
+        parts << log[:check_name].to_s.color(:magenta) if log[:check_name]
         parts << (log[:text] || 'OK')
         parts.compact.join(': ') + "\n"
       end

@@ -19,7 +19,7 @@ namespace :coverage do
       undocumented = objects.select { |o| o.docstring.empty? }
       undocumented.each do |object|
         logger.error report.merge(file_line: object.line,
-                                  check_name: object.type.to_s,
+                                  check_name: object.type,
                                   text: object.name.to_s)
       end
       error = undocumented.any?

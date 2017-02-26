@@ -42,7 +42,7 @@ namespace :lint do
     PuppetLint::OptParser.build.load(File.join(DATADIR, 'puppet-lint.rc'))
 
     linter = PuppetLint.new
-    manifests.each do |manifest|
+    errors = manifests.collect do |manifest|
       report = { task: 'lint', file_path: manifest }
       linter.file = manifest
       linter.run
@@ -55,9 +55,11 @@ namespace :lint do
                                  text: problem[:message])
         problem
       end
-      abort if problems.any?
-      logger.info report
+      error = problems.any?
+      logger.info report unless error
+      error
     end
+    abort if errors.any?
   end
 
   RuboCop::RakeTask.new :ruby do |rubocop|
