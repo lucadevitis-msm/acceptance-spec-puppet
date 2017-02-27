@@ -12,12 +12,12 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'MSMFG Spec Helper'
   spec.description = 'MSMFG Spec Helper'
-  spec.homepage = 'https://github.com/lucadevitis-msm/msmfg_spec_helper'
-  spec.license = 'MIT'
+  spec.homepage = 'https://lucadevitis-msm.github.io/msmfg_spec_helper'
+  spec.license = 'proprietary'
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
-  spec.metadata['allowed_push_host'] = 'http://mygemserver.com'
+  spec.metadata['allowed_push_host'] = 'https://artifactory3-eu1.moneysupermarket.com/artifactory/gems-local'
 
   spec.files = `git ls-files -z bin lib data`.split("\x0")
   spec.bindir = 'bin'
